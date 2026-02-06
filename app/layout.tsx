@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import PageTransition from '@/components/PageTransition';
 import BackToTop from '@/components/BackToTop';
 import CookieConsent from '@/components/CookieConsent';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -76,6 +77,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased bg-slate-950 text-white`}>
         <div className="fixed inset-0 bg-gradient-mesh pointer-events-none z-0" />
+        <ReadingProgressBar />
         <Navbar />
         <main className="relative z-10">
           <PageTransition>
