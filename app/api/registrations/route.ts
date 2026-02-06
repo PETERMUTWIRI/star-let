@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { verifyAdminAuth, unauthorizedResponse } from '@/lib/auth/middleware';
 import { stripe } from '@/lib/stripe';
 import { getBaseUrl } from '@/lib/utils';
+import { sendEmail } from '@/lib/email/resend';
 
 const prisma = new PrismaClient();
 
@@ -375,7 +376,6 @@ async function sendConfirmationEmail(registration: any) {
   // Implementation depends on your email service (Resend, SendGrid, etc.)
   // This is a placeholder for the email sending logic
   try {
-    const { sendEmail } = await import('@/lib/email/resend');
     await sendEmail({
       to: registration.email,
       subject: `Registration Confirmed: ${registration.event.title}`,
