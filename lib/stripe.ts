@@ -1,16 +1,28 @@
 import Stripe from 'stripe';
 
-const stripeKey = process.env.STRIPE_SECRET_KEY;
+// Lazy initialization to avoid build-time errors
+function createStripeClient(): Stripe {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) {
+    // Return a dummy client that throws on actual usage
+    return new Proxy({} as Stripe, {
+      get() {
+        throw new Error('STRIPE_SECRET_KEY is not set');
+      },
+    });
+  }
+  return new Stripe(key, {
+    apiVersion: '2026-01-28.clover',
+    typescript: true,
+  });
+}
 
-export const stripe = stripeKey 
-  ? new Stripe(stripeKey, {
-      apiVersion: '2026-01-28.clover',
-      typescript: true,
-    })
-  : null as unknown as Stripe;
+export const stripe = createStripeClient();
 
-// Helper to check if Stripe is configured
-export const isStripeConfigured = () => !!stripeKey;
+// Helper to check if properly configured
+export function isStripeConfigured(): boolean {
+  return !!process.env.STRIPE_SECRET_KEY;
+}
 
 export function formatAmountForStripe(amount: number, currency: string): number {
   let zeroDecimalCurrency = true;
