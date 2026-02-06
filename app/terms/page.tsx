@@ -83,7 +83,7 @@ export default function TermsOfServicePage() {
             <p className="mb-4">
               You may not:
             </p>
-            <ul class="list-disc pl-6 mb-6 space-y-2">
+            <ul className="list-disc pl-6 mb-6 space-y-2">
               <li>Reproduce, distribute, or publicly perform any music without authorization</li>
               <li>Use our content for commercial purposes without written permission</li>
               <li>Remove or alter any copyright notices or watermarks</li>
