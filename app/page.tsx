@@ -174,52 +174,98 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Latest Release Section */}
+      {/* Latest Release Section - Soul Awakening */}
       <section className="relative py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Album Art */}
+              {/* Artist Image */}
               <div className="relative group">
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl opacity-30 blur-2xl group-hover:opacity-50 transition-opacity duration-500" />
-                <div className="relative aspect-square rounded-2xl overflow-hidden glow-mixed">
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                    <FaMusic className="w-32 h-32 text-slate-700" />
-                  </div>
+                <div className="absolute -inset-4 bg-gradient-to-r from-amber-500 via-orange-500 to-purple-600 rounded-3xl opacity-40 blur-2xl group-hover:opacity-60 transition-opacity duration-500" />
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden glow-mixed">
+                  <Image
+                    src="/images/about/Rahab.jpeg"
+                    alt="Starlet - Gospel Artist"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
                   {/* Play Overlay */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <button className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <button className="w-20 h-20 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform">
                       <FaPlay className="w-8 h-8 text-white ml-1" />
                     </button>
+                  </div>
+                  
+                  {/* Quote Overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white/90 text-sm italic font-light">
+                      "Music that transcends boundaries, touching souls in every language"
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* Content */}
+              {/* Content - Soul Awakening Message */}
               <div className="space-y-6">
-                <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  Latest Release
+                <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  🙏 Gospel • Multilingual • Soul-Stirring
                 </span>
-                <h2 className="text-5xl md:text-6xl font-bold">
-                  <span className="text-gradient">Midnight Dreams</span>
+                
+                <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                  <span className="text-gradient">Awaken Your Spirit</span>
+                  <span className="block text-2xl md:text-3xl text-amber-400 mt-2 font-light italic">
+                    "Imani Yangu" / My Faith
+                  </span>
                 </h2>
-                <p className="text-lg text-slate-300 leading-relaxed">
-                  A dreamy exploration of late-night thoughts and emotions, blending indie pop 
-                  with electronic elements. This single captures the essence of those quiet 
-                  moments when inspiration strikes and the world feels full of possibility.
-                </p>
+                
+                <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
+                  <p>
+                    Through the power of gospel music, <span className="text-amber-400 font-medium">Starlet</span> bridges 
+                    cultures and languages—singing in both <span className="text-cyan-400">English</span> and{' '}
+                    <span className="text-cyan-400">Swahili</span> to reach hearts across the world.
+                  </p>
+                  
+                  <p className="border-l-4 border-amber-500/50 pl-4 italic text-slate-400">
+                    "My music is not just entertainment—it is a calling to heal, uplift, and awaken 
+                    the divine spirit within every listener. From the villages of Kenya to the cities 
+                    of America, we are all united by faith."
+                  </p>
+                  
+                  <p>
+                    Whether you understand every word or simply feel the melody, her voice carries 
+                    a message of <span className="text-purple-400">hope</span>,{' '}
+                    <span className="text-purple-400">love</span>, and{' '}
+                    <span className="text-purple-400">spiritual transformation</span>.
+                  </p>
+                </div>
+                
+                {/* Language Tags */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {['English', 'Swahili', 'Gospel', 'Worship', 'Inspirational'].map((tag) => (
+                    <span 
+                      key={tag}
+                      className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-slate-400 border border-white/10"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
                 
                 {/* Streaming Platforms */}
                 <div className="flex flex-wrap gap-3 pt-4">
                   {[
                     { icon: FaSpotify, name: 'Spotify' },
                     { icon: FaApple, name: 'Apple Music' },
-                    { icon: FaYoutube, name: 'YouTube Music' },
+                    { icon: FaYoutube, name: 'YouTube' },
                   ].map((platform) => (
                     <a
                       key={platform.name}
                       href="#"
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-amber-500/50 hover:bg-white/10 transition-all"
                     >
                       <platform.icon className="w-4 h-4 text-slate-400" />
                       <span className="text-sm text-slate-300">{platform.name}</span>
@@ -229,9 +275,9 @@ export default function HomePage() {
 
                 <Link 
                   href="/music" 
-                  className="inline-flex items-center gap-2 text-blue-400 hover:text-purple-400 transition-colors pt-4 group"
+                  className="inline-flex items-center gap-2 text-amber-400 hover:text-purple-400 transition-colors pt-4 group"
                 >
-                  View All Music
+                  Experience The Music
                   <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

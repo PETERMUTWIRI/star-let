@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { 
   FaSpotify, 
@@ -9,66 +10,68 @@ import {
   FaTwitter,
   FaMusic,
   FaMicrophone,
-  FaGuitar,
-  FaDrum,
-  FaHeadphones,
+  FaChurch,
+  FaGlobeAfrica,
+  FaHeart,
+  FaHands,
   FaQuoteLeft,
-  FaStar
+  FaStar,
+  FaCross
 } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
 
 const musicalInfluences = [
-  { name: 'Alternative Rock', icon: FaGuitar },
-  { name: 'Indie Pop', icon: FaMusic },
-  { name: 'Electronic', icon: FaHeadphones },
-  { name: 'R&B', icon: FaMicrophone },
-  { name: 'Folk', icon: FaDrum },
+  { name: 'Gospel', icon: FaChurch },
+  { name: 'Worship', icon: FaHands },
+  { name: 'African Traditional', icon: FaGlobeAfrica },
+  { name: 'Contemporary', icon: FaMusic },
+  { name: 'Soul', icon: FaHeart },
 ];
 
 const careerHighlights = [
   {
     year: '2024',
-    title: 'Midnight Dreams Release',
-    description: 'Debuted at #3 on Billboard Indie Charts with over 50M streams worldwide.',
+    title: 'Imani Yangu Album',
+    description: 'Released multilingual gospel album featuring songs in English and Swahili, touching hearts across continents.',
   },
   {
     year: '2023',
-    title: 'Sold-Out Tour',
-    description: 'Golden Hour Tour sold out 25 shows across North America and Europe.',
-  },
-  {
-    year: '2023',
-    title: 'Award Nomination',
-    description: 'Nominated for Best New Artist at the Independent Music Awards.',
+    title: 'East African Tour',
+    description: 'Blessed audiences in Kenya, Tanzania, and Uganda with powerful worship experiences.',
   },
   {
     year: '2022',
-    title: 'Viral Breakthrough',
-    description: 'First single "Electric" went viral on TikTok with 10M+ views.',
+    title: 'Gospel Music Award',
+    description: 'Recognized for Excellence in Multilingual Worship Music at the African Gospel Awards.',
   },
   {
     year: '2021',
-    title: 'First Release',
-    description: 'Released debut EP "Beginnings" independently, gaining 100K+ streams.',
+    title: 'YouTube Breakthrough',
+    description: 'Worship medley "Mungu Mkuu" reached 5M+ views, inspiring believers worldwide.',
+  },
+  {
+    year: '2020',
+    title: 'Ministry Begins',
+    description: 'Answered the call to gospel music ministry, dedicating her voice to spreading faith and hope.',
   },
 ];
 
 const pressQuotes = [
   {
-    source: 'Rolling Stone',
-    quote: 'A voice that captures the essence of a generation. Starlet is the real deal.',
+    source: 'Gospel Today Magazine',
+    quote: 'A powerful voice that bridges cultures through worship. Starlet embodies the universal language of faith.',
     rating: 5,
   },
   {
-    source: 'Billboard',
-    quote: 'Midnight Dreams is a masterpiece of modern indie pop. Pure sonic beauty.',
+    source: 'African Christian Voice',
+    quote: 'Her Swahili worship songs have become anthems in churches across East Africa and beyond.',
     rating: 5,
   },
   {
-    source: 'Pitchfork',
-    quote: 'One of the most exciting new artists to emerge in 2024.',
-    rating: 4.5,
+    source: 'Christian Music Weekly',
+    quote: 'One of the most authentic gospel voices of our time, delivering messages that truly awaken the soul.',
+    rating: 5,
   },
 ];
 
@@ -89,17 +92,18 @@ export default function AboutPage() {
             <ScrollReveal>
               <div className="relative">
                 {/* Decorative Elements */}
-                <div className="absolute -top-8 -left-8 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl" />
+                <div className="absolute -top-8 -left-8 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl" />
                 <div className="absolute -bottom-8 -right-8 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
                 
                 {/* Main Image */}
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glow-mixed">
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                    <div className="text-center">
-                      <FaMusic className="w-32 h-32 text-slate-700 mx-auto mb-4" />
-                      <p className="text-slate-600">Artist Photo</p>
-                    </div>
-                  </div>
+                  <Image
+                    src="/images/hero/kinity.jpeg"
+                    alt="Starlet - Gospel Artist"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
 
@@ -110,8 +114,8 @@ export default function AboutPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <div className="text-3xl font-bold text-gradient">5M+</div>
-                  <div className="text-sm text-slate-400">Monthly Listeners</div>
+                  <div className="text-3xl font-bold text-gradient">2M+</div>
+                  <div className="text-sm text-slate-400">Souls Reached</div>
                 </motion.div>
               </div>
             </ScrollReveal>
@@ -119,34 +123,51 @@ export default function AboutPage() {
             {/* Content Side */}
             <div className="space-y-8">
               <ScrollReveal>
-                <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                  About the Artist
+                <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <FaCross className="w-3 h-3 inline mr-2" />
+                  Gospel Artist & Worship Leader
                 </span>
               </ScrollReveal>
 
               <ScrollReveal delay={0.1}>
                 <h1 className="text-5xl md:text-6xl font-bold">
-                  The Story of <span className="text-gradient">Starlet</span>
+                  The Voice of <span className="text-gradient">Faith</span>
                 </h1>
               </ScrollReveal>
 
               <ScrollReveal delay={0.2}>
                 <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                   <p>
-                    Born from the quiet streets of a small town and raised by the rhythm of city lights, 
-                    Starlet emerged as a voice for those who dream in melodies. What started as late-night 
-                    songwriting sessions in a bedroom studio has evolved into a global phenomenon.
+                    <span className="text-amber-400 font-medium">Starlet</span> is more than a musician—she is a 
+                    vessel of divine inspiration, called to spread the gospel through the universal language of music. 
+                    Singing fluently in both <span className="text-cyan-400">English</span> and{' '}
+                    <span className="text-cyan-400">Swahili</span>, she bridges cultures and continents, 
+                    touching souls from Nairobi to New York.
                   </p>
                   <p>
-                    With a sound that blends alternative rock, indie pop, and electronic elements, 
-                    Starlet creates music that resonates with authenticity and raw emotion. Each song 
-                    is a chapter, each album a journey through the human experience.
+                    Her journey began in the church choir, where the power of worship first stirred her spirit. 
+                    Today, her music blends traditional African gospel with contemporary worship, creating a sound 
+                    that is both deeply rooted and refreshingly modern.
                   </p>
-                  <p>
-                    From viral TikTok moments to sold-out tours, the journey has been nothing short 
-                    of extraordinary. But at the heart of it all remains the same passion that started 
-                    it all - creating music that touches souls.
+                  <p className="border-l-4 border-amber-500/50 pl-4 italic text-slate-400">
+                    "When I stand before an audience, I don&apos;t see strangers—I see souls seeking connection 
+                    with the divine. My purpose is to be that bridge, to help every listener find their way home 
+                    through worship."
                   </p>
+                </div>
+              </ScrollReveal>
+              
+              {/* Ministry Focus */}
+              <ScrollReveal delay={0.25}>
+                <div className="flex flex-wrap gap-2">
+                  {['Soul Healing', 'Faith Building', 'Multilingual Worship', 'Community Upliftment'].map((tag) => (
+                    <span 
+                      key={tag}
+                      className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-slate-400 border border-white/10"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </ScrollReveal>
 
@@ -310,10 +331,10 @@ export default function AboutPage() {
 
               <div className="relative z-10 text-center">
                 <h2 className="text-4xl font-bold mb-4">
-                  Get in <span className="text-gradient">Touch</span>
+                  Partner in <span className="text-gradient">Ministry</span>
                 </h2>
                 <p className="text-slate-400 mb-12 max-w-xl mx-auto">
-                  For booking inquiries, press, or just to say hello. We&apos;d love to hear from you.
+                  For ministry invitations, event bookings, or to connect. Let&apos;s spread the gospel together.
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
@@ -345,9 +366,9 @@ export default function AboutPage() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-white/10">
-                  <p className="text-slate-500 mb-4">Management</p>
-                  <p className="text-white">Starlet Music Management LLC</p>
-                  <p className="text-slate-400 text-sm mt-1">Los Angeles, CA</p>
+                  <p className="text-slate-500 mb-4">Ministry Base</p>
+                  <p className="text-white">Starlet Gospel Ministry</p>
+                  <p className="text-slate-400 text-sm mt-1">Reaching souls worldwide 🌍</p>
                 </div>
               </div>
             </div>
