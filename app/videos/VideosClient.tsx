@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlay, FaExternalLinkAlt, FaXmark } from 'react-icons/fa6';
+import { FaPlay, FaArrowUpRightFromSquare, FaXmark } from 'react-icons/fa6';
 import Image from 'next/image';
 import ScrollReveal from '@/components/ScrollReveal';
 
@@ -225,7 +225,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-brand-primary hover:text-white transition-colors"
                 >
-                  <FaExternalLinkAlt className="text-sm" />
+                  <FaArrowUpRightFromSquare className="text-sm" />
                   Watch on YouTube
                 </a>
               </div>

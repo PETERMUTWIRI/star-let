@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendar, FaLocationDot, FaTicket, FaExternalLinkAlt } from 'react-icons/fa6';
+import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare } from 'react-icons/fa6';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
 import type { Event } from './page';
@@ -209,7 +209,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                       className="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-brand-text rounded-full font-semibold hover:bg-brand-dark transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg"
                                     >
                                       Get Tickets
-                                      <FaExternalLinkAlt className="text-sm" />
+                                      <FaArrowUpRightFromSquare className="text-sm" />
                                     </a>
                                   ) : (
                                     <button className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-400 rounded-full font-semibold cursor-not-allowed">
