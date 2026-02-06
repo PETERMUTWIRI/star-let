@@ -277,3 +277,26 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
     timeoutId = setTimeout(() => fn(...args), delay);
   };
 }
+
+/**
+ * Get the base URL for the application
+ * Works in both server and client environments
+ * @returns Base URL (e.g., "http://localhost:3000" or "https://example.com")
+ */
+export function getBaseUrl(): string {
+  if (typeof window !== 'undefined') {
+    // Client-side
+    return window.location.origin;
+  }
+  
+  // Server-side
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+  
+  return 'http://localhost:3000';
+}
