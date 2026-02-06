@@ -122,7 +122,7 @@ export async function GET(req: NextRequest) {
     const events = await prisma.event.findMany({
       where,
       orderBy: { startDate: category === 'Past' ? 'desc' : 'asc' },
-      include: includeStats ? {
+      include: {
         registrations: {
           where: {
             status: { in: ['pending', 'completed'] },
@@ -130,32 +130,33 @@ export async function GET(req: NextRequest) {
           select: {
             id: true,
             status: true,
+            amountPaid: true,
           },
         },
-      } : undefined,
+      },
     });
 
-    // Add registration stats to each event if requested
+    // Add registration stats to each event
     const eventsWithStats = events.map(e => ({
       ...e,
-      registrationCount: e.registrations?.length || 0,
+      registrationCount: e.registrations.length,
       spotsLeft: e.maxAttendees 
-        ? e.maxAttendees - (e.registrations?.length || 0) 
+        ? e.maxAttendees - e.registrations.length
         : null,
       isSoldOut: e.maxAttendees 
-        ? (e.registrations?.length || 0) >= e.maxAttendees 
+        ? e.registrations.length >= e.maxAttendees 
         : false,
       // Ticket sales metadata
-      ticketSales: {
-        totalRevenue: e.registrations?.reduce((sum, r) => {
+      ticketSales: includeStats ? {
+        totalRevenue: e.registrations.reduce((sum, r) => {
           return r.status === 'completed' ? sum + (r.amountPaid || 0) : sum;
-        }, 0) || 0,
-        pendingRevenue: e.registrations?.reduce((sum, r) => {
+        }, 0),
+        pendingRevenue: e.registrations.reduce((sum, r) => {
           return r.status === 'pending' ? sum + (r.amountPaid || 0) : sum;
-        }, 0) || 0,
-        completedCount: e.registrations?.filter(r => r.status === 'completed').length || 0,
-        pendingCount: e.registrations?.filter(r => r.status === 'pending').length || 0,
-      },
+        }, 0),
+        completedCount: e.registrations.filter(r => r.status === 'completed').length,
+        pendingCount: e.registrations.filter(r => r.status === 'pending').length,
+      } : undefined,
     }));
 
     return NextResponse.json(eventsWithStats);
