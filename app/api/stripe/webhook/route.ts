@@ -88,10 +88,9 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   // Update registration status to completed
   const registration = await prisma.registration.update({
-    where: { id: registrationId },
+    where: { id: Number(registrationId) },
     data: {
       status: 'completed',
-      stripePaymentIntentId: session.payment_intent as string | undefined,
     },
   });
 
@@ -106,7 +105,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
  */
 async function handleCheckoutExpired(session: Stripe.Checkout.Session) {
   const { registrationId } = session.metadata || {};
-
+  
   if (!registrationId) {
     console.error('No registrationId in session metadata');
     return;
@@ -116,7 +115,7 @@ async function handleCheckoutExpired(session: Stripe.Checkout.Session) {
 
   // Update registration status to expired
   const registration = await prisma.registration.update({
-    where: { id: registrationId },
+    where: { id: Number(registrationId) },
     data: {
       status: 'expired',
     },
