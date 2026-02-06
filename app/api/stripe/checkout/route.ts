@@ -116,7 +116,6 @@ export async function POST(req: NextRequest) {
         currency: 'usd',
         product_data: {
           name: event.title,
-          description: `Ticket for ${event.title}`,
         },
       });
       stripePriceId = stripePrice.id;
