@@ -1,9 +1,16 @@
 import Stripe from 'stripe';
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-01-28.clover',
-  typescript: true,
-});
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+
+export const stripe = stripeKey 
+  ? new Stripe(stripeKey, {
+      apiVersion: '2026-01-28.clover',
+      typescript: true,
+    })
+  : null as unknown as Stripe;
+
+// Helper to check if Stripe is configured
+export const isStripeConfigured = () => !!stripeKey;
 
 export function formatAmountForStripe(amount: number, currency: string): number {
   let zeroDecimalCurrency = true;
