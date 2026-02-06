@@ -5,7 +5,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare } from 'react-icons/fa6';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
-import type { Event } from './page';
+interface Event {
+  id: number;
+  title: string;
+  slug: string;
+  description?: string;
+  category: string;
+  cover?: string;
+  location: string;
+  startDate: string;
+  endDate?: string;
+  venue?: string;
+  address?: string;
+  registrationLink?: string;
+  maxAttendees?: number;
+  isFree?: boolean;
+  ticketPrice?: string;
+  ticketPriceCents?: number;
+  registrationCount?: number;
+  spotsLeft?: number | null;
+  isSoldOut?: boolean;
+}
 
 interface EventsClientProps {
   initialEvents: Event[];
