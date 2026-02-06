@@ -341,7 +341,6 @@ export async function DELETE(req: NextRequest) {
       where: { id },
       data: {
         status: 'cancelled',
-        cancelledAt: new Date(),
       },
     });
 
