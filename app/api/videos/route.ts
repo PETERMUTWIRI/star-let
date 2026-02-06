@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     // Get single video by ID
     if (id) {
       const video = await prisma.video.findUnique({ 
-        where: { id: Number(id), deletedAt: null } 
+        where: { id: Number(id) } 
       });
       return video 
         ? NextResponse.json(video) 
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Build where clause for listing
-    const where: any = { deletedAt: null };
+    const where: any = {};
     
     if (category && category !== 'All') {
       where.category = category;
@@ -175,9 +175,8 @@ export async function DELETE(req: NextRequest) {
     const idNum = Number(id);
     if (isNaN(idNum)) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
 
-    await prisma.video.update({ 
-      where: { id: idNum }, 
-      data: { deletedAt: new Date() } 
+    await prisma.video.delete({ 
+      where: { id: idNum }
     });
     
     return NextResponse.json({ ok: true });
