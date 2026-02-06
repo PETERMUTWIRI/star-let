@@ -185,7 +185,7 @@ async function SuccessContent({ searchParams }: SuccessPageProps) {
                 <p className="text-sm">
                   <span className="font-medium text-gray-700">Amount Paid:</span>{' '}
                   <span className="text-gray-600">
-                    ${(registration.amountPaid / 100).toFixed(2)}
+                    ${((registration.amountPaid ?? 0) / 100).toFixed(2)}
                   </span>
                 </p>
                 <p className="text-sm">
