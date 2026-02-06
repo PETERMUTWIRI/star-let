@@ -1,4 +1,7 @@
 {
+  "overrides": {
+    "confbox": "0.1.8"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
