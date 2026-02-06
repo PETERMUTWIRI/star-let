@@ -61,7 +61,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-blue-400 font-medium tracking-[0.3em] uppercase text-sm"
               >
-                Gospel Artist • Worship Leader • Multilingual (English & Swahili)
+                Gospel Artist • Singer • Songwriter
               </motion.p>
             </StaggerItem>
 
