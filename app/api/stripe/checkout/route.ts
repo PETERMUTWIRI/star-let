@@ -34,9 +34,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Convert eventId to number
+    const eventIdNum = Number(eventId);
+    if (isNaN(eventIdNum)) {
+      return NextResponse.json(
+        { error: 'Invalid eventId' },
+        { status: 400 }
+      );
+    }
+
     // Fetch the event
     const event = await prisma.event.findUnique({
-      where: { id: eventId, deletedAt: null },
+      where: { id: eventIdNum, deletedAt: null },
     });
 
     if (!event) {
@@ -58,7 +67,7 @@ export async function POST(req: NextRequest) {
     if (event.maxAttendees) {
       const registrationCount = await prisma.registration.count({
         where: { 
-          eventId, 
+          eventId: eventIdNum, 
           status: { in: ['pending', 'completed'] } 
         },
       });
@@ -78,10 +87,9 @@ export async function POST(req: NextRequest) {
     if (isFreeEvent) {
       const registration = await prisma.registration.create({
         data: {
-          eventId,
+          eventId: eventIdNum,
           email,
           name,
-          userId: user.id,
           amountPaid: 0,
           status: 'completed',
         },
@@ -115,7 +123,7 @@ export async function POST(req: NextRequest) {
 
       // Update event with Stripe price ID
       await prisma.event.update({
-        where: { id: eventId },
+        where: { id: eventIdNum },
         data: { 
           stripePriceId,
           stripeProductId: stripePrice.product as string,
@@ -126,10 +134,9 @@ export async function POST(req: NextRequest) {
     // Create pending registration
     const registration = await prisma.registration.create({
       data: {
-        eventId,
+        eventId: eventIdNum,
         email,
         name,
-        userId: user.id,
         amountPaid: priceInCents,
         status: 'pending',
       },
