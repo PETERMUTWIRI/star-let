@@ -152,12 +152,11 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${baseUrl}/events/${eventId}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/events/${eventId}/cancel`,
+      success_url: `${baseUrl}/events/${eventIdNum}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/events/${eventIdNum}/cancel`,
       metadata: {
-        registrationId: registration.id,
-        eventId,
-        userId: user.id,
+        registrationId: String(registration.id),
+        eventId: String(eventIdNum),
       },
     });
 
