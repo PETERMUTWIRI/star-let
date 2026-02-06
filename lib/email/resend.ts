@@ -82,6 +82,20 @@ export async function sendNewsletterEmail(to: string[], subject: string, html: s
 }
 */
 
+// Generic email sender placeholder
+export async function sendEmail({ to, subject, template, data }: { 
+  to: string; 
+  subject: string; 
+  template: string; 
+  data: any; 
+}) {
+  console.log('Email would be sent to:', to);
+  console.log('Subject:', subject);
+  console.log('Template:', template);
+  console.log('Data:', data);
+  console.log('Please configure Resend to enable email sending');
+}
+
 // Placeholder functions until Resend is configured
 export async function sendWelcomeEmail(to: string) {
   console.log('Welcome email would be sent to:', to);
