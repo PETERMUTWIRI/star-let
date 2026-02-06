@@ -14,7 +14,10 @@ import {
   FaShareAlt,
   FaMusic
 } from 'react-icons/fa';
-import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import ScrollReveal, { StaggerContainer, StaggerItem, ScaleIn } from '@/components/ScrollReveal';
+import { SoundWave } from '@/components/MusicVisualizer';
+import { GradientText } from '@/components/TextScramble';
+import { GlowButton } from '@/components/MagneticButton';
 import { useState } from 'react';
 
 // Album data
@@ -96,11 +99,16 @@ export default function MusicPage() {
                 Discography
               </motion.span>
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                Music & <span className="text-gradient">Albums</span>
+                Music & <GradientText>Albums</GradientText>
               </h1>
-              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
                 Stream and download all releases. Available on all major platforms.
               </p>
+              
+              {/* Sound Wave Visual */}
+              <div className="flex justify-center">
+                <SoundWave />
+              </div>
             </div>
           </ScrollReveal>
 
