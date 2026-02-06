@@ -1,4 +1,5 @@
 // app/api/stripe/checkout/route.ts - Stripe checkout for event tickets
+// Build: force refresh
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { stripe } from '@/lib/stripe';
