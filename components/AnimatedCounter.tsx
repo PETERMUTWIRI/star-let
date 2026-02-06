@@ -71,12 +71,14 @@ export function StatCard({
   label,
   prefix = '',
   suffix = '',
+  decimals = 0,
   icon: Icon,
 }: {
   value: number;
   label: string;
   prefix?: string;
   suffix?: string;
+  decimals?: number;
   icon?: React.ComponentType<{ className?: string }>;
 }) {
   return (
@@ -100,6 +102,7 @@ export function StatCard({
             end={value} 
             prefix={prefix} 
             suffix={suffix}
+            decimals={decimals}
             duration={2.5}
           />
         </div>

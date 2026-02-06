@@ -3,7 +3,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import ScrollReveal, { StaggerContainer, StaggerItem, ScaleIn } from '@/components/ScrollReveal';
+import { StatCard } from '@/components/AnimatedCounter';
+import { GradientText } from '@/components/TextScramble';
+import { Equalizer } from '@/components/MusicVisualizer';
+import { GlowButton } from '@/components/MagneticButton';
 import { 
   FaSpotify, 
   FaApple, 
@@ -15,7 +19,9 @@ import {
   FaHeadphones,
   FaCalendar,
   FaArrowRight,
-  FaMusic
+  FaMusic,
+  FaUsers,
+  FaCompactDisc
 } from 'react-icons/fa';
 
 // Animated floating orbs component
@@ -119,14 +125,30 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.8 }}
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
               >
-                <Link href="/music" className="btn-primary flex items-center gap-2">
-                  <FaHeadphones className="w-5 h-5" />
-                  Listen Now
+                <Link href="/music">
+                  <GlowButton variant="primary">
+                    <FaHeadphones className="w-5 h-5 inline mr-2" />
+                    Listen Now
+                  </GlowButton>
                 </Link>
-                <Link href="/videos" className="btn-secondary flex items-center gap-2">
-                  <FaPlay className="w-4 h-4" />
-                  Watch Videos
+                <Link href="/videos">
+                  <GlowButton variant="secondary">
+                    <FaPlay className="w-4 h-4 inline mr-2" />
+                    Watch Videos
+                  </GlowButton>
                 </Link>
+              </motion.div>
+            </StaggerItem>
+            
+            {/* Equalizer Visual */}
+            <StaggerItem>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1 }}
+                className="flex justify-center pt-12"
+              >
+                <Equalizer />
               </motion.div>
             </StaggerItem>
           </StaggerContainer>
@@ -221,29 +243,39 @@ export default function HomePage() {
       {/* Stats Section */}
       <section className="relative py-24 px-6">
         <div className="max-w-7xl mx-auto">
-          <ScrollReveal>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { number: '50M+', label: 'Streams', icon: FaHeadphones },
-                { number: '3', label: 'Albums', icon: FaMusic },
-                { number: '150+', label: 'Shows', icon: FaCalendar },
-                { number: '1M+', label: 'Followers', icon: FaInstagram },
-              ].map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center p-6 rounded-2xl bg-gradient-card"
-                >
-                  <stat.icon className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{stat.number}</div>
-                  <div className="text-slate-400">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
+          <ScrollReveal className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <GradientText>By The Numbers</GradientText>
+            </h2>
+            <p className="text-slate-400">Our journey in music so far</p>
           </ScrollReveal>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StatCard
+              icon={FaHeadphones}
+              value={50}
+              label="Million Streams"
+              suffix="M+"
+            />
+            <StatCard
+              icon={FaCompactDisc}
+              value={3}
+              label="Albums Released"
+            />
+            <StatCard
+              icon={FaCalendar}
+              value={156}
+              label="Shows Performed"
+              suffix="+"
+            />
+            <StatCard
+              icon={FaUsers}
+              value={1.2}
+              decimals={1}
+              label="Million Followers"
+              suffix="M+"
+            />
+          </div>
         </div>
       </section>
 
