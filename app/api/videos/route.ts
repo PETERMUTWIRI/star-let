@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     // Get single video by ID
     if (id) {
       const video = await prisma.video.findUnique({ 
-        where: { id, deletedAt: null } 
+        where: { id: Number(id), deletedAt: null } 
       });
       return video 
         ? NextResponse.json(video) 
@@ -119,6 +119,9 @@ export async function PUT(req: NextRequest) {
     const id = new URL(req.url).searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
 
+    const idNum = Number(id);
+    if (isNaN(idNum)) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+
     const raw = await req.json();
     console.log('PUT /api/videos body:', raw);
 
@@ -141,7 +144,7 @@ export async function PUT(req: NextRequest) {
     if (body.published !== undefined) data.published = body.published;
     if (body.order !== undefined) data.order = body.order;
 
-    const updated = await prisma.video.update({ where: { id }, data });
+    const updated = await prisma.video.update({ where: { id: idNum }, data });
     console.log('Video updated:', updated.id);
     return NextResponse.json(updated);
   } catch (error) {
@@ -169,8 +172,11 @@ export async function DELETE(req: NextRequest) {
     const id = new URL(req.url).searchParams.get('id');
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 });
 
+    const idNum = Number(id);
+    if (isNaN(idNum)) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+
     await prisma.video.update({ 
-      where: { id }, 
+      where: { id: idNum }, 
       data: { deletedAt: new Date() } 
     });
     
