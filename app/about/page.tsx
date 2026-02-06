@@ -98,7 +98,7 @@ export default function AboutPage() {
                 {/* Main Image */}
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glow-mixed">
                   <Image
-                    src="/images/hero/kinity.jpeg"
+                    src="/images/about/Rahab.jpeg"
                     alt="Starlet - Gospel Artist"
                     fill
                     className="object-cover"
