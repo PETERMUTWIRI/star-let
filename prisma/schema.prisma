@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  slug        String    @unique
+  content     String
+  excerpt     String?   @db.VarChar(500)
+  category    String    @db.VarChar(100)
+  cover       String?   @db.VarChar(500)
+  published   Boolean   @default(true)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  author      String?   @db.VarChar(255)
+  deletedAt   DateTime? @db.Timestamp(6)
+  metaTitle   String?   @db.VarChar(100)
+  metaDesc    String?   @db.VarChar(160)
+  ogImage     String?   @db.VarChar(500)
+
+  @@unique([slug, deletedAt])
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+  @@index([deletedAt])
+  @@index([published, deletedAt])
+}
+
+model Event {
+  id               Int       @id @default(autoincrement())
+  title            String    @db.VarChar(255)
+  slug             String    @unique
+  description      String?
+  category         String    @db.VarChar(50)
+  cover            String?   @db.VarChar(500)
+  location         String    @db.VarChar(255)
+  startDate        DateTime
+  endDate          DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  author           String?   @db.VarChar(255)
+  deletedAt        DateTime? @db.Timestamp(6)
+  metaTitle        String?   @db.VarChar(100)
+  metaDesc         String?   @db.VarChar(160)
+  ogImage          String?   @db.VarChar(500)
+  venue            String?   @db.VarChar(255)
+  address          String?
+  registrationLink String?   @db.VarChar(500)
+  maxAttendees     Int?
+  isFree           Boolean?  @default(true)
+  ticketPrice      String?   @db.VarChar(50)
+  gallery          Json?
+  content          String?
+  excerpt          String?
+  ticketPriceCents Int?
+  stripeProductId  String?   @db.VarChar(255)
+  stripePriceId    String?   @db.VarChar(255)
+  registrations    Registration[]
+
+  @@unique([slug, deletedAt])
+  @@index([slug])
+  @@index([category])
+  @@index([startDate])
+  @@index([deletedAt])
+  @@index([author])
+  @@index([isFree])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewsletterSubscriber {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  subscribed     Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  unsubscribedAt DateTime?
+
+  @@index([email])
+  @@index([subscribed])
+}
+
+model Video {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  description String?
+  youtubeId   String    @db.VarChar(50)
+  category    String    @db.VarChar(100)
+  thumbnail   String?   @db.VarChar(500)
+  published   Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Registration {
+  id                Int      @id @default(autoincrement())
+  eventId           Int
+  email             String   @db.VarChar(255)
+  name              String   @db.VarChar(255)
+  stripeSessionId   String?  @db.VarChar(255)
+  amountPaid        Int?
+  status            String   @default("pending")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  event             Event    @relation(fields: [eventId], references: [id])
+  
+  @@index([eventId])
+  @@index([email])
+  @@index([status])
+}
