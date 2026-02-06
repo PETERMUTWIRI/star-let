@@ -128,27 +128,10 @@ async function handleCheckoutExpired(session: Stripe.Checkout.Session) {
  * Handle failed payment
  */
 async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
-  // Find registration by payment intent ID if stored
-  const registration = await prisma.registration.findFirst({
-    where: { stripePaymentIntentId: paymentIntent.id },
-  });
-
-  if (!registration) {
-    console.error('No registration found for payment intent:', paymentIntent.id);
-    return;
-  }
-
-  console.log('Processing failed payment for registration:', registration.id);
-
-  // Update registration status to failed
-  await prisma.registration.update({
-    where: { id: registration.id },
-    data: {
-      status: 'failed',
-    },
-  });
-
-  console.log('Registration marked as failed:', registration.id);
+  // Log the failed payment - we don't store payment intent ID in schema
+  // You could look up by session metadata if needed
+  console.log('Payment failed for intent:', paymentIntent.id);
+  // TODO: Implement proper lookup if you add stripePaymentIntentId to schema
 }
 
 /* ---------- GET (for webhook verification/testing) ---------- */
