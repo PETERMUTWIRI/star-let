@@ -60,7 +60,7 @@ const careerHighlights = [
 const pressQuotes = [
   {
     source: 'Gospel Today Magazine',
-    quote: 'A powerful voice that bridges cultures through worship. Starlet embodies the universal language of faith.',
+    quote: 'A powerful voice that bridges cultures through worship. Rahab Kinity embodies the universal language of faith.',
     rating: 5,
   },
   {
@@ -99,7 +99,7 @@ export default function AboutPage() {
                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glow-mixed">
                   <Image
                     src="/images/about/Rahab.jpeg"
-                    alt="Starlet - Gospel Artist"
+                    alt="Rahab Kinity - Gospel Artist"
                     fill
                     className="object-cover"
                     priority
@@ -138,7 +138,7 @@ export default function AboutPage() {
               <ScrollReveal delay={0.2}>
                 <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                   <p>
-                    <span className="text-amber-400 font-medium">Starlet</span> is more than a musician—she is a 
+                    <span className="text-amber-400 font-medium">Rahab Kinity</span> is more than a musician—she is a 
                     vessel of divine inspiration, called to spread the gospel through the universal language of music. 
                     Singing fluently in both <span className="text-cyan-400">English</span> and{' '}
                     <span className="text-cyan-400">Swahili</span>, she bridges cultures and continents, 
@@ -203,7 +203,7 @@ export default function AboutPage() {
                 Musical <span className="text-gradient">Influences</span>
               </h2>
               <p className="text-slate-400 max-w-2xl mx-auto">
-                A fusion of genres that creates the unique Starlet sound
+                A fusion of genres that creates the unique Rahab Kinity sound
               </p>
             </div>
           </ScrollReveal>
@@ -367,7 +367,7 @@ export default function AboutPage() {
 
                 <div className="mt-12 pt-8 border-t border-white/10">
                   <p className="text-slate-500 mb-4">Ministry Base</p>
-                  <p className="text-white">Starlet Gospel Ministry</p>
+                  <p className="text-white">Rahab Kinity Gospel Ministry</p>
                   <p className="text-slate-400 text-sm mt-1">Reaching souls worldwide 🌍</p>
                 </div>
               </div>

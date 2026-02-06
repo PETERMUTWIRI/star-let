@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Starlet Blue-Purple Theme - Light Mode */
+    /* Rahab Kinity Blue-Purple Theme - Light Mode */
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
     --card: 222 47% 15%;
@@ -65,6 +65,7 @@
 
   html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
   }
 
   body {
@@ -72,6 +73,7 @@
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%);
     background-attachment: fixed;
     min-height: 100vh;
+    overscroll-behavior: none;
   }
 }
 

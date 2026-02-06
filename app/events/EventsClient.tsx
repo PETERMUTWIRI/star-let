@@ -89,7 +89,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
               Upcoming Shows
             </h1>
             <p className="text-body-large text-brand-text/70 max-w-2xl mx-auto">
-              Catch Starlet Music live at a venue near you. Get your tickets now before they sell out!
+              Catch Rahab Kinity Music live at a venue near you. Get your tickets now before they sell out!
             </p>
           </ScrollReveal>
         </div>

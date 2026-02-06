@@ -45,7 +45,7 @@ const videos = [
   },
   {
     id: 'ghi789jkl',
-    title: 'Starlet - Interview with MTV',
+    title: 'Rahab Kinity - Interview with MTV',
     category: 'Interview',
     views: '500K',
     duration: '8:45',

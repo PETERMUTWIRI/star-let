@@ -16,14 +16,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Starlet | Official Website",
-    template: "%s | Starlet",
+    default: "Rahab Kinity | Official Website",
+    template: "%s | Rahab Kinity",
   },
-  description: "Starlet - Independent artist creating soulful music that resonates with hearts worldwide. Explore albums, singles, videos, tour dates, and more.",
+  description: "Rahab Kinity - Independent artist creating soulful music that resonates with hearts worldwide. Explore albums, singles, videos, tour dates, and more.",
   keywords: ['music', 'artist', 'pop', 'indie', 'albums', 'singles', 'concerts', 'tour', 'starlet', 'musician', 'singer', 'songwriter'],
-  authors: [{ name: "Starlet" }],
-  creator: "Starlet",
-  publisher: "Starlet",
+  authors: [{ name: "Rahab Kinity" }],
+  creator: "Rahab Kinity",
+  publisher: "Rahab Kinity",
   formatDetection: {
     email: false,
     address: false,
@@ -34,10 +34,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Starlet | Official Website",
+    title: "Rahab Kinity | Official Website",
     description: "Independent artist creating soulful music that resonates with hearts worldwide.",
     url: 'https://starletmusic.com',
-    siteName: "Starlet",
+    siteName: "Rahab Kinity",
     locale: 'en_US',
     type: 'website',
     images: [
@@ -45,13 +45,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Starlet - Official Website',
+        alt: 'Rahab Kinity - Official Website',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Starlet | Official Website",
+    title: "Rahab Kinity | Official Website",
     description: "Independent artist creating soulful music that resonates with hearts worldwide.",
     images: ['/og-image.jpg'],
   },
@@ -75,11 +75,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className={`${inter.className} antialiased bg-slate-950 text-white`}>
+      <body className={`${inter.className} antialiased bg-slate-950 text-white overscroll-none`}>
         <div className="fixed inset-0 bg-gradient-mesh pointer-events-none z-0" />
         <ReadingProgressBar />
         <Navbar />
-        <main className="relative z-10">
+        <main className="relative z-10 pt-20">
           <PageTransition>
             {children}
           </PageTransition>

@@ -185,7 +185,7 @@ export default function HomePage() {
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden glow-mixed">
                   <Image
                     src="/images/about/Rahab.jpeg"
-                    alt="Starlet - Gospel Artist"
+                    alt="Rahab Kinity - Gospel Artist"
                     fill
                     className="object-cover"
                     priority
@@ -224,7 +224,7 @@ export default function HomePage() {
                 
                 <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                   <p>
-                    Through the power of gospel music, <span className="text-amber-400 font-medium">Starlet</span> bridges 
+                    Through the power of gospel music, <span className="text-amber-400 font-medium">Rahab Kinity</span> bridges 
                     cultures and languages—singing in both <span className="text-cyan-400">English</span> and{' '}
                     <span className="text-cyan-400">Swahili</span> to reach hearts across the world.
                   </p>
