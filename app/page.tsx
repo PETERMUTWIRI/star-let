@@ -61,7 +61,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-blue-400 font-medium tracking-[0.3em] uppercase text-sm"
               >
-                Independent Artist • Singer • Songwriter
+                Gospel Artist • Worship Leader • Multilingual (English & Swahili)
               </motion.p>
             </StaggerItem>
 
@@ -71,9 +71,9 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-7xl md:text-9xl font-black tracking-tight"
+                className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight"
               >
-                <span className="text-gradient text-glow">STARLET</span>
+                <span className="text-gradient text-glow">RAHAB KINITY</span>
               </motion.h1>
             </StaggerItem>
 
@@ -85,8 +85,8 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
               >
-                Creating soulful melodies that echo through the night, 
-                <span className="text-purple-400"> touching hearts worldwide</span>
+                Awakening souls through worship in English & Swahili, 
+                <span className="text-purple-400"> spreading faith across continents</span>
               </motion.p>
             </StaggerItem>
 

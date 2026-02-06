@@ -55,7 +55,7 @@ export default function Footer() {
                 <FaMusic className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">
-                STARLET
+                RAHAB KINITY
               </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
