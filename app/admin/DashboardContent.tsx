@@ -46,7 +46,7 @@ interface Registration {
   registrationDate: string;
 }
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json());
 
 export default function DashboardContent() {
   const { data: posts, mutate: mutatePosts } = useSWR<Post[]>('/api/blog', fetcher);
@@ -92,19 +92,19 @@ export default function DashboardContent() {
   if (!posts || !events || !videos || !registrations)
     return (
       <div className="max-w-7xl mx-auto p-8">
-        <div className="h-10 bg-gray-200 rounded mb-8 animate-pulse" />
+        <div className="h-10 bg-slate-700 rounded mb-8 animate-pulse" />
         <div className="grid md:grid-cols-4 gap-6 mb-10">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-24 bg-gray-200 rounded animate-pulse" />
+            <div key={i} className="h-24 bg-slate-700 rounded animate-pulse" />
           ))}
         </div>
         <div className="grid md:grid-cols-2 gap-8">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl shadow p-6 h-64">
-              <div className="h-6 bg-gray-200 rounded mb-4 animate-pulse" />
+            <div key={i} className="bg-slate-800 rounded-2xl shadow p-6 h-64 border border-white/10">
+              <div className="h-6 bg-slate-700 rounded mb-4 animate-pulse" />
               <div className="space-y-3">
                 {[...Array(4)].map((_, j) => (
-                  <div key={j} className="h-12 bg-gray-100 rounded animate-pulse" />
+                  <div key={j} className="h-12 bg-slate-700 rounded animate-pulse" />
                 ))}
               </div>
             </div>
@@ -117,10 +117,10 @@ export default function DashboardContent() {
   return (
     <div className="max-w-7xl mx-auto p-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3">
+        <h1 className="text-3xl font-black text-white flex items-center gap-3">
           <FaMusic className="text-blue-600" /> Rahab Kinity Music Admin
         </h1>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-400">
           {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function DashboardContent() {
           label="Upcoming Events" 
           value={upcomingEvents.length} 
           icon={<FaCalendar />}
-          trend="Next: {upcomingEvents[0]?.title || 'None'}"
+          trend={`Next: ${upcomingEvents[0]?.title || 'None'}`}
           color="blue"
         />
         <QuickStatCard 
@@ -217,9 +217,9 @@ export default function DashboardContent() {
         />
 
         {/* REGISTRATIONS SECTION */}
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-black text-gray-900">Recent Registrations</h2>
+            <h2 className="text-xl font-black text-white">Recent Registrations</h2>
             <Link href="/admin/registrations" className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1">
               <FaTicketAlt /> View All
             </Link>
@@ -230,11 +230,11 @@ export default function DashboardContent() {
                 <div key={r.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition">
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm truncate">{r.attendeeName}</p>
-                    <p className="text-xs text-gray-500">{r.eventName}</p>
+                    <p className="text-xs text-gray-400">{r.eventName}</p>
                   </div>
                   <div className="text-right">
                     <p className={`text-sm font-semibold ${r.status === 'completed' ? 'text-green-600' : 'text-gray-600'}`}>
-                      ${r.amountPaid.toFixed(2)}
+                      ${(r.amountPaid ?? 0).toFixed(2)}
                     </p>
                     <span className={`text-xs px-2 py-0.5 rounded-full ${
                       r.status === 'completed' ? 'bg-green-100 text-green-800' :
@@ -248,7 +248,7 @@ export default function DashboardContent() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">No registrations yet</p>
+              <p className="text-sm text-gray-400">No registrations yet</p>
             )}
           </div>
           <div className="mt-4 pt-4 border-t">
@@ -282,11 +282,11 @@ function MetricCard({ label, value, icon, href, color = 'blue' }: { label: strin
   };
   
   return (
-    <Link href={href} className="group bg-white rounded-2xl shadow p-6 hover:shadow-xl transition">
+    <Link href={href} className="group bg-slate-800 rounded-2xl shadow p-6 hover:shadow-xl transition border border-white/10">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-gray-500">{label}</p>
-          <p className="text-3xl font-black text-gray-900 mt-1">{value}</p>
+          <p className="text-sm text-gray-400">{label}</p>
+          <p className="text-3xl font-black text-white mt-1">{value}</p>
         </div>
         <div className={`text-3xl text-gray-400 transition ${colorClasses[color]}`}>{icon}</div>
       </div>
@@ -303,14 +303,14 @@ function QuickStatCard({ label, value, icon, trend, color = 'blue' }: { label: s
   };
   
   return (
-    <div className="bg-white rounded-2xl shadow p-6">
+    <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
       <div className="flex items-center gap-4">
         <div className={`p-3 rounded-xl ${colorClasses[color]}`}>
           {icon}
         </div>
         <div>
-          <p className="text-sm text-gray-500">{label}</p>
-          <p className="text-2xl font-black text-gray-900">{value}</p>
+          <p className="text-sm text-gray-400">{label}</p>
+          <p className="text-2xl font-black text-white">{value}</p>
           <p className="text-xs text-gray-400 mt-1">{trend}</p>
         </div>
       </div>
@@ -332,9 +332,9 @@ function SectionCard<T>({
   render: (item: T) => React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow p-6">
+    <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-black text-gray-900">{title}</h2>
+        <h2 className="text-xl font-black text-white">{title}</h2>
         <Link href={onNew} className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1">
           <FaPlus /> New
         </Link>
@@ -343,7 +343,7 @@ function SectionCard<T>({
         {items.length ? (
           items.map(render)
         ) : (
-          <p className="text-sm text-gray-500">No items yet</p>
+          <p className="text-sm text-gray-400">No items yet</p>
         )}
       </div>
       <div className="mt-4 border-t pt-4">
@@ -359,7 +359,7 @@ function ItemRow({ id, title, subtitle, cover, editLink, onDelete, status }: { i
       {cover && <img src={cover} alt="" className="w-12 h-12 object-cover rounded" />}
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-sm truncate">{title}</p>
-        <p className="text-xs text-gray-500">{subtitle}</p>
+        <p className="text-xs text-gray-400">{subtitle}</p>
       </div>
       {status && (
         <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">
