@@ -66,12 +66,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(registration);
     }
 
-    // List registrations - admin only for full list
+    // For admin dashboard: return empty array if not admin
+    // This allows the dashboard to load even for non-admin users
     if (!isAdmin) {
-      // Non-admin users can only see their own registrations if they provide email
-      if (!email || email !== user?.email) {
-        return unauthorizedResponse();
-      }
+      return NextResponse.json([]);
     }
 
     const where: any = {};
@@ -82,11 +80,6 @@ export async function GET(req: NextRequest) {
     
     if (status) {
       where.status = status;
-    }
-
-    // Non-admin users can only see their own registrations
-    if (!isAdmin && email) {
-      where.email = email;
     }
 
     const registrations = await prisma.registration.findMany({

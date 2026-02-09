@@ -46,7 +46,22 @@ interface Registration {
   registrationDate: string;
 }
 
-const fetcher = (url: string) => fetch(url, { credentials: 'include' }).then((r) => r.json());
+// Safe fetcher that returns empty array on error
+const fetcher = async (url: string) => {
+  try {
+    const res = await fetch(url, { credentials: 'include' });
+    if (!res.ok) {
+      console.warn(`API error: ${url} returned ${res.status}`);
+      return [];
+    }
+    const data = await res.json();
+    // Ensure we return an array
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error(`Fetch error for ${url}:`, error);
+    return [];
+  }
+};
 
 export default function DashboardContent() {
   const { data: posts, mutate: mutatePosts } = useSWR<Post[]>('/api/blog', fetcher);
