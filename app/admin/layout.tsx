@@ -16,7 +16,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     // auto-redirect to sign-in if no session
     authClient.getSession().then((s) => {
       if (!s) {
-        router.replace('/admin/sign-in');
+        router.replace('/auth/sign-in');
       }
       setIsLoading(false);
     });
@@ -50,7 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <button
             onClick={async () => {
               await authClient.signOut();
-              window.location.href = '/admin/sign-in';
+              window.location.href = '/auth/sign-in';
             }}
             className="flex items-center gap-2 px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg transition-colors text-sm font-semibold"
           >
