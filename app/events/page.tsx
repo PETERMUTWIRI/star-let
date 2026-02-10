@@ -1,21 +1,36 @@
 import EventsClient from './EventsClient';
+import { prisma } from '@/lib/prisma';
 
-// Server component to fetch events
+// Force dynamic rendering to get fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+// Server component to fetch events directly from DB
 async function getEvents() {
   try {
-    // Use absolute URL for server-side fetch
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/events`, {
-      // Revalidate every 60 seconds (ISR)
-      next: { revalidate: 60 },
+    const events = await prisma.event.findMany({
+      where: { deletedAt: null },
+      orderBy: { startDate: 'asc' },
+      include: {
+        registrations: {
+          where: {
+            status: { in: ['pending', 'completed'] },
+          },
+          select: {
+            id: true,
+            status: true,
+          },
+        },
+      },
     });
-    
-    if (!res.ok) {
-      console.error('Failed to fetch events:', res.status);
-      return [];
-    }
-    
-    return res.json();
+
+    // Add computed fields
+    return events.map((e) => ({
+      ...e,
+      registrationCount: e.registrations.length,
+      spotsLeft: e.maxAttendees ? e.maxAttendees - e.registrations.length : null,
+      isSoldOut: e.maxAttendees ? e.registrations.length >= e.maxAttendees : false,
+    }));
   } catch (error) {
     console.error('Error fetching events:', error);
     return [];
@@ -24,6 +39,6 @@ async function getEvents() {
 
 export default async function EventsPage() {
   const events = await getEvents();
-  
+
   return <EventsClient initialEvents={events} />;
 }
