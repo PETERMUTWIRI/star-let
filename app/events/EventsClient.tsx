@@ -206,7 +206,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                       {event.isFree 
                                         ? 'Free Entry' 
                                         : event.ticketPrice 
-                                          ? `$${event.ticketPrice}`
+                                          ? event.ticketPrice
                                           : 'Tickets Available'
                                       }
                                     </span>
