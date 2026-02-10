@@ -73,7 +73,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
   };
 
   const isSoldOut = (event: Event) => {
-    return event.isSoldOut || (event.spotsLeft !== null && event.spotsLeft <= 0);
+    return event.isSoldOut || (event.spotsLeft !== null && event.spotsLeft !== undefined && event.spotsLeft <= 0);
   };
 
   return (
