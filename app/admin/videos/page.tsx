@@ -180,13 +180,13 @@ function VideoEditor() {
             {/* title */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Video Title *</label>
-              <input name="title" value={form.title} onChange={handleChange} placeholder="e.g., Summer Vibes Official Music Video" className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500" disabled={isLoading} />
+              <input name="title" value={form.title} onChange={handleChange} placeholder="e.g., Summer Vibes Official Music Video" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" disabled={isLoading} />
             </div>
 
             {/* YouTube ID */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2"><FaYoutube className="inline mr-1 text-red-600" /> YouTube Video ID *</label>
-              <input name="youtubeId" value={form.youtubeId} onChange={handleChange} placeholder="e.g., dQw4w9WgXcQ" className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500" disabled={isLoading} maxLength={11} />
+              <input name="youtubeId" value={form.youtubeId} onChange={handleChange} placeholder="e.g., dQw4w9WgXcQ" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" disabled={isLoading} maxLength={11} />
               <p className="text-xs text-gray-500 mt-1">The 11-character ID from the YouTube URL (e.g., youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>)</p>
               
               {/* YouTube Preview */}
@@ -211,7 +211,7 @@ function VideoEditor() {
             {/* category */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
-              <select name="category" value={form.category} onChange={handleChange} className="w-full px-4 py-3 border rounded-lg" disabled={isLoading}>
+              <select name="category" value={form.category} onChange={handleChange} className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading}>
                 <option value="Music Video">Music Video</option>
                 <option value="Live Performance">Live Performance</option>
                 <option value="Behind the Scenes">Behind the Scenes</option>
@@ -223,7 +223,7 @@ function VideoEditor() {
             {/* order */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Display Order</label>
-              <input type="number" name="order" value={form.order} onChange={handleChange} placeholder="0" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+              <input type="number" name="order" value={form.order} onChange={handleChange} placeholder="0" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
               <p className="text-xs text-gray-500 mt-1">Lower numbers appear first. Videos are sorted by order, then by date added.</p>
             </div>
 
@@ -257,7 +257,7 @@ function VideoEditor() {
             {/* description */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-              <textarea name="description" value={form.description} onChange={handleChange} placeholder="Video description..." className="w-full px-4 py-3 border rounded-lg h-40" disabled={isLoading} />
+              <textarea name="description" value={form.description} onChange={handleChange} placeholder="Video description..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-40" disabled={isLoading} />
             </div>
 
             {/* save btn */}
@@ -279,13 +279,13 @@ function VideoEditor() {
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Meta Title (60 chars max)</label>
-              <input name="metaTitle" value={form.metaTitle} onChange={handleChange} placeholder="SEO title for search results..." className="w-full px-4 py-3 border rounded-lg" maxLength={60} />
+              <input name="metaTitle" value={form.metaTitle} onChange={handleChange} placeholder="SEO title for search results..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" maxLength={60} />
               <div className="flex justify-between mt-1"><span className="text-xs text-gray-500">{form.metaTitle.length}/60</span><span className="text-xs text-gray-500">Recommended: 50-60 characters</span></div>
             </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Meta Description (160 chars max)</label>
-              <textarea name="metaDesc" value={form.metaDesc} onChange={handleChange} placeholder="Brief description for search results..." className="w-full px-4 py-3 border rounded-lg h-24" maxLength={160} />
+              <textarea name="metaDesc" value={form.metaDesc} onChange={handleChange} placeholder="Brief description for search results..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-24" maxLength={160} />
               <div className="flex justify-between mt-1"><span className="text-xs text-gray-500">{form.metaDesc.length}/160</span><span className="text-xs text-gray-500">Recommended: 150-160 characters</span></div>
             </div>
 

@@ -246,7 +246,7 @@ function BlogEditor() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Title *</label>
               <input
-                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter post title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -258,7 +258,7 @@ function BlogEditor() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Author</label>
               <input
-                className="w-full px-4 py-3 border rounded-lg"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900"
                 placeholder="e.g., John Doe, Communications Team"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
@@ -270,7 +270,7 @@ function BlogEditor() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Category *</label>
               <select
-                className="w-full px-4 py-3 border rounded-lg"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 disabled={isLoading}
@@ -312,7 +312,7 @@ function BlogEditor() {
                 Excerpt (Auto-generated from content, or customize)
               </label>
               <textarea
-                className="w-full px-4 py-3 border rounded-lg h-24"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-24"
                 placeholder="Brief summary for blog cards..."
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
@@ -344,7 +344,7 @@ function BlogEditor() {
                 </label>
                 <input
                   type="datetime-local"
-                  className="px-4 py-3 border rounded-lg"
+                  className="px-4 py-3 border rounded-lg bg-white text-gray-900"
                   value={publishedAt}
                   onChange={(e) => setPublishedAt(e.target.value)}
                 />
@@ -365,7 +365,7 @@ function BlogEditor() {
                 Meta Title (60 chars max)
               </label>
               <input
-                className="w-full px-4 py-3 border rounded-lg"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900"
                 placeholder="SEO title for search results..."
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
@@ -383,7 +383,7 @@ function BlogEditor() {
                 Meta Description (160 chars max)
               </label>
               <textarea
-                className="w-full px-4 py-3 border rounded-lg h-24"
+                className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-24"
                 placeholder="Brief description for search results..."
                 value={metaDesc}
                 onChange={(e) => setMetaDesc(e.target.value)}

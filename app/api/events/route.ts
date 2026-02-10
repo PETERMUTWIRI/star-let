@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
       raw.maxAttendees = Number(raw.maxAttendees);
     }
 
-    if (raw.ticketPriceCents === null || raw.ticketPriceCents === '') {
+    if (raw.ticketPriceCents === null || raw.ticketPriceCents === '' || raw.ticketPriceCents === undefined) {
       delete raw.ticketPriceCents;
     } else {
       raw.ticketPriceCents = Number(raw.ticketPriceCents);
@@ -256,9 +256,9 @@ export async function PUT(req: NextRequest) {
       raw.maxAttendees = Number(raw.maxAttendees);
     }
 
-    if (raw.ticketPriceCents === null || raw.ticketPriceCents === '') {
+    if (raw.ticketPriceCents === null || raw.ticketPriceCents === '' || raw.ticketPriceCents === undefined) {
       delete raw.ticketPriceCents;
-    } else if (raw.ticketPriceCents !== undefined) {
+    } else {
       raw.ticketPriceCents = Number(raw.ticketPriceCents);
     }
 

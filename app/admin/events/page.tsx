@@ -38,6 +38,7 @@ function EventEditor() {
     maxAttendees: '',
     isFree: true,
     ticketPrice: '',
+    ticketPriceCents: '',
     gallery: [] as string[], // NEW
   });
 
@@ -55,8 +56,13 @@ function EventEditor() {
       setIsLoading(true);
       const res = await fetch(`/api/events?id=${id}`);
       const ev = await res.json();
-      // cast maxAttendees to string for input field
-      setForm({ ...ev, gallery: ev.gallery || [], maxAttendees: ev.maxAttendees?.toString() ?? '' });
+      // cast maxAttendees and ticketPriceCents to string for input fields
+      setForm({ 
+        ...ev, 
+        gallery: ev.gallery || [], 
+        maxAttendees: ev.maxAttendees?.toString() ?? '',
+        ticketPriceCents: ev.ticketPriceCents?.toString() ?? '',
+      });
     } catch (e) {
       console.error(e);
       alert('Failed to load event');
@@ -118,11 +124,12 @@ function EventEditor() {
       const method = editId ? 'PUT' : 'POST';
       const url = editId ? `/api/events?id=${editId}` : '/api/events';
 
-      /* ---- cast maxAttendees before send ---- */
+      /* ---- cast maxAttendees & ticketPriceCents before send ---- */
       const payload = {
         ...form,
         maxAttendees: form.maxAttendees ? Number(form.maxAttendees) : null,
-        ticketPrice: form.isFree ? undefined : form.ticketPrice, 
+        ticketPrice: form.isFree ? undefined : form.ticketPrice,
+        ticketPriceCents: form.isFree ? undefined : (form.ticketPriceCents ? Number(form.ticketPriceCents) : undefined),
       };
 
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -175,19 +182,19 @@ function EventEditor() {
             {/* title */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Event Title</label>
-              <input name="title" value={form.title} onChange={handleChange} placeholder="e.g., Community Health Fair" className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500" disabled={isLoading} />
+              <input name="title" value={form.title} onChange={handleChange} placeholder="e.g., Community Health Fair" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500" disabled={isLoading} />
             </div>
 
             {/* author / organiser */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Organiser</label>
-              <input name="author" value={form.author} onChange={handleChange} placeholder="New International Hope Team" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+              <input name="author" value={form.author} onChange={handleChange} placeholder="New International Hope Team" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
             </div>
 
             {/* category */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-              <select name="category" value={form.category} onChange={handleChange} className="w-full px-4 py-3 border rounded-lg" disabled={isLoading}>
+              <select name="category" value={form.category} onChange={handleChange} className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading}>
                 <option value="Upcoming">Upcoming</option>
                 <option value="Past">Past Event</option>
               </select>
@@ -197,22 +204,22 @@ function EventEditor() {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2"><FaClock className="inline mr-1" /> Start Date</label>
-                <input name="startDate" value={form.startDate} onChange={handleChange} placeholder="2026-06-20T09:00" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+                <input name="startDate" value={form.startDate} onChange={handleChange} placeholder="2026-06-20T09:00" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
                 <p className="text-xs text-gray-500 mt-1">Format: YYYY-MM-DDTHH:MM</p>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2"><FaClock className="inline mr-1" /> End Date (optional)</label>
-                <input name="endDate" value={form.endDate} onChange={handleChange} placeholder="2026-06-20T16:00" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+                <input name="endDate" value={form.endDate} onChange={handleChange} placeholder="2026-06-20T16:00" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
               </div>
             </div>
 
             {/* location / venue / address */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2"><FaMapMarkerAlt className="inline mr-1" /> Location</label>
-              <input name="location" value={form.location} onChange={handleChange} placeholder="Downtown Community Center" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+              <input name="location" value={form.location} onChange={handleChange} placeholder="Downtown Community Center" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
             </div>
-            <input name="venue" value={form.venue} onChange={handleChange} placeholder="Grand Ballroom" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
-            <textarea name="address" value={form.address} onChange={handleChange} placeholder="123 Main St, City, State 12345" className="w-full px-4 py-3 border rounded-lg h-24" disabled={isLoading} />
+            <input name="venue" value={form.venue} onChange={handleChange} placeholder="Grand Ballroom" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
+            <textarea name="address" value={form.address} onChange={handleChange} placeholder="123 Main St, City, State 12345" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-24" disabled={isLoading} />
 
             {/* tickets */}
             <div className="bg-gray-50 p-4 rounded-lg">
@@ -221,14 +228,38 @@ function EventEditor() {
                 <input type="checkbox" name="isFree" checked={form.isFree} onChange={handleChange} className="w-4 h-4 text-blue-600" disabled={isLoading} />
                 <span>Free Event</span>
               </label>
-              {!form.isFree && <input name="ticketPrice" value={form.ticketPrice} onChange={handleChange} placeholder="$25.00" className="w-full px-4 py-3 border rounded-lg mb-4" disabled={isLoading} />}
-              <input type="number" name="maxAttendees" value={form.maxAttendees} onChange={handleChange} placeholder="Max attendees (optional)" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+              {!form.isFree && (
+                <>
+                  <div className="mb-4">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Ticket Price ($)</label>
+                    <input 
+                      type="number" 
+                      name="ticketPriceCents" 
+                      value={form.ticketPriceCents} 
+                      onChange={(e) => {
+                        const cents = e.target.value;
+                        setForm(p => ({ 
+                          ...p, 
+                          ticketPriceCents: cents,
+                          ticketPrice: cents ? `$${(Number(cents) / 100).toFixed(2)}` : ''
+                        }));
+                      }} 
+                      placeholder="2500 (=$25.00)" 
+                      className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" 
+                      disabled={isLoading} 
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Enter amount in cents (e.g., 2500 = $25.00)</p>
+                    {form.ticketPrice && <p className="text-sm text-green-600 mt-1">Price: {form.ticketPrice}</p>}
+                  </div>
+                </>
+              )}
+              <input type="number" name="maxAttendees" value={form.maxAttendees} onChange={handleChange} placeholder="Max attendees (optional)" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
             </div>
 
             {/* registration */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Registration</label>
-              <input name="registrationLink" value={form.registrationLink} onChange={handleChange} placeholder="https://... or newinternationalhope@gmail.com" className="w-full px-4 py-3 border rounded-lg" disabled={isLoading} />
+              <input name="registrationLink" value={form.registrationLink} onChange={handleChange} placeholder="https://... or newinternationalhope@gmail.com" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
             </div>
 
             {/* COVER IMAGE */}
@@ -263,7 +294,7 @@ function EventEditor() {
             {/* description */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-              <textarea name="description" value={form.description} onChange={handleChange} placeholder="Event description..." className="w-full px-4 py-3 border rounded-lg h-40" disabled={isLoading} />
+              <textarea name="description" value={form.description} onChange={handleChange} placeholder="Event description..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-40" disabled={isLoading} />
             </div>
 
             {/* save btn */}
@@ -284,13 +315,13 @@ function EventEditor() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Meta Title (60 chars max)</label>
-            <input name="metaTitle" value={form.metaTitle} onChange={handleChange} placeholder="SEO title for search results..." className="w-full px-4 py-3 border rounded-lg" maxLength={60} />
+            <input name="metaTitle" value={form.metaTitle} onChange={handleChange} placeholder="SEO title for search results..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" maxLength={60} />
             <div className="flex justify-between mt-1"><span className="text-xs text-gray-500">{form.metaTitle.length}/60</span><span className="text-xs text-gray-500">Recommended: 50-60 characters</span></div>
           </div>
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Meta Description (160 chars max)</label>
-            <textarea name="metaDesc" value={form.metaDesc} onChange={handleChange} placeholder="Brief description for search results..." className="w-full px-4 py-3 border rounded-lg h-24" maxLength={160} />
+            <textarea name="metaDesc" value={form.metaDesc} onChange={handleChange} placeholder="Brief description for search results..." className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900 h-24" maxLength={160} />
             <div className="flex justify-between mt-1"><span className="text-xs text-gray-500">{form.metaDesc.length}/160</span><span className="text-xs text-gray-500">Recommended: 150-160 characters</span></div>
           </div>
 
