@@ -8,7 +8,7 @@ export const revalidate = 0;
 async function getVideos() {
   try {
     const videos = await prisma.video.findMany({
-      where: { deletedAt: null, published: true },
+      where: { published: true },
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     });
     
