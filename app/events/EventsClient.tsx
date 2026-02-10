@@ -94,19 +94,19 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-400 text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                Live Experiences
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-amber-400 text-sm font-medium mb-6">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                Live Performances
               </span>
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tight">
-                Upcoming{' '}
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-                  Events
+                Experience{' '}
+                <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-green-600 bg-clip-text text-transparent">
+                  The Energy
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                Join Rahab Kinity for unforgettable nights of worship, inspiration, and live performances. 
-                Secure your spot today.
+                From intimate worship nights to high-energy cultural celebrations—join Rahab for an 
+                unforgettable blend of Kenyan heritage, soul-stirring music, and stories of hope.
               </p>
             </motion.div>
           </ScrollReveal>
@@ -114,9 +114,9 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mt-12">
             {[
-              { value: filteredEvents.length, label: 'Events' },
-              { value: filteredEvents.filter(e => e.isFree).length, label: 'Free' },
-              { value: filteredEvents.filter(e => !e.isFree).length, label: 'Ticketed' },
+              { value: filteredEvents.length, label: 'Upcoming Shows' },
+              { value: 'USA', label: 'Touring' },
+              { value: 'Kenya', label: 'Rooted In' },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -522,28 +522,29 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-600/10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-green-600/10" />
               <div className="absolute inset-0 backdrop-blur-xl bg-slate-900/50" />
               <div className="absolute inset-0 rounded-3xl border border-white/10" />
               
               <div className="relative z-10 text-center">
                 <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
-                  Never Miss an Event
+                  Be Part of the Journey
                 </h2>
                 <p className="text-slate-400 mb-8 max-w-lg mx-auto">
-                  Get notified when new events are announced and be the first to secure your tickets.
+                  From New Haven to nationwide tours—get first access to performances that celebrate 
+                  resilience, heritage, and the power of music.
                 </p>
                 <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="flex-1 px-6 py-4 rounded-full bg-white/5 border border-white/20 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                    className="flex-1 px-6 py-4 rounded-full bg-white/5 border border-white/20 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                   />
                   <button
                     type="submit"
-                    className="px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
+                    className="px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 to-green-600 text-white font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
                   >
-                    Subscribe
+                    Stay Connected
                   </button>
                 </form>
               </div>

@@ -12,7 +12,7 @@ async function getVideos() {
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     });
     
-    // Convert Date to string and nulls to undefined
+    // Convert nulls to undefined and dates to strings
     return videos.map((v) => ({
       id: String(v.id),
       title: v.title,

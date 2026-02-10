@@ -61,7 +61,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="text-blue-400 font-medium tracking-[0.3em] uppercase text-sm"
               >
-                Gospel Artist • Singer • Songwriter
+                Kenyan Singer • Songwriter • Performer
               </motion.p>
             </StaggerItem>
 
@@ -85,8 +85,8 @@ export default function HomePage() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
               >
-                Awakening souls through worship in English & Swahili, 
-                <span className="text-purple-400"> spreading faith across continents</span>
+                From Kenya to America—bringing unity, hope & healing through 
+                <span className="text-purple-400">high-energy performances that move the soul</span>
               </motion.p>
             </StaggerItem>
 
@@ -209,43 +209,43 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Content - Soul Awakening Message */}
+              {/* Content - Her Story */}
               <div className="space-y-6">
                 <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  🙏 Gospel • Multilingual • Soul-Stirring
+                  🌍 Kenyan Heritage • Gospel Roots • Cancer Survivor
                 </span>
                 
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                  <span className="text-gradient">Awaken Your Spirit</span>
+                  <span className="text-gradient">A Journey of Resilience</span>
                   <span className="block text-2xl md:text-3xl text-amber-400 mt-2 font-light italic">
-                    "Imani Yangu" / My Faith
+                    From Refugee to Radiant Voice
                   </span>
                 </h2>
                 
                 <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                   <p>
-                    Through the power of gospel music, <span className="text-amber-400 font-medium">Rahab Kinity</span> bridges 
-                    cultures and languages—singing in both <span className="text-cyan-400">English</span> and{' '}
-                    <span className="text-cyan-400">Swahili</span> to reach hearts across the world.
+                    <span className="text-amber-400 font-medium">Rahab Kinity</span> brings the vibrant spirit of Kenya to American stages, 
+                    weaving traditional <span className="text-cyan-400">Maasai culture</span> into powerful performances that dance between 
+                    gospel roots and contemporary sound.
                   </p>
                   
                   <p className="border-l-4 border-amber-500/50 pl-4 italic text-slate-400">
-                    "My music is not just entertainment—it is a calling to heal, uplift, and awaken 
-                    the divine spirit within every listener. From the villages of Kenya to the cities 
-                    of America, we are all united by faith."
+                    "Every beat is a testimony. Every song is a bridge—from where I came from to where faith has brought me. 
+                    I don't just sing; I share the story of survival, of hope, of a little girl who dared to dream beyond the refugee camp."
                   </p>
                   
                   <p>
-                    Whether you understand every word or simply feel the melody, her voice carries 
-                    a message of <span className="text-purple-400">hope</span>,{' '}
-                    <span className="text-purple-400">love</span>, and{' '}
-                    <span className="text-purple-400">spiritual transformation</span>.
+                    A <span className="text-purple-400">cancer survivor</span> with an unbreakable spirit, Rahab creates original music 
+                    about <span className="text-purple-400">unity</span>,{' '}
+                    <span className="text-purple-400">community</span>, and{' '}
+                    <span className="text-purple-400">healing</span>. Whether performing with traditional Maasai attire 
+                    or pouring her heart out in worship, her energy is contagious—and her message is universal.
                   </p>
                 </div>
                 
-                {/* Language Tags */}
+                {/* Heritage Tags */}
                 <div className="flex flex-wrap gap-2 pt-2">
-                  {['English', 'Swahili', 'Gospel', 'Worship', 'Inspirational'].map((tag) => (
+                  {['Kenyan Roots', 'Maasai Heritage', 'Gospel', 'Live Performance', 'Cancer Survivor', 'Refugee Story'].map((tag) => (
                     <span 
                       key={tag}
                       className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-slate-400 border border-white/10"
