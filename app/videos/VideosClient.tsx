@@ -9,10 +9,10 @@ import ScrollReveal from '@/components/ScrollReveal';
 interface Video {
   id: string;
   title: string;
-  description: string | null;
+  description?: string;
   youtubeId: string;
   category: string;
-  thumbnail: string | null;
+  thumbnail?: string;
   published: boolean;
   order: number;
   createdAt: string;
@@ -22,7 +22,7 @@ interface VideosClientProps {
   initialVideos: Video[];
 }
 
-const categories = ['All', 'Music Video', 'Live Performance', 'Behind the Scenes'];
+const categories = ['All', 'Music Video', 'Live Performance', 'Behind the Scenes', 'Interview', 'Lyric Video'];
 
 export default function VideosClient({ initialVideos }: VideosClientProps) {
   const [activeCategory, setActiveCategory] = useState('All');

@@ -3,7 +3,7 @@
 
 import useSWR from 'swr';
 import Link from 'next/link';
-import { FaEdit, FaTrash, FaPlus, FaCalendar, FaFileAlt, FaPen, FaVideo, FaTicketAlt, FaMusic, FaDollarSign } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaPlus, FaCalendar, FaFileAlt, FaPen, FaVideo, FaTicketAlt, FaMusic, FaDollarSign, FaCompactDisc } from 'react-icons/fa';
 
 /* ---------- types ---------- */
 interface Post {
@@ -25,6 +25,17 @@ interface Event {
 }
 
 interface Video {
+  id: number;
+  title: string;
+  category: string;
+  youtubeId: string;
+  thumbnail?: string;
+  published: boolean;
+  order: number;
+  createdAt: string;
+}
+
+interface Music {
   id: number;
   title: string;
   category: string;
@@ -67,6 +78,7 @@ export default function DashboardContent() {
   const { data: posts, mutate: mutatePosts } = useSWR<Post[]>('/api/blog', fetcher);
   const { data: events, mutate: mutateEvents } = useSWR<Event[]>('/api/events', fetcher);
   const { data: videos, mutate: mutateVideos } = useSWR<Video[]>('/api/videos', fetcher);
+  const { data: music, mutate: mutateMusic } = useSWR<Music[]>('/api/music', fetcher);
   const { data: registrations } = useSWR<Registration[]>('/api/registrations', fetcher);
 
   const deletePost = async (id: number) => {
@@ -87,6 +99,12 @@ export default function DashboardContent() {
     mutateVideos(videos?.filter((v) => v.id !== id) ?? [], false);
   };
 
+  const deleteMusic = async (id: number) => {
+    if (!confirm('Delete this music entry?')) return;
+    await fetch(`/api/music?id=${id}`, { method: 'DELETE' });
+    mutateMusic(music?.filter((m) => m.id !== id) ?? [], false);
+  };
+
   /* ---------- computed stats ---------- */
   const totalRevenue = registrations
     ?.filter(r => r.status === 'completed')
@@ -99,12 +117,15 @@ export default function DashboardContent() {
   const recentVideos = videos
     ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
 
+  const recentMusic = music
+    ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
+
   const recentRegistrations = registrations
     ?.sort((a, b) => new Date(b.registrationDate).getTime() - new Date(a.registrationDate).getTime())
     .slice(0, 5) || [];
 
   /* ---------- skeleton while loading ---------- */
-  if (!posts || !events || !videos || !registrations)
+  if (!posts || !events || !videos || !music || !registrations)
     return (
       <div className="max-w-7xl mx-auto p-8">
         <div className="h-10 bg-slate-700 rounded mb-8 animate-pulse" />
@@ -146,6 +167,7 @@ export default function DashboardContent() {
         <MetricCard label="Events" value={events.length} icon={<FaCalendar />} href="/admin/events" color="green" />
         <MetricCard label="Videos" value={videos.length} icon={<FaVideo />} href="/admin/videos" color="purple" />
         <MetricCard label="Registrations" value={registrations.length} icon={<FaTicketAlt />} href="/admin/registrations" color="orange" />
+        <MetricCard label="Music" value={music.length} icon={<FaCompactDisc />} href="/admin/music" color="red" />
       </div>
 
       {/* Quick Stats Row */}
@@ -170,6 +192,13 @@ export default function DashboardContent() {
           icon={<FaVideo />}
           trend={`${videos.filter(v => !v.published).length} drafts`}
           color="purple"
+        />
+        <QuickStatCard 
+          label="Music Tracks" 
+          value={music.filter(m => m.published).length} 
+          icon={<FaMusic />}
+          trend={`${music.filter(m => !m.published).length} drafts`}
+          color="red"
         />
       </div>
 
@@ -231,6 +260,25 @@ export default function DashboardContent() {
           )}
         />
 
+        {/* MUSIC SECTION */}
+        <SectionCard
+          title="Recent Music"
+          href="/admin/music"
+          onNew="/admin/music"
+          items={recentMusic.slice(0, 5)}
+          render={(m) => (
+            <ItemRow
+              id={m.id}
+              title={m.title}
+              subtitle={`${m.category} • Order: ${m.order}`}
+              cover={m.thumbnail}
+              editLink={`/admin/music?id=${m.id}`}
+              onDelete={() => deleteMusic(m.id)}
+              status={m.published ? undefined : 'Draft'}
+            />
+          )}
+        />
+
         {/* REGISTRATIONS SECTION */}
         <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
           <div className="flex items-center justify-between mb-4">
@@ -280,6 +328,7 @@ export default function DashboardContent() {
           <QuickActionButton href="/admin/events" icon={<FaCalendar />} label="New Event" />
           <QuickActionButton href="/admin/videos" icon={<FaVideo />} label="Add Video" />
           <QuickActionButton href="/admin/registrations" icon={<FaTicketAlt />} label="View Registrations" />
+          <QuickActionButton href="/admin/music" icon={<FaMusic />} label="Add Music" />
         </div>
       </div>
     </div>

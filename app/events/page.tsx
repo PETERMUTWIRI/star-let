@@ -24,9 +24,25 @@ async function getEvents() {
       },
     });
 
-    // Add computed fields
+    // Add computed fields and convert nulls to undefined
     return events.map((e) => ({
-      ...e,
+      id: e.id,
+      title: e.title,
+      slug: e.slug,
+      description: e.description ?? undefined,
+      category: e.category,
+      cover: e.cover ?? undefined,
+      location: e.location,
+      startDate: e.startDate.toISOString(),
+      endDate: e.endDate?.toISOString(),
+      venue: e.venue ?? undefined,
+      address: e.address ?? undefined,
+      registrationLink: e.registrationLink ?? undefined,
+      maxAttendees: e.maxAttendees ?? undefined,
+      isFree: e.isFree ?? true,
+      ticketPrice: e.ticketPrice ?? undefined,
+      ticketPriceCents: e.ticketPriceCents ?? undefined,
+      gallery: e.gallery as string[] | undefined,
       registrationCount: e.registrations.length,
       spotsLeft: e.maxAttendees ? e.maxAttendees - e.registrations.length : null,
       isSoldOut: e.maxAttendees ? e.registrations.length >= e.maxAttendees : false,
