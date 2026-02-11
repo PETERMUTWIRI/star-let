@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  FaMusic, 
   FaBars, 
   FaXmark,
   FaInstagram,
@@ -62,12 +62,15 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
-                <FaMusic className="w-5 h-5 text-white" />
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
+                <Image
+                  src="/rahab_kinity_logo.png"
+                  alt="Rahab Kinity"
+                  fill
+                  className="object-contain"
+                  priority
+                />
               </div>
-              <span className="text-xl font-bold text-white tracking-tight">
-                RAHAB KINITY
-              </span>
             </Link>
 
             {/* Desktop Navigation */}

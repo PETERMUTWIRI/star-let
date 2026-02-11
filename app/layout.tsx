@@ -33,6 +33,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/rahab_kinity_logo.png',
+    shortcut: '/rahab_kinity_logo.png',
+    apple: '/rahab_kinity_logo.png',
+  },
   openGraph: {
     title: "Rahab Kinity | Official Website",
     description: "Independent artist creating soulful music that resonates with hearts worldwide.",

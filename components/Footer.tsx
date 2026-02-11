@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   FaSpotify, 
   FaApple, 
@@ -8,7 +9,6 @@ import {
   FaInstagram, 
   FaTwitter,
   FaTiktok,
-  FaMusic,
   FaArrowUp
 } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
@@ -51,12 +51,14 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 group mb-6">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
-                <FaMusic className="w-5 h-5 text-white" />
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
+                <Image
+                  src="/rahab_kinity_logo.png"
+                  alt="Rahab Kinity"
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <span className="text-xl font-bold text-white tracking-tight">
-                RAHAB KINITY
-              </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Creating soulful music that resonates with hearts worldwide. 
