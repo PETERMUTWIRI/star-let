@@ -24,7 +24,7 @@ const footerLinks = {
     { label: 'Events', href: '/events' },
     { label: 'About', href: '/about' },
     { label: 'Blog', href: '/blog' },
-    { label: 'Contact', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ],
 };
 

@@ -8,21 +8,18 @@ import {
   FaYoutube, 
   FaInstagram, 
   FaTwitter,
-  FaMusic,
   FaMicrophone,
   FaChurch,
   FaGlobeAfrica,
   FaHeart,
-  FaHands,
   FaQuoteLeft,
   FaStar,
-  FaCross,
   FaRibbon,
   FaUsers,
   FaFlag
 } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import HomepageBookingSection from '../HomepageBookingSection';
 
 const heritageElements = [
   { name: 'Kenyan Roots', icon: FaFlag },
@@ -386,70 +383,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Contact/Booking Section */}
-      <section className="relative py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <div className="relative rounded-3xl p-12 overflow-hidden">
-              {/* Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 via-green-600/20 to-amber-600/20" />
-              <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xl" />
-              
-              {/* Animated Border */}
-              <div className="absolute inset-0 rounded-3xl p-[1px] bg-gradient-to-r from-amber-500 via-green-500 to-amber-500 animate-gradient" style={{ backgroundSize: '200% 100%' }} />
-
-              <div className="relative z-10 text-center">
-                <h2 className="text-4xl font-bold mb-4">
-                  Bring the <span className="text-gradient">Experience</span> to Your Event
-                </h2>
-                <p className="text-slate-400 mb-12 max-w-xl mx-auto">
-                  Whether it's a community celebration, corporate event, or spiritual gathering—
-                  Rahab brings energy, inspiration, and an unforgettable performance.
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                  <a 
-                    href="mailto:booking@rahabkinity.com"
-                    className="flex items-center gap-4 p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/50 hover:bg-amber-500/5 transition-all group"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
-                      <MdEmail className="w-6 h-6 text-amber-400" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-sm text-slate-500">Booking</p>
-                      <p className="text-white font-medium">booking@rahabkinity.com</p>
-                    </div>
-                  </a>
-
-                  <a 
-                    href="mailto:press@rahabkinity.com"
-                    className="flex items-center gap-4 p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-green-500/50 hover:bg-green-500/5 transition-all group"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
-                      <MdEmail className="w-6 h-6 text-green-400" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-sm text-slate-500">Press</p>
-                      <p className="text-white font-medium">press@rahabkinity.com</p>
-                    </div>
-                  </a>
-                </div>
-
-                <div className="mt-12 pt-8 border-t border-white/10">
-                  <p className="text-slate-500 mb-4">Available For</p>
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {['Community Events', 'Worship Services', 'Cultural Celebrations', 'Corporate Functions', 'Fundraisers'].map((type) => (
-                      <span key={type} className="px-4 py-2 rounded-full bg-white/5 text-slate-300 text-sm border border-white/10">
-                        {type}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* Booking Section - Same as Homepage */}
+      <HomepageBookingSection />
     </div>
   );
 }
