@@ -1,28 +1,27 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import ScrollReveal, { StaggerContainer, StaggerItem, ScaleIn } from '@/components/ScrollReveal';
-import { StatCard } from '@/components/AnimatedCounter';
-import { GradientText } from '@/components/TextScramble';
-import { Equalizer } from '@/components/MusicVisualizer';
-import { GlowButton } from '@/components/MagneticButton';
+import { prisma } from '@/lib/prisma';
 import { 
   FaSpotify, 
   FaApple, 
   FaYoutube, 
   FaInstagram, 
-  FaTwitter, 
+  FaTwitter,
   FaTiktok,
   FaPlay,
   FaHeadphones,
   FaCalendar,
   FaArrowRight,
   FaMusic,
-  FaUsers,
-  FaCompactDisc
 } from 'react-icons/fa';
+import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import { GradientText } from '@/components/TextScramble';
+import { Equalizer } from '@/components/MusicVisualizer';
+import { GlowButton } from '@/components/MagneticButton';
+import { motion } from 'framer-motion';
+import HomepageEventsSection from './HomepageEventsSection';
+import HomepageBlogSection from './HomepageBlogSection';
+import HomepageBookingSection from './HomepageBookingSection';
 
 // Animated floating orbs component
 const FloatingOrbs = () => (
@@ -33,7 +32,91 @@ const FloatingOrbs = () => (
   </>
 );
 
-export default function HomePage() {
+// Server-side data fetching
+async function getUpcomingEvents() {
+  try {
+    const now = new Date();
+    const events = await prisma.event.findMany({
+      where: { 
+        deletedAt: null,
+        startDate: { gte: now }
+      },
+      orderBy: { startDate: 'asc' },
+      take: 1,
+      include: {
+        registrations: {
+          where: {
+            status: { in: ['pending', 'completed'] },
+          },
+          select: {
+            id: true,
+            status: true,
+          },
+        },
+      },
+    });
+
+    return events.map((e) => ({
+      id: e.id,
+      title: e.title,
+      slug: e.slug,
+      description: e.description ?? undefined,
+      category: e.category,
+      cover: e.cover ?? undefined,
+      location: e.location,
+      startDate: e.startDate.toISOString(),
+      endDate: e.endDate?.toISOString(),
+      venue: e.venue ?? undefined,
+      address: e.address ?? undefined,
+      registrationLink: e.registrationLink ?? undefined,
+      maxAttendees: e.maxAttendees ?? undefined,
+      isFree: e.isFree ?? true,
+      ticketPrice: e.ticketPrice ?? undefined,
+      ticketPriceCents: e.ticketPriceCents ?? undefined,
+      registrationCount: e.registrations.length,
+      spotsLeft: e.maxAttendees ? e.maxAttendees - e.registrations.length : null,
+      isSoldOut: e.maxAttendees ? e.registrations.length >= e.maxAttendees : false,
+    }));
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    return [];
+  }
+}
+
+async function getLatestBlogPost() {
+  try {
+    const post = await prisma.post.findFirst({
+      where: {
+        published: true,
+        deletedAt: null,
+        publishedAt: { not: null, lte: new Date() },
+      },
+      orderBy: { publishedAt: 'desc' },
+    });
+
+    if (!post) return null;
+
+    return {
+      id: post.id,
+      title: post.title,
+      content: post.content,
+      excerpt: post.excerpt || post.content.slice(0, 200).replace(/<[^>]*>/g, ''),
+      cover: post.cover,
+      category: post.category,
+      author: post.author,
+      publishedAt: post.publishedAt!.toISOString(),
+      slug: post.slug,
+    };
+  } catch (error) {
+    console.error('Error fetching blog post:', error);
+    return null;
+  }
+}
+
+export default async function HomePage() {
+  const upcomingEvents = await getUpcomingEvents();
+  const latestBlogPost = await getLatestBlogPost();
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Background Effects */}
@@ -175,7 +258,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest Release Section - Soul Awakening */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-32 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -203,7 +286,7 @@ export default function HomePage() {
                   {/* Quote Overlay */}
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <p className="text-white/90 text-sm italic font-light">
-                      "Music that transcends boundaries, touching souls in every language"
+                      &ldquo;Music that transcends boundaries, touching souls in every language&rdquo;
                     </p>
                   </div>
                 </div>
@@ -230,8 +313,8 @@ export default function HomePage() {
                   </p>
                   
                   <p className="border-l-4 border-amber-500/50 pl-4 italic text-slate-400">
-                    "Every beat is a testimony. Every song is a bridge—from where I came from to where faith has brought me. 
-                    I don't just sing; I share the story of survival, of hope, of a little girl who dared to dream beyond the refugee camp."
+                    &ldquo;Every beat is a testimony. Every song is a bridge—from where I came from to where faith has brought me. 
+                    I don&apos;t just sing; I share the story of survival, of hope, of a little girl who dared to dream beyond the refugee camp.&rdquo;
                   </p>
                   
                   <p>
@@ -286,109 +369,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="relative py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <GradientText>By The Numbers</GradientText>
-            </h2>
-            <p className="text-slate-400">Our journey in music so far</p>
-          </ScrollReveal>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatCard
-              icon={FaHeadphones}
-              value={50}
-              label="Million Streams"
-              suffix="M+"
-            />
-            <StatCard
-              icon={FaCompactDisc}
-              value={3}
-              label="Albums Released"
-            />
-            <StatCard
-              icon={FaCalendar}
-              value={156}
-              label="Shows Performed"
-              suffix="+"
-            />
-            <StatCard
-              icon={FaUsers}
-              value={1.2}
-              decimals={1}
-              label="Million Followers"
-              suffix="M+"
-            />
-          </div>
-        </div>
-      </section>
+      {/* Next Performance / Events Section */}
+      <HomepageEventsSection upcomingEvents={upcomingEvents} />
 
-      {/* Upcoming Shows Preview */}
-      <section className="relative py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-4">
-                On Tour
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Upcoming <span className="text-gradient">Shows</span>
-              </h2>
-              <p className="text-slate-400 max-w-2xl mx-auto">
-                Experience the music live. Get your tickets now before they sell out.
-              </p>
-            </div>
-          </ScrollReveal>
+      {/* Blog Section */}
+      <HomepageBlogSection latestPost={latestBlogPost} />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { date: 'MAR 15', venue: 'The Fillmore', city: 'San Francisco, CA', status: 'On Sale' },
-              { date: 'MAR 22', venue: 'The Troubadour', city: 'Los Angeles, CA', status: 'Selling Fast' },
-              { date: 'APR 05', venue: 'The Sinclair', city: 'Boston, MA', status: 'On Sale' },
-            ].map((show, index) => (
-              <ScrollReveal key={show.date} delay={index * 0.1}>
-                <div className="card-premium group cursor-pointer">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <span className="text-3xl font-bold text-gradient">{show.date}</span>
-                      <span className="block text-sm text-slate-400">2024</span>
-                    </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      show.status === 'Selling Fast' 
-                        ? 'bg-orange-500/20 text-orange-300 border border-orange-500/30'
-                        : 'bg-green-500/20 text-green-300 border border-green-500/30'
-                    }`}>
-                      {show.status}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-1 group-hover:text-blue-400 transition-colors">
-                    {show.venue}
-                  </h3>
-                  <p className="text-slate-400 mb-4">{show.city}</p>
-                  <Link 
-                    href="/events" 
-                    className="inline-flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors"
-                  >
-                    Get Tickets
-                    <FaArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/events" className="btn-secondary">
-              View All Shows
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Booking Section */}
+      <HomepageBookingSection />
 
       {/* Newsletter CTA */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-32 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="relative rounded-3xl p-12 overflow-hidden">
@@ -436,7 +427,7 @@ export default function HomePage() {
       </section>
 
       {/* Social Links */}
-      <section className="relative py-16 px-6 border-t border-white/5">
+      <section className="relative py-16 px-4 sm:px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <p className="text-slate-400">Follow the journey</p>
