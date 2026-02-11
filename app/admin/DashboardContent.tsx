@@ -163,11 +163,11 @@ export default function DashboardContent() {
 
       {/* KPI CARDS */}
       <div className="grid md:grid-cols-4 gap-6 mb-10">
-        <MetricCard label="Blog Posts" value={posts.length} icon={<FaPen />} href="/admin/blog" color="blue" />
-        <MetricCard label="Events" value={events.length} icon={<FaCalendar />} href="/admin/events" color="green" />
-        <MetricCard label="Videos" value={videos.length} icon={<FaVideo />} href="/admin/videos" color="purple" />
+        <MetricCard label="Blog Posts" value={posts.length} icon={<FaPen />} href="/admin/blog/list" color="blue" />
+        <MetricCard label="Events" value={events.length} icon={<FaCalendar />} href="/admin/events/list" color="green" />
+        <MetricCard label="Videos" value={videos.length} icon={<FaVideo />} href="/admin/videos/list" color="purple" />
         <MetricCard label="Registrations" value={registrations.length} icon={<FaTicketAlt />} href="/admin/registrations" color="orange" />
-        <MetricCard label="Music" value={music.length} icon={<FaCompactDisc />} href="/admin/music" color="red" />
+        <MetricCard label="Music" value={music.length} icon={<FaCompactDisc />} href="/admin/music/list" color="red" />
       </div>
 
       {/* Quick Stats Row */}

@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <NeonAuthUIProvider
-      authClient={authClient}
+      authClient={authClient as any}
       emailOTP
       redirectTo="/admin/blog"
     >

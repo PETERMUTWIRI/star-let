@@ -1,9 +1,9 @@
-// app/admin/blog/page.tsx - ENTERPRISE ADMIN EDITOR
+// app/admin/blog/page.tsx - ENTERPRISE ADMIN EDITOR WITH IMAGE UPLOAD
 'use client';
 
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { FaSave, FaArrowLeft, FaEye, FaEyeSlash, FaImage } from 'react-icons/fa';
+import { FaSave, FaArrowLeft, FaEye, FaEyeSlash, FaImage, FaPlus, FaTrash } from 'react-icons/fa';
 import Link from 'next/link';
 
 // Wrapper with Suspense for useSearchParams
@@ -22,6 +22,7 @@ function BlogEditor() {
   const [category, setCategory] = useState('News');
   const [cover, setCover] = useState('');
   const [excerpt, setExcerpt] = useState('');
+  const [inlineImages, setInlineImages] = useState<string[]>([]);
   
   // SEO & Meta fields (NEW)
   const [author, setAuthor] = useState('');
@@ -87,6 +88,7 @@ function BlogEditor() {
       setOgImage(post.ogImage || '');
       setPublished(post.published);
       setPublishedAt(post.publishedAt ? new Date(post.publishedAt).toISOString().slice(0, 16) : '');
+      setInlineImages(post.inlineImages || []);
     } catch (error) {
       console.error('Failed to load post:', error);
       alert('Failed to load post');
@@ -117,6 +119,45 @@ function BlogEditor() {
     }
   }, [excerpt]);
 
+  // Image upload handler for CKEditor
+  const handleEditorImageUpload = useCallback(async (loader: any) => {
+    return new Promise((resolve, reject) => {
+      loader.file.then(async (file: File) => {
+        try {
+          const body = new FormData();
+          body.append('file', file);
+          
+          const res = await fetch('/api/upload', { method: 'POST', body });
+          const data = await res.json();
+          
+          if (data.url) {
+            setInlineImages(prev => [...prev, data.url]);
+            resolve({ default: data.url });
+          } else {
+            reject('Upload failed');
+          }
+        } catch (error) {
+          console.error('Image upload error:', error);
+          reject('Upload failed');
+        }
+      });
+    });
+  }, []);
+
+  // Custom CKEditor adapter
+  function uploadAdapter(loader: any) {
+    return {
+      upload: () => handleEditorImageUpload(loader),
+      abort: () => {}
+    };
+  }
+
+  function uploadPlugin(editor: any) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader: any) => {
+      return uploadAdapter(loader);
+    };
+  }
+
   // Add to your admin editor save function
   const savePost = async (asDraft = false) => {
     if (!title || !content) return alert('Title & content required');
@@ -138,6 +179,7 @@ function BlogEditor() {
         ogImage: ogImage || undefined,
         published: asDraft ? false : published,
         publishedAt: asDraft ? null : (publishedAt ? new Date(publishedAt).toISOString() : new Date().toISOString()),
+        inlineImages,
       };
 
       const res = await fetch(url, {
@@ -151,7 +193,7 @@ function BlogEditor() {
         throw new Error(error.error || 'Failed to save post');
       }
 
-      // ❌ FIXED: Auto-revalidate blog after publishing
+      // Auto-revalidate blog after publishing
       if (!asDraft && published) {
         await fetch('/api/revalidate', {
           method: 'POST',
@@ -188,6 +230,41 @@ function BlogEditor() {
     } catch (error) {
       alert('Failed to upload image');
     }
+  };
+
+  // Upload multiple inline images
+  const uploadInlineImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    
+    setIsLoading(true);
+    const urls: string[] = [];
+    
+    for (const file of Array.from(files)) {
+      const body = new FormData();
+      body.append('file', file);
+      
+      try {
+        const res = await fetch('/api/upload', { method: 'POST', body });
+        const data = await res.json();
+        if (data.url) urls.push(data.url);
+      } catch (error) {
+        console.error('Upload error:', error);
+      }
+    }
+    
+    setInlineImages(prev => [...prev, ...urls]);
+    setIsLoading(false);
+  };
+
+  // Insert image into content
+  const insertImageIntoContent = (imageUrl: string) => {
+    const imgTag = `<figure class="image"><img src="${imageUrl}" alt="Blog image" class="rounded-xl shadow-lg max-w-full h-auto" /></figure><p></p>`;
+    setContent(prev => prev + imgTag);
+  };
+
+  const removeInlineImage = (index: number) => {
+    setInlineImages(prev => prev.filter((_, i) => i !== index));
   };
 
   if (!EditorComponent || !ClassicEditor) {
@@ -321,6 +398,54 @@ function BlogEditor() {
               <span className="text-xs text-gray-500">{excerpt.length}/500</span>
             </div>
 
+            {/* Inline Images Manager */}
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <label className="block text-sm font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                <FaImage /> Inline Images for Content
+              </label>
+              <p className="text-sm text-blue-700 mb-4">
+                Upload images here, then click to insert them into your blog post. You can also drag and drop or paste images directly into the editor.
+              </p>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={uploadInlineImages}
+                  disabled={isLoading}
+                  className="flex-1"
+                />
+              </div>
+
+              {/* Uploaded Images */}
+              {inlineImages.length > 0 && (
+                <div className="grid grid-cols-4 gap-2">
+                  {inlineImages.map((url, i) => (
+                    <div key={i} className="relative group">
+                      <img src={url} alt="" className="h-20 w-full object-cover rounded" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1">
+                        <button
+                          onClick={() => insertImageIntoContent(url)}
+                          className="bg-blue-500 text-white p-1 rounded text-xs"
+                          title="Insert into content"
+                        >
+                          <FaPlus />
+                        </button>
+                        <button
+                          onClick={() => removeInlineImage(i)}
+                          className="bg-red-500 text-white p-1 rounded text-xs"
+                          title="Remove"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Rich Text Editor */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Content *</label>
@@ -331,9 +456,40 @@ function BlogEditor() {
                   onChange={handleEditorChange}
                   config={{
                     placeholder: 'Write your story here...',
+                    extraPlugins: [uploadPlugin],
+                    toolbar: [
+                      'heading',
+                      '|',
+                      'bold',
+                      'italic',
+                      'link',
+                      'bulletedList',
+                      'numberedList',
+                      '|',
+                      'imageUpload',
+                      'blockQuote',
+                      'insertTable',
+                      '|',
+                      'undo',
+                      'redo'
+                    ],
+                    image: {
+                      toolbar: [
+                        'imageTextAlternative',
+                        '|',
+                        'imageStyle:full',
+                        'imageStyle:side'
+                      ]
+                    },
+                    simpleUpload: {
+                      uploadUrl: '/api/upload',
+                    }
                   }}
                 />
               </div>
+              <p className="text-xs text-gray-500 mt-2">
+                Tip: You can drag & drop images directly into the editor, or use the image button to upload.
+              </p>
             </div>
 
             {/* Schedule Publish */}

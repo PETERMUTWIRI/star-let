@@ -10,7 +10,7 @@ import { FaMusic, FaArrowLeft } from 'react-icons/fa';
 export default function SignUpPage() {
   return (
     <NeonAuthUIProvider
-      authClient={authClient}
+      authClient={authClient as any}
       emailOTP
       redirectTo="/admin"
     >
