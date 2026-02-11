@@ -62,7 +62,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
+              <div className="relative w-20 h-20 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
                 <Image
                   src="/rahab_kinity_logo.png"
                   alt="Rahab Kinity"

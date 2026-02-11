@@ -51,7 +51,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 group mb-6">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
+              <div className="relative w-20 h-20 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
                 <Image
                   src="/rahab_kinity_logo.png"
                   alt="Rahab Kinity"
