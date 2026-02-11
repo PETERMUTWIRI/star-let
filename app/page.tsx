@@ -109,7 +109,7 @@ export default async function HomePage() {
       <HomepageHero />
 
       {/* Latest Release Section - Soul Awakening */}
-      <section className="relative py-32 px-4 sm:px-6">
+      <section className="relative py-16 sm:py-24 lg:py-32 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -145,10 +145,6 @@ export default async function HomePage() {
 
               {/* Content - Her Story */}
               <div className="space-y-6">
-                <span className="inline-block px-4 py-1 rounded-full text-sm font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  🌍 Kenyan Heritage • Gospel Roots • Cancer Survivor
-                </span>
-                
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight">
                   <span className="text-gradient">A Journey of Resilience</span>
                   <span className="block text-2xl md:text-3xl text-amber-400 mt-2 font-light italic">

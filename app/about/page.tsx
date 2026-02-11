@@ -9,25 +9,14 @@ import {
   FaInstagram, 
   FaTwitter,
   FaMicrophone,
-  FaChurch,
-  FaGlobeAfrica,
   FaHeart,
   FaQuoteLeft,
   FaStar,
   FaRibbon,
-  FaUsers,
   FaFlag
 } from 'react-icons/fa';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
 import HomepageBookingSection from '../HomepageBookingSection';
-
-const heritageElements = [
-  { name: 'Kenyan Roots', icon: FaFlag },
-  { name: 'Maasai Culture', icon: FaGlobeAfrica },
-  { name: 'Gospel Foundation', icon: FaChurch },
-  { name: 'Live Performance', icon: FaMicrophone },
-  { name: 'Community', icon: FaUsers },
-];
 
 const journeyMilestones = [
   {
@@ -194,38 +183,6 @@ export default function AboutPage() {
                 </div>
               </ScrollReveal>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Heritage Section */}
-      <section className="relative py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">
-                Cultural <span className="text-gradient">Heritage</span>
-              </h2>
-              <p className="text-slate-400 max-w-2xl mx-auto">
-                The elements that define Rahab's unique performance style
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            {heritageElements.map((item, index) => (
-              <ScrollReveal key={item.name} delay={index * 0.1}>
-                <motion.div 
-                  className="card-premium text-center group cursor-default"
-                  whileHover={{ y: -8 }}
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-green-600/20 flex items-center justify-center mx-auto mb-4 group-hover:from-amber-500/30 group-hover:to-green-600/30 transition-all">
-                    <item.icon className="w-8 h-8 text-amber-400" />
-                  </div>
-                  <h3 className="font-semibold text-white">{item.name}</h3>
-                </motion.div>
-              </ScrollReveal>
-            ))}
           </div>
         </div>
       </section>

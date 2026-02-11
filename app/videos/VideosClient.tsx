@@ -76,7 +76,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-16 sm:pt-20">
           <StaggerContainer className="space-y-8">
             <StaggerItem>
               <motion.span
@@ -185,7 +185,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
 
       {/* Featured Video Section */}
       {featuredVideo && (
-        <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <section className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <ScrollReveal>
               <div className="flex items-center gap-3 mb-8">
@@ -369,7 +369,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-center py-24"
+                  className="text-center py-16 sm:py-20"
                 >
                   <div className="text-8xl mb-6">🎬</div>
                   <h3 className="text-2xl font-bold text-white mb-3">
@@ -445,7 +445,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
       </AnimatePresence>
 
       {/* Subscribe CTA */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <ScrollReveal>
             <div className="relative rounded-3xl p-8 sm:p-12 overflow-hidden">

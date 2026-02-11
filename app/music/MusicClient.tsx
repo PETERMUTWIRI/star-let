@@ -50,7 +50,7 @@ export default function MusicClient({ music }: MusicClientProps) {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6">
+      <section className="relative pt-16 sm:pt-20 lg:pt-24 pb-10 sm:pb-14 lg:pb-18 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
             <div className="text-center">
@@ -198,7 +198,7 @@ export default function MusicClient({ music }: MusicClientProps) {
               ))}
             </StaggerContainer>
           ) : (
-            <div className="text-center py-20">
+            <div className="text-center py-12 sm:py-16">
               <div className="text-6xl mb-4">🎵</div>
               <h3 className="text-xl font-semibold text-white mb-2">No music found</h3>
               <p className="text-slate-400">Check back soon for new releases!</p>

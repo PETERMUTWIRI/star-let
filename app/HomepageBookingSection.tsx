@@ -92,20 +92,6 @@ export default function HomepageBookingSection() {
           </ScrollReveal>
         </div>
 
-        {/* Book Now Button - Prominent */}
-        <ScrollReveal>
-          <div className="text-center mb-12">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 px-12 py-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-lg font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
-            >
-              <FaCalendarAlt className="w-6 h-6" />
-              Book Now
-              <FaArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </ScrollReveal>
-
         {/* CTA */}
         <ScrollReveal>
           <div className="relative max-w-3xl mx-auto">
@@ -118,22 +104,14 @@ export default function HomepageBookingSection() {
                 Whether it&apos;s a concert, worship service, or corporate event—let&apos;s make it unforgettable. 
                 Reach out to discuss your event needs.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
-                >
-                  <FaEnvelope className="w-5 h-5" />
-                  Contact for Booking
-                  <FaArrowRight className="w-4 h-4" />
-                </Link>
-                <a
-                  href="mailto:booking@rahabkinity.com"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all"
-                >
-                  booking@rahabkinity.com
-                </a>
-              </div>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-3 px-12 py-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-lg font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
+              >
+                <FaCalendarAlt className="w-6 h-6" />
+                Book Now
+                <FaArrowRight className="w-5 h-5" />
+              </Link>
             </div>
           </div>
         </ScrollReveal>
