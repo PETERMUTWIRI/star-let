@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { 
   FaCalendarCheck,
   FaEnvelope,
-  FaArrowRight
+  FaArrowRight,
+  FaCalendarAlt
 } from 'react-icons/fa';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -90,6 +91,20 @@ export default function HomepageBookingSection() {
             </div>
           </ScrollReveal>
         </div>
+
+        {/* Book Now Button - Prominent */}
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-3 px-12 py-5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-lg font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
+            >
+              <FaCalendarAlt className="w-6 h-6" />
+              Book Now
+              <FaArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </ScrollReveal>
 
         {/* CTA */}
         <ScrollReveal>
