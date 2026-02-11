@@ -21,9 +21,9 @@ export default function HomepageHero() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 pt-20 sm:pt-0">
+      <section className="relative min-h-[85vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 pt-16 sm:pt-20 lg:pt-0">
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          <StaggerContainer className="space-y-6">
+          <StaggerContainer className="space-y-4 sm:space-y-6">
             {/* Pre-title */}
             <StaggerItem>
               <motion.p 
@@ -42,7 +42,7 @@ export default function HomepageHero() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter"
               >
                 <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-purple-600 bg-clip-text text-transparent">
                   RAHAB KINITY
@@ -56,7 +56,7 @@ export default function HomepageHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="text-xl md:text-2xl lg:text-3xl text-white font-light tracking-wide"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white font-light tracking-wide"
               >
                 Heritage. Healing. Hope.
               </motion.p>
@@ -68,7 +68,7 @@ export default function HomepageHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed"
+                className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-2 sm:px-0"
               >
                 Crafting performances that move the soul and transcend boundaries.
               </motion.p>

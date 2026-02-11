@@ -58,7 +58,7 @@ export default function HomepageEventsSection({ upcomingEvents }: HomepageEvents
 
   if (!latestEvent) {
     return (
-      <section className="relative py-24 px-4 sm:px-6">
+      <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-amber-400 text-sm font-medium mb-6">
@@ -85,7 +85,7 @@ export default function HomepageEventsSection({ upcomingEvents }: HomepageEvents
   }
 
   return (
-    <section className="relative py-24 px-4 sm:px-6">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         <ScrollReveal className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-amber-400 text-sm font-medium mb-6">

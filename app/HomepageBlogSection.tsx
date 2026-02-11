@@ -45,7 +45,7 @@ export default function HomepageBlogSection({ latestPost }: HomepageBlogSectionP
 
   if (!latestPost) {
     return (
-      <section className="relative py-24 px-4 sm:px-6 bg-slate-900/30">
+      <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-slate-900/30">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium mb-6">
@@ -65,7 +65,7 @@ export default function HomepageBlogSection({ latestPost }: HomepageBlogSectionP
   }
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 bg-slate-900/30">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-slate-900/30">
       <div className="max-w-7xl mx-auto">
         <ScrollReveal className="text-center mb-12">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium mb-6">

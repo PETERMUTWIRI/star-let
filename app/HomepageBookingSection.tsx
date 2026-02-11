@@ -39,7 +39,7 @@ const services = [
 
 export default function HomepageBookingSection() {
   return (
-    <section className="relative py-24 px-4 sm:px-6">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         <ScrollReveal className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-400 text-sm font-medium mb-6">
