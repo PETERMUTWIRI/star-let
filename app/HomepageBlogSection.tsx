@@ -79,29 +79,29 @@ export default function HomepageBlogSection({ latestPost }: HomepageBlogSectionP
 
         <ScrollReveal>
           <motion.div
-            className="relative group max-w-4xl mx-auto"
-            whileHover={{ scale: 1.01 }}
+            className="relative group"
+            whileHover={{ scale: 1.005 }}
             transition={{ duration: 0.3 }}
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
             <div className="relative bg-slate-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10">
-              <div className="grid md:grid-cols-2">
+              <div className="grid lg:grid-cols-2">
                 {/* Image Side */}
-                <div className="relative aspect-[4/3] md:aspect-auto md:h-full min-h-[300px]">
+                <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[300px]">
                   {latestPost.cover ? (
                     <Image
                       src={latestPost.cover}
                       alt={latestPost.title}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center">
                       <span className="text-8xl">✍️</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:bg-gradient-to-r" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent lg:bg-gradient-to-r" />
                   
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
@@ -122,7 +122,7 @@ export default function HomepageBlogSection({ latestPost }: HomepageBlogSectionP
                 </div>
 
                 {/* Content Side */}
-                <div className="p-8 lg:p-10 flex flex-col justify-center">
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
                   {/* Meta Info */}
                   <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-slate-400">
                     <span className="flex items-center gap-2">
@@ -140,12 +140,12 @@ export default function HomepageBlogSection({ latestPost }: HomepageBlogSectionP
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl lg:text-3xl font-black text-white mb-4 leading-tight">
+                  <h3 className="text-2xl lg:text-4xl font-black text-white mb-4 leading-tight">
                     {latestPost.title}
                   </h3>
 
                   {/* Excerpt */}
-                  <p className="text-slate-400 leading-relaxed mb-6 line-clamp-4">
+                  <p className="text-slate-400 leading-relaxed mb-6 line-clamp-4 lg:text-lg">
                     {latestPost.excerpt}
                   </p>
 

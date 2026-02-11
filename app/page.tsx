@@ -9,9 +9,7 @@ import {
   FaTwitter,
   FaTiktok,
   FaPlay,
-  FaCalendar,
   FaArrowRight,
-  FaMusic,
 } from 'react-icons/fa';
 import ScrollReveal from '@/components/ScrollReveal';
 import { GradientText } from '@/components/TextScramble';
@@ -228,82 +226,8 @@ export default async function HomePage() {
       {/* Blog Section */}
       <HomepageBlogSection latestPost={latestBlogPost} />
 
-      {/* Booking Section */}
+      {/* Booking Section - Last Section */}
       <HomepageBookingSection />
-
-      {/* Newsletter CTA */}
-      <section className="relative py-32 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <div className="relative rounded-3xl p-12 overflow-hidden">
-              {/* Background Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-blue-600/20" />
-              <div className="absolute inset-0 bg-slate-950/50 backdrop-blur-xl" />
-              
-              {/* Gradient Border */}
-              <div className="absolute inset-0 rounded-3xl border border-gradient p-[1px]" 
-                style={{
-                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(168, 85, 247, 0.5))',
-                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                  WebkitMaskComposite: 'xor',
-                  maskComposite: 'exclude',
-                }}
-              />
-
-              <div className="relative z-10 text-center">
-                <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                  Stay in the <span className="text-gradient">Loop</span>
-                </h2>
-                <p className="text-slate-400 mb-8 max-w-xl mx-auto">
-                  Get exclusive access to new releases, behind-the-scenes content, 
-                  and early ticket announcements.
-                </p>
-
-                <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="flex-1 px-6 py-4 rounded-full bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 transition-colors"
-                  />
-                  <button type="submit" className="btn-primary whitespace-nowrap">
-                    Subscribe
-                  </button>
-                </form>
-
-                <p className="text-xs text-slate-500 mt-4">
-                  No spam, ever. Unsubscribe anytime.
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* Social Links */}
-      <section className="relative py-16 px-4 sm:px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <p className="text-slate-400">Follow the journey</p>
-            <div className="flex items-center gap-6">
-              {[
-                { icon: FaInstagram, href: '#', label: 'Instagram' },
-                { icon: FaTwitter, href: '#', label: 'Twitter' },
-                { icon: FaTiktok, href: '#', label: 'TikTok' },
-                { icon: FaYoutube, href: '#', label: 'YouTube' },
-              ].map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all"
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

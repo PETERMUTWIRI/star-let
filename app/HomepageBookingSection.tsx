@@ -2,47 +2,35 @@
 
 import { motion } from 'framer-motion';
 import { 
-  FaMicrophone, 
-  FaChurch, 
-  FaUsers, 
-  FaBuilding, 
-  FaHeart,
-  FaStar,
   FaCalendarCheck,
   FaEnvelope,
   FaArrowRight
 } from 'react-icons/fa';
 import Link from 'next/link';
-import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const services = [
   {
-    icon: FaMicrophone,
     title: 'Live Performances',
     description: 'High-energy concerts and live shows featuring original music and traditional Kenyan elements.',
   },
   {
-    icon: FaChurch,
     title: 'Worship Services',
     description: 'Soul-stirring gospel performances for churches, conferences, and spiritual gatherings.',
   },
   {
-    icon: FaUsers,
     title: 'Community Events',
     description: 'Cultural celebrations, fundraisers, and community-building events with authentic Maasai heritage.',
   },
   {
-    icon: FaBuilding,
     title: 'Corporate Functions',
     description: 'Professional entertainment for corporate events, galas, and private celebrations.',
   },
   {
-    icon: FaHeart,
     title: 'Healing & Hope Events',
     description: 'Inspirational speaking and performances focused on resilience, cancer survival, and overcoming adversity.',
   },
   {
-    icon: FaStar,
     title: 'Cultural Education',
     description: 'Interactive workshops and presentations sharing Kenyan culture, traditions, and storytelling.',
   },
@@ -65,26 +53,43 @@ export default function HomepageBookingSection() {
           </p>
         </ScrollReveal>
 
-        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {services.map((service, index) => (
-            <StaggerItem key={service.title}>
-              <motion.div
-                className="relative group h-full"
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl opacity-0 group-hover:opacity-50 transition duration-500 blur" />
-                <div className="relative h-full p-6 rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-white/10 hover:border-amber-500/30 transition-all">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center mb-4 group-hover:from-amber-500/30 group-hover:to-orange-500/30 transition-all">
-                    <service.icon className="w-7 h-7 text-amber-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{service.description}</p>
-                </div>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {/* Main Content - Services Left, Video Right */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+          {/* Services List - Left Side */}
+          <ScrollReveal>
+            <div className="space-y-4">
+              {services.map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="group p-5 rounded-xl bg-slate-900/40 border border-white/5 hover:border-amber-500/30 hover:bg-slate-900/60 transition-all"
+                >
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          {/* YouTube Video - Right Side */}
+          <ScrollReveal>
+            <div className="relative h-full min-h-[350px] lg:min-h-full rounded-2xl overflow-hidden border border-white/10">
+              <iframe
+                src="https://www.youtube.com/embed/UApoQM5A7vI?autoplay=1&mute=1&loop=1&playlist=UApoQM5A7vI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+                title="Rahab Kinity Performance"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+          </ScrollReveal>
+        </div>
 
         {/* CTA */}
         <ScrollReveal>
