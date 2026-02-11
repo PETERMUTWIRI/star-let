@@ -241,17 +241,55 @@ function VideoEditor() {
             {/* THUMBNAIL */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <label className="block text-sm font-semibold text-gray-700 mb-2"><FaImage className="inline mr-1" /> Thumbnail</label>
-              <p className="text-xs text-gray-500 mb-3">Auto-generated from YouTube, or upload a custom thumbnail.</p>
-              
-              <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'thumbnail')} disabled={isLoading || uploadLoading} />
-              {uploadLoading && <span className="text-blue-600 text-sm ml-2">Uploading...</span>}
               
               {form.thumbnail && (
-                <div className="mt-3 relative inline-block">
-                  <img src={form.thumbnail} alt="Thumbnail" className="h-32 rounded shadow object-cover aspect-video" />
-                  <button onClick={() => setForm(p => ({ ...p, thumbnail: '' }))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600">×</button>
+                <div className="mb-4 relative inline-block">
+                  <img src={form.thumbnail} alt="Thumbnail" className="h-40 rounded-lg shadow-lg object-cover aspect-video" />
+                  <button 
+                    onClick={() => {
+                      if (form.youtubeId) {
+                        // Reset to YouTube auto-generated thumbnail
+                        setForm(p => ({ ...p, thumbnail: `https://img.youtube.com/vi/${form.youtubeId}/maxresdefault.jpg` }));
+                      } else {
+                        setForm(p => ({ ...p, thumbnail: '' }));
+                      }
+                    }} 
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm hover:bg-red-600 shadow-md"
+                    title="Remove custom thumbnail"
+                  >×</button>
                 </div>
               )}
+              
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <label className="flex-1 cursor-pointer">
+                    <div className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors">
+                      <FaImage className="text-gray-400" />
+                      <span className="text-sm text-gray-600">Upload Custom Thumbnail</span>
+                    </div>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={(e) => handleImageUpload(e, 'thumbnail')} 
+                      disabled={isLoading || uploadLoading}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                
+                {uploadLoading && (
+                  <div className="flex items-center gap-2 text-blue-600 text-sm">
+                    <span className="animate-spin">⟳</span>
+                    Uploading...
+                  </div>
+                )}
+                
+                <p className="text-xs text-gray-500">
+                  {form.thumbnail?.includes('img.youtube.com') 
+                    ? 'Currently using auto-generated YouTube thumbnail. Upload a custom image to override it.' 
+                    : 'Using custom uploaded thumbnail.'}
+                </p>
+              </div>
             </div>
 
             {/* description */}
