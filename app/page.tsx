@@ -50,7 +50,7 @@ export default function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6">
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 pt-20 sm:pt-0">
         <div className="relative z-10 max-w-7xl mx-auto text-center">
           <StaggerContainer className="space-y-8">
             {/* Pre-title */}

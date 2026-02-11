@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendarAlt, FaUser, FaArrowRight, FaClock, FaTag, FaShare, FaBookmark, FaChevronLeft, FaChevronRight, FaSearch } from 'react-icons/fa';
+import { FaCalendarAlt, FaUser, FaArrowRight, FaClock, FaTag, FaShare, FaBookmark, FaSearch, FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
 
@@ -26,12 +26,17 @@ const categories = ['All', 'News', 'Impact Story', 'Event Recap', 'Advocacy', 'O
 
 export default function BlogClient({ initialPosts }: BlogClientProps) {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [imgErr, setImgErr] = useState<Set<number>>(new Set());
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const allPostsRef = useRef<HTMLDivElement>(null);
+
+  // Get the latest post as the featured one
+  const latestPost = initialPosts[0];
+  const remainingPosts = initialPosts.slice(1);
 
   const filteredPosts = useMemo(() => {
-    let posts = initialPosts;
+    let posts = remainingPosts;
     
     if (activeCategory !== 'All') {
       posts = posts.filter(p => p.category === activeCategory);
@@ -47,10 +52,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     }
     
     return posts;
-  }, [initialPosts, activeCategory, searchQuery]);
-
-  const featuredPost = filteredPosts[0];
-  const otherPosts = filteredPosts.slice(1);
+  }, [remainingPosts, activeCategory, searchQuery]);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -77,6 +79,17 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     setImgErr(prev => new Set(prev).add(postId));
   };
 
+  const scrollToAllPosts = () => {
+    setShowAllPosts(true);
+    setTimeout(() => {
+      allPostsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
+  // Scroll to content on mobile
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [showContent, setShowContent] = useState(false);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Subtle Background Gradient */}
@@ -85,8 +98,8 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-400/5 rounded-full blur-[120px]" />
       </div>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - UNCHANGED */}
+      <section className="relative pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center">
             <motion.div
@@ -132,16 +145,215 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="relative sticky top-0 z-40 bg-slate-50/95 backdrop-blur-xl border-b border-slate-200 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
-            <div className="flex flex-wrap justify-center gap-2">
+      {/* Featured Post Section - Split View Layout */}
+      {latestPost && (
+        <section className="relative py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <ScrollReveal>
+              {/* Section Label */}
+              <div className="flex items-center gap-3 mb-8">
+                <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-bold">
+                  Latest Story
+                </span>
+                <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent" />
+              </div>
+
+              {/* Split View Container */}
+              <div className="grid lg:grid-cols-2 gap-0 bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-2xl shadow-slate-200/50 min-h-[70vh]">
+                
+                {/* LEFT SIDE - Cover Photo & Excerpt (Sticky on Desktop) */}
+                <div className="relative lg:sticky lg:top-0 lg:h-screen lg:max-h-[800px]">
+                  {/* Cover Image */}
+                  <div className="relative h-64 lg:h-1/2 lg:min-h-[400px]">
+                    {latestPost.cover && !imgErr.has(latestPost.id) ? (
+                      <Image
+                        src={latestPost.cover}
+                        alt={latestPost.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        onError={() => handleImageError(latestPost.id)}
+                        priority
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                        <span className="text-8xl">✍️</span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-6 left-6">
+                      <span className="px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-sm font-bold shadow-lg">
+                        {latestPost.category}
+                      </span>
+                    </div>
+
+                    {/* Date Badge */}
+                    <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg text-center">
+                      <div className="text-3xl font-black text-slate-900">
+                        {formatDate(latestPost.publishedAt).day}
+                      </div>
+                      <div className="text-sm font-bold text-blue-600 uppercase">
+                        {formatDate(latestPost.publishedAt).month}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Excerpt & Meta Section */}
+                  <div className="p-8 lg:p-10 lg:h-1/2 lg:flex lg:flex-col lg:justify-center bg-slate-50/50">
+                    {/* Meta Info */}
+                    <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-2">
+                        <FaUser className="text-blue-500" />
+                        {latestPost.author || 'Staff Writer'}
+                      </span>
+                      <span className="flex items-center gap-2">
+                        <FaClock className="text-blue-500" />
+                        {getReadingTime(latestPost.content)} min read
+                      </span>
+                      <span className="flex items-center gap-2">
+                        <FaCalendarAlt className="text-blue-500" />
+                        {formatDate(latestPost.publishedAt).fullDate}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h2 className="text-2xl lg:text-3xl font-black text-slate-900 mb-4 leading-tight">
+                      {latestPost.title}
+                    </h2>
+
+                    {/* Excerpt */}
+                    <p className="text-slate-600 leading-relaxed mb-6">
+                      {latestPost.excerpt}
+                    </p>
+
+                    {/* Mobile: Scroll to Content Button */}
+                    <button
+                      onClick={() => setShowContent(true)}
+                      className="lg:hidden inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg shadow-blue-500/25"
+                    >
+                      Read Full Story
+                      <FaArrowRight />
+                    </button>
+
+                    {/* Desktop: Scroll indicator */}
+                    <div className="hidden lg:flex items-center gap-2 text-slate-400 text-sm">
+                      <span>Scroll right side to read</span>
+                      <FaArrowRight className="text-blue-500" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* RIGHT SIDE - Scrollable Content */}
+                <div 
+                  ref={contentRef}
+                  className={`p-8 lg:p-12 lg:overflow-y-auto lg:max-h-[800px] ${showContent ? 'block' : 'hidden lg:block'}`}
+                  style={{ scrollbarWidth: 'thin', scrollbarColor: '#cbd5e1 transparent' }}
+                >
+                  {/* Mobile Back Button */}
+                  <button
+                    onClick={() => setShowContent(false)}
+                    className="lg:hidden mb-6 inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
+                  >
+                    ← Back to overview
+                  </button>
+
+                  {/* Article Content */}
+                  <article 
+                    className="prose prose-lg prose-slate max-w-none prose-headings:text-slate-900 prose-headings:font-bold prose-p:text-slate-600 prose-a:text-blue-600 prose-strong:text-slate-900 prose-blockquote:border-l-blue-500 prose-blockquote:bg-blue-50/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg"
+                    dangerouslySetInnerHTML={{ __html: latestPost.content }}
+                  />
+
+                  {/* Share Section */}
+                  <div className="mt-12 pt-8 border-t border-slate-200">
+                    <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                      <FaShare className="text-blue-500" />
+                      Share this story
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      <button 
+                        onClick={() => {
+                          const url = encodeURIComponent(window.location.href);
+                          window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+                        }}
+                        className="px-5 py-2.5 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition hover:shadow-lg text-sm"
+                      >
+                        Facebook
+                      </button>
+                      <button 
+                        onClick={() => {
+                          const url = encodeURIComponent(window.location.href);
+                          const text = encodeURIComponent(latestPost.title);
+                          window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+                        }}
+                        className="px-5 py-2.5 rounded-full bg-sky-500 text-white font-semibold hover:bg-sky-600 transition hover:shadow-lg text-sm"
+                      >
+                        Twitter
+                      </button>
+                      <button 
+                        onClick={() => {
+                          navigator.clipboard.writeText(window.location.href);
+                          alert('Link copied to clipboard!');
+                        }}
+                        className="px-5 py-2.5 rounded-full bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition text-sm"
+                      >
+                        Copy Link
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Scroll Down to More Posts Indicator */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="flex justify-center mt-12"
+              >
+                <button
+                  onClick={scrollToAllPosts}
+                  className="group flex flex-col items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  <span className="text-sm font-medium">More Stories</span>
+                  <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <FaChevronDown className="w-5 h-5" />
+                  </motion.div>
+                </button>
+              </motion.div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* All Posts Section */}
+      <section 
+        ref={allPostsRef}
+        className="relative py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
+            <div>
+              <h2 className="text-3xl lg:text-4xl font-black text-slate-900 mb-2">
+                All Stories
+              </h2>
+              <p className="text-slate-600">
+                Explore our collection of inspiring stories and updates
+              </p>
+            </div>
+
+            {/* Category Filter - Now in All Posts Section */}
+            <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                     activeCategory === category
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
                       : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 shadow-sm'
@@ -152,12 +364,8 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
               ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Blog Content */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+          {/* Posts Grid */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory + searchQuery}
@@ -167,170 +375,80 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
               transition={{ duration: 0.4 }}
             >
               {filteredPosts.length > 0 ? (
-                <>
-                  {/* Featured Post */}
-                  {featuredPost && !searchQuery && (
-                    <ScrollReveal className="mb-16">
-                      <motion.div
-                        className="relative group cursor-pointer"
-                        onClick={() => setSelectedPost(featuredPost)}
-                        whileHover={{ scale: 1.005 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-500" />
-                        <div className="relative bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
-                          <div className="grid lg:grid-cols-2">
-                            {/* Image Side */}
-                            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full min-h-[400px]">
-                              {featuredPost.cover && !imgErr.has(featuredPost.id) ? (
+                <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredPosts.map((post) => {
+                    const date = formatDate(post.publishedAt);
+                    
+                    return (
+                      <StaggerItem key={post.id}>
+                        <motion.article
+                          className="group h-full cursor-pointer"
+                          whileHover={{ y: -8 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <div className="relative h-full bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-300 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10">
+                            {/* Image */}
+                            <div className="relative aspect-[16/10] overflow-hidden">
+                              {post.cover && !imgErr.has(post.id) ? (
                                 <Image
-                                  src={featuredPost.cover}
-                                  alt={featuredPost.title}
+                                  src={post.cover}
+                                  alt={post.title}
                                   fill
-                                  className="object-cover"
-                                  sizes="(max-width: 1024px) 100vw, 50vw"
-                                  onError={() => handleImageError(featuredPost.id)}
-                                  priority
+                                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  onError={() => handleImageError(post.id)}
                                 />
                               ) : (
-                                <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                                  <span className="text-8xl">✍️</span>
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+                                  <span className="text-5xl">📰</span>
                                 </div>
                               )}
-                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent lg:bg-gradient-to-r" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
                               
                               {/* Category Badge */}
-                              <div className="absolute top-6 left-6">
-                                <span className="px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-sm font-bold shadow-lg">
-                                  {featuredPost.category}
+                              <div className="absolute top-4 left-4">
+                                <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-bold shadow-sm">
+                                  {post.category}
                                 </span>
                               </div>
 
-                              {/* Date Badge */}
-                              <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg text-center">
-                                <div className="text-3xl font-black text-slate-900">
-                                  {formatDate(featuredPost.publishedAt).day}
-                                </div>
-                                <div className="text-sm font-bold text-blue-600 uppercase">
-                                  {formatDate(featuredPost.publishedAt).month}
-                                </div>
+                              {/* Date */}
+                              <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white/90 text-sm">
+                                <FaCalendarAlt className="text-blue-300" />
+                                {date.fullDate}
                               </div>
                             </div>
 
-                            {/* Content Side */}
-                            <div className="p-8 lg:p-12 flex flex-col justify-center">
-                              <div className="flex items-center gap-4 mb-4 text-sm text-slate-500">
-                                <span className="flex items-center gap-2">
-                                  <FaUser className="text-blue-500" />
-                                  {featuredPost.author || 'Staff Writer'}
-                                </span>
-                                <span className="flex items-center gap-2">
-                                  <FaClock className="text-blue-500" />
-                                  {getReadingTime(featuredPost.content)} min read
-                                </span>
-                              </div>
-
-                              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mb-6 leading-tight group-hover:text-blue-600 transition-colors">
-                                {featuredPost.title}
-                              </h2>
+                            {/* Content */}
+                            <div className="p-6">
+                              <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                {post.title}
+                              </h3>
                               
-                              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-                                {featuredPost.excerpt}
+                              <p className="text-slate-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+                                {post.excerpt}
                               </p>
 
-                              <div className="flex items-center gap-4">
-                                <button className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105">
-                                  Read Story
-                                  <FaArrowRight />
-                                </button>
-                                <button className="w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition-colors">
-                                  <FaBookmark />
-                                </button>
+                              <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                                <div className="flex items-center gap-2 text-sm text-slate-500">
+                                  <FaUser className="text-blue-500" />
+                                  <span className="truncate max-w-[100px]">
+                                    {post.author || 'Staff Writer'}
+                                  </span>
+                                </div>
+                                
+                                <span className="inline-flex items-center gap-1 text-blue-600 text-sm font-semibold group-hover:gap-2 transition-all">
+                                  Read
+                                  <FaArrowRight className="w-3 h-3" />
+                                </span>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    </ScrollReveal>
-                  )}
-
-                  {/* Posts Grid */}
-                  <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {(searchQuery ? filteredPosts : otherPosts).map((post) => {
-                      const date = formatDate(post.publishedAt);
-                      
-                      return (
-                        <StaggerItem key={post.id}>
-                          <motion.div
-                            className="group h-full cursor-pointer"
-                            onClick={() => setSelectedPost(post)}
-                            whileHover={{ y: -8 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div className="relative h-full bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-blue-300 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10">
-                              {/* Image */}
-                              <div className="relative aspect-[16/10] overflow-hidden">
-                                {post.cover && !imgErr.has(post.id) ? (
-                                  <Image
-                                    src={post.cover}
-                                    alt={post.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    onError={() => handleImageError(post.id)}
-                                  />
-                                ) : (
-                                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-                                    <span className="text-5xl">📰</span>
-                                  </div>
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
-                                
-                                {/* Category Badge */}
-                                <div className="absolute top-4 left-4">
-                                  <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-bold shadow-sm">
-                                    {post.category}
-                                  </span>
-                                </div>
-
-                                {/* Date */}
-                                <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white/90 text-sm">
-                                  <FaCalendarAlt className="text-blue-300" />
-                                  {date.fullDate}
-                                </div>
-                              </div>
-
-                              {/* Content */}
-                              <div className="p-6">
-                                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                                  {post.title}
-                                </h3>
-                                
-                                <p className="text-slate-600 text-sm mb-4 line-clamp-2 leading-relaxed">
-                                  {post.excerpt}
-                                </p>
-
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                                  <div className="flex items-center gap-2 text-sm text-slate-500">
-                                    <FaUser className="text-blue-500" />
-                                    <span className="truncate max-w-[100px]">
-                                      {post.author || 'Staff Writer'}
-                                    </span>
-                                  </div>
-                                  
-                                  <span className="inline-flex items-center gap-1 text-blue-600 text-sm font-semibold group-hover:gap-2 transition-all">
-                                    Read
-                                    <FaArrowRight className="w-3 h-3" />
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-                        </StaggerItem>
-                      );
-                    })}
-                  </StaggerContainer>
-                </>
+                        </motion.article>
+                      </StaggerItem>
+                    );
+                  })}
+                </StaggerContainer>
               ) : (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -353,128 +471,6 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           </AnimatePresence>
         </div>
       </section>
-
-      {/* Post Detail Modal */}
-      <AnimatePresence>
-        {selectedPost && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm"
-            onClick={() => setSelectedPost(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedPost(null)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/95 shadow-lg text-slate-600 hover:text-slate-900 transition flex items-center justify-center"
-              >
-                ×
-              </button>
-
-              {/* Cover Image */}
-              <div className="relative aspect-video">
-                {selectedPost.cover && !imgErr.has(selectedPost.id) ? (
-                  <Image
-                    src={selectedPost.cover}
-                    alt={selectedPost.title}
-                    fill
-                    className="object-cover"
-                    onError={() => handleImageError(selectedPost.id)}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                    <span className="text-8xl">✍️</span>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
-                
-                {/* Category Badge */}
-                <div className="absolute top-6 left-6">
-                  <span className="px-4 py-2 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-sm font-bold shadow-lg">
-                    {selectedPost.category}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-8 lg:p-12">
-                {/* Meta */}
-                <div className="flex flex-wrap items-center gap-6 mb-6 text-sm text-slate-500">
-                  <span className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-blue-500" />
-                    {formatDate(selectedPost.publishedAt).fullDate}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <FaUser className="text-blue-500" />
-                    {selectedPost.author || 'Staff Writer'}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <FaClock className="text-blue-500" />
-                    {getReadingTime(selectedPost.content)} min read
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h2 className="text-3xl lg:text-4xl font-black text-slate-900 mb-8 leading-tight">
-                  {selectedPost.title}
-                </h2>
-
-                {/* Article Content */}
-                <article 
-                  className="prose prose-lg prose-slate max-w-none"
-                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-                />
-
-                {/* Share Section */}
-                <div className="mt-12 pt-8 border-t border-slate-200">
-                  <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <FaShare className="text-blue-500" />
-                    Share this story
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    <button 
-                      onClick={() => {
-                        const url = encodeURIComponent(window.location.href);
-                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-                      }}
-                      className="px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition hover:shadow-lg"
-                    >
-                      Share on Facebook
-                    </button>
-                    <button 
-                      onClick={() => {
-                        const url = encodeURIComponent(window.location.href);
-                        const text = encodeURIComponent(selectedPost.title);
-                        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-                      }}
-                      className="px-6 py-3 rounded-full bg-sky-500 text-white font-semibold hover:bg-sky-600 transition hover:shadow-lg"
-                    >
-                      Share on Twitter
-                    </button>
-                    <button 
-                      onClick={() => {
-                        navigator.clipboard.writeText(window.location.href);
-                        alert('Link copied to clipboard!');
-                      }}
-                      className="px-6 py-3 rounded-full bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition"
-                    >
-                      Copy Link
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Newsletter Section */}
       <section className="relative py-24 px-4 sm:px-6 lg:px-8">

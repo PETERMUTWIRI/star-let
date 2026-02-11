@@ -76,7 +76,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24 sm:pt-20">
           <StaggerContainer className="space-y-8">
             <StaggerItem>
               <motion.span
