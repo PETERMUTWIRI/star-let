@@ -460,3 +460,345 @@
     outline-offset: 2px;
   }
 }
+
+/* ==========================================================================
+   PRINT STYLES
+   Optimized for music artist website - converts dark theme to print-friendly
+   ========================================================================== */
+
+@media print {
+  /* Reset base styles for print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    margin: 1.5cm 1cm;
+    size: auto;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    background: white !important;
+    background-image: none !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Hide non-essential navigation elements */
+  nav,
+  .navbar,
+  [class*="navbar"],
+  [class*="Navbar"],
+  [class*="navigation"],
+  [class*="Navigation"],
+  header[class*="fixed"],
+  header[class*="sticky"],
+  .mobile-menu,
+  .mobile-menu-button,
+  [class*="mobile-menu"],
+  [class*="hamburger"],
+  [class*="menu-button"] {
+    display: none !important;
+  }
+
+  /* Hide footer and utility elements */
+  footer,
+  .footer,
+  [class*="Footer"],
+  [class*="back-to-top"],
+  [class*="BackToTop"],
+  [class*="scroll-to-top"],
+  [class*="cookie"],
+  [class*="Cookie"],
+  [class*="consent"],
+  [class*="Consent"],
+  [class*="reading-progress"],
+  [class*="ReadingProgress"],
+  [class*="progress-bar"] {
+    display: none !important;
+  }
+
+  /* Hide interactive and decorative elements */
+  video,
+  [class*="video-background"],
+  [class*="VideoBackground"],
+  .orb,
+  .orb-blue,
+  .orb-purple,
+  .orb-mixed,
+  [class*="decorative"],
+  [class*="blur-effect"],
+  [class*="glow"],
+  .glow-blue,
+  .glow-purple,
+  .glow-mixed,
+  .animate-float,
+  .animate-pulse-glow,
+  .shimmer,
+  .animate-bounce-subtle {
+    display: none !important;
+  }
+
+  /* Hide social media icons and CTAs */
+  [class*="social-icon"],
+  [class*="SocialIcon"],
+  [class*="social-media"],
+  [class*="newsletter"],
+  [class*="Newsletter"],
+  [class*="subscribe"],
+  [class*="cta-button"],
+  .btn-primary,
+  .btn-secondary,
+  button[class*="share"],
+  button[class*="like"],
+  button[class*="follow"] {
+    display: none !important;
+  }
+
+  /* Remove backdrop filters and glass effects */
+  .glass,
+  .glass-light,
+  .bg-gradient-glass,
+  .card-premium,
+  [class*="backdrop-blur"],
+  [class*="backdrop-filter"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: white !important;
+    border: 1px solid #ccc !important;
+  }
+
+  /* Remove gradients and set solid backgrounds */
+  .bg-gradient-hero,
+  .bg-gradient-card,
+  .bg-gradient-mesh,
+  .section-hero,
+  .section-writing,
+  [class*="gradient-background"],
+  [class*="bg-gradient"] {
+    background: white !important;
+    background-image: none !important;
+  }
+
+  /* Reset pseudo-element backgrounds */
+  .section-hero::before,
+  .section-writing::before,
+  .gradient-border::before,
+  .shimmer::after {
+    display: none !important;
+    background: none !important;
+  }
+
+  /* Reset gradient text to solid black */
+  .text-gradient,
+  .text-gradient-blue,
+  .text-gradient-purple,
+  .content-blue-accent h1,
+  .content-blue-accent h2,
+  .content-blue-accent h3,
+  .content-purple-accent h1,
+  .content-purple-accent h2,
+  .content-purple-accent h3 {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: black !important;
+    background-clip: initial !important;
+    color: black !important;
+  }
+
+  /* Typography for print */
+  h1, h2, h3, h4, h5, h6 {
+    color: black !important;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 20pt;
+  }
+
+  h3 {
+    font-size: 16pt;
+  }
+
+  p {
+    color: black !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Links - show URLs */
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #333;
+    word-break: break-all;
+  }
+
+  /* Don't show URLs for internal anchor links */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "" !important;
+  }
+
+  /* Images optimization */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    page-break-before: auto;
+    page-break-after: auto;
+  }
+
+  /* Cards and containers */
+  .card-premium,
+  [class*="card"],
+  [class*="Card"] {
+    background: white !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold;
+  }
+
+  /* Lists */
+  ul, ol {
+    page-break-inside: avoid;
+  }
+
+  li {
+    color: black !important;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 3px solid #999;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #333 !important;
+    page-break-inside: avoid;
+  }
+
+  /* Code blocks */
+  pre, code {
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  /* Page break utilities */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
+  }
+
+  /* Remove fixed positioning */
+  [class*="fixed"],
+  [class*="sticky"] {
+    position: static !important;
+  }
+
+  /* Show main content areas */
+  main, article, section {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Form elements - hide most, but show labels */
+  input, textarea, select, button {
+    display: none !important;
+  }
+
+  label {
+    color: black !important;
+  }
+
+  /* Hide modal and overlay elements */
+  [class*="modal"],
+  [class*="Modal"],
+  [class*="overlay"],
+  [class*="Overlay"],
+  [class*="dialog"],
+  [class*="Dialog"],
+  [class*="popup"],
+  [class*="Popup"],
+  [role="dialog"] {
+    display: none !important;
+  }
+
+  /* Audio/Video players */
+  audio, video, [class*="player"], [class*="Player"] {
+    display: none !important;
+  }
+
+  /* Animation pause */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Divider styling */
+  .divider-gradient,
+  [class*="divider"] {
+    background: #ccc !important;
+    height: 1px !important;
+  }
+
+  /* Ensure text contrast */
+  [class*="text-muted"],
+  [class*="text-gray"],
+  [class*="text-slate"] {
+    color: #666 !important;
+  }
+
+  /* Selection reset */
+  ::selection {
+    background: #b3d4fc !important;
+    color: black !important;
+  }
+}
