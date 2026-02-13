@@ -1,9 +1,39 @@
 import EventsClient from './EventsClient';
 import { prisma } from '@/lib/prisma';
+import type { Metadata } from 'next';
+import { EventSchema, MusicGroupSchema } from '@/components/StructuredData';
 
 // Force dynamic rendering to get fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Events & Concerts | Rahab Kinity',
+  description: 'See Rahab Kinity live! View upcoming concerts, worship nights, and community events. Get tickets and experience the energy of Kenyan-American gospel music.',
+  keywords: ['concerts', 'live events', 'gospel concerts', 'worship nights', 'tour dates', 'tickets', 'performances'],
+  openGraph: {
+    title: 'Events & Concerts | Rahab Kinity',
+    description: 'See Rahab Kinity live! View upcoming concerts, worship nights, and community events. Get tickets now.',
+    type: 'website',
+    url: 'https://starletmusic.com/events',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rahab Kinity Live Events',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Events & Concerts | Rahab Kinity',
+    description: 'See Rahab Kinity live! View upcoming concerts and get tickets.',
+  },
+  alternates: {
+    canonical: 'https://starletmusic.com/events',
+  },
+};
 
 // Server component to fetch events directly from DB
 async function getEvents() {
@@ -55,6 +85,35 @@ async function getEvents() {
 
 export default async function EventsPage() {
   const events = await getEvents();
+  const now = new Date();
+  const upcomingEvents = events.filter(e => new Date(e.startDate) >= now).slice(0, 5);
 
-  return <EventsClient initialEvents={events} />;
+  return (
+    <>
+      <MusicGroupSchema />
+      {upcomingEvents.map((event) => (
+        <EventSchema
+          key={event.id}
+          name={event.title}
+          description={event.description}
+          image={event.cover}
+          startDate={event.startDate}
+          endDate={event.endDate}
+          location={{
+            name: event.venue,
+            address: event.address,
+            city: event.location,
+          }}
+          offers={event.isFree ? undefined : {
+            price: event.ticketPriceCents ? String(event.ticketPriceCents / 100) : '0',
+            priceCurrency: 'USD',
+            availability: event.isSoldOut ? 'SoldOut' : 'InStock',
+            url: event.registrationLink,
+          }}
+          eventStatus={event.isSoldOut ? 'EventScheduled' : 'EventScheduled'}
+        />
+      ))}
+      <EventsClient initialEvents={events} />
+    </>
+  );
 }

@@ -461,6 +461,140 @@
   }
 }
 
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  /* Hide interactive elements */
+  nav,
+  footer,
+  .fixed,
+  button:not([type="submit"]),
+  [class*="sticky"],
+  .cookie-consent,
+  .back-to-top,
+  .reading-progress-bar {
+    display: none !important;
+  }
+
+  /* Reset backgrounds for printing */
+  body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure content is visible */
+  main {
+    padding-top: 0 !important;
+  }
+
+  /* Make links visible with their URLs */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Don't show URLs for internal/hash links */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+
+  /* Ensure images don't break across pages */
+  img {
+    break-inside: avoid;
+    max-width: 100% !important;
+  }
+
+  /* Page breaks */
+  h1, h2, h3 {
+    break-after: avoid;
+  }
+
+  p {
+    break-inside: avoid;
+  }
+
+  /* Remove shadows and effects */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   PREFERS-REDUCED-MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable smooth scroll */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  /* Stop pulsing animations */
+  .animate-pulse,
+  .animate-pulse-glow,
+  .animate-bounce-subtle {
+    animation: none !important;
+  }
+
+  /* Stop floating animations */
+  .animate-float,
+  .animate-bounce {
+    animation: none !important;
+  }
+
+  /* Stop shimmer */
+  .shimmer::after {
+    animation: none !important;
+  }
+
+  /* Stop gradient animations */
+  .animate-gradient,
+  .gradient-border::before {
+    animation: none !important;
+  }
+}
+
+/* Respect reduced motion preference for specific components */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable hover transforms */
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .group-hover\:scale-110,
+  .group-hover\:translate-x-1,
+  .group-hover\:scale-100 {
+    transform: none !important;
+  }
+
+  /* Disable hover Y translations */
+  .hover\:translate-y-\[-2px\]:hover,
+  .hover\:translate-y-\[-8px\]:hover,
+  .group-hover\:translate-y-0 {
+    transform: none !important;
+  }
+
+  /* Keep focus states visible but instant */
+  *:focus-visible {
+    transition: none !important;
+  }
+}
+
 /* ==========================================================================
    PRINT STYLES
    Optimized for music artist website - converts dark theme to print-friendly

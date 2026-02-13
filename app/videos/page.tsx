@@ -1,8 +1,38 @@
 import VideosClient from './VideosClient';
 import { prisma } from '@/lib/prisma';
+import type { Metadata } from 'next';
+import { MusicGroupSchema } from '@/components/StructuredData';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Videos | Rahab Kinity',
+  description: 'Watch official music videos, live performances, behind-the-scenes footage, and worship sessions from Rahab Kinity on YouTube.',
+  keywords: ['music videos', 'live performances', 'youtube', 'behind the scenes', 'worship videos', 'gospel videos'],
+  openGraph: {
+    title: 'Videos | Rahab Kinity',
+    description: 'Watch official music videos, live performances, and behind-the-scenes footage.',
+    type: 'video.other',
+    url: 'https://starletmusic.com/videos',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rahab Kinity Videos',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Videos | Rahab Kinity',
+    description: 'Watch official music videos and live performances.',
+  },
+  alternates: {
+    canonical: 'https://starletmusic.com/videos',
+  },
+};
 
 // Server component to fetch videos from DB
 async function getVideos() {
@@ -32,5 +62,11 @@ async function getVideos() {
 
 export default async function VideosPage() {
   const videos = await getVideos();
-  return <VideosClient initialVideos={videos} />;
+  
+  return (
+    <>
+      <MusicGroupSchema />
+      <VideosClient initialVideos={videos} />
+    </>
+  );
 }

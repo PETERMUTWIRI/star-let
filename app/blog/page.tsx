@@ -3,6 +3,36 @@ import { PrismaClient } from '@prisma/client';
 import BlogClient from './BlogClient';
 import { unstable_cache } from 'next/cache';
 import { revalidatePath } from 'next/cache';
+import type { Metadata } from 'next';
+import { MusicGroupSchema, ArticleSchema } from '@/components/StructuredData';
+
+export const metadata: Metadata = {
+  title: 'Blog & Stories | Rahab Kinity',
+  description: 'Read inspiring stories, impact narratives, and updates from Rahab Kinity. Discover the journey of faith, music, and community transformation.',
+  keywords: ['blog', 'stories', 'inspiration', 'faith', 'testimony', 'community', 'impact'],
+  openGraph: {
+    title: 'Blog & Stories | Rahab Kinity',
+    description: 'Read inspiring stories and updates from Rahab Kinity.',
+    type: 'website',
+    url: 'https://starletmusic.com/blog',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rahab Kinity Blog',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog & Stories | Rahab Kinity',
+    description: 'Read inspiring stories and updates from Rahab Kinity.',
+  },
+  alternates: {
+    canonical: 'https://starletmusic.com/blog',
+  },
+};
 
 /* ---------- prisma singleton ---------- */
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
@@ -40,6 +70,8 @@ const getCachedPosts = unstable_cache(
 /* ---------- server component ---------- */
 export default async function BlogPage() {
   const posts = await getCachedPosts();
+  const latestPost = posts[0];
+  
   if (posts.length === 0)
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -51,7 +83,24 @@ export default async function BlogPage() {
       </div>
     );
 
-  return <BlogClient initialPosts={posts} />;
+  return (
+    <>
+      <MusicGroupSchema />
+      {latestPost && (
+        <ArticleSchema
+          headline={latestPost.title}
+          description={latestPost.excerpt}
+          image={latestPost.cover || undefined}
+          datePublished={latestPost.publishedAt}
+          dateModified={latestPost.updatedAt}
+          author={latestPost.author || 'Rahab Kinity'}
+          category={latestPost.category}
+          slug={latestPost.slug}
+        />
+      )}
+      <BlogClient initialPosts={posts} />
+    </>
+  );
 }
 
 /* ---------- manual revalidation helper (for api calls) ---------- */

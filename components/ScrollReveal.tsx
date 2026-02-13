@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, Variants } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { useRef, ReactNode, useEffect, useState } from 'react';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -35,6 +35,25 @@ const directionVariants: Record<string, Variants> = {
   },
 };
 
+// Hook to detect reduced motion preference
+function useReducedMotion(): boolean {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return reducedMotion;
+}
+
 export default function ScrollReveal({
   children,
   className = '',
@@ -45,18 +64,28 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once, margin: '-100px' });
+  const reducedMotion = useReducedMotion();
+
+  // If reduced motion is preferred, just fade in without movement
+  const variants = reducedMotion 
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : directionVariants[direction];
+
+  const transition = reducedMotion
+    ? { duration: 0.2, delay: 0 }
+    : {
+        duration,
+        delay,
+        ease: [0.22, 1, 0.36, 1] as const, // Custom easing for premium feel
+      };
 
   return (
     <motion.div
       ref={ref}
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
-      variants={directionVariants[direction]}
-      transition={{
-        duration,
-        delay,
-        ease: [0.22, 1, 0.36, 1], // Custom easing for premium feel
-      }}
+      variants={variants}
+      transition={transition}
       className={className}
     >
       {children}
@@ -78,6 +107,11 @@ export function StaggerContainer({
 }: StaggerContainerProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const reducedMotion = useReducedMotion();
+
+  const transition = reducedMotion
+    ? { staggerChildren: 0 }
+    : { staggerChildren: staggerDelay };
 
   return (
     <motion.div
@@ -87,9 +121,7 @@ export function StaggerContainer({
       variants={{
         hidden: {},
         visible: {
-          transition: {
-            staggerChildren: staggerDelay,
-          },
+          transition,
         },
       }}
       className={className}
@@ -111,13 +143,20 @@ export function StaggerItem({
   className = '',
   direction = 'up',
 }: StaggerItemProps) {
+  const reducedMotion = useReducedMotion();
+
+  const variants = reducedMotion
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : directionVariants[direction];
+
+  const transition = reducedMotion
+    ? { duration: 0.2 }
+    : { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
     <motion.div
-      variants={directionVariants[direction]}
-      transition={{
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
-      }}
+      variants={variants}
+      transition={transition}
       className={className}
     >
       {children}
@@ -137,13 +176,18 @@ export function FadeIn({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const reducedMotion = useReducedMotion();
+
+  const transition = reducedMotion
+    ? { duration: 0.2, delay: 0 }
+    : { duration: 0.8, delay, ease: 'easeOut' as const };
 
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 0.8, delay, ease: 'easeOut' }}
+      transition={transition}
       className={className}
     >
       {children}
@@ -163,13 +207,26 @@ export function ScaleIn({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const reducedMotion = useReducedMotion();
+
+  const animate = reducedMotion
+    ? { opacity: 1 }
+    : { opacity: 1, scale: 1 };
+
+  const initial = reducedMotion
+    ? { opacity: 0 }
+    : { opacity: 0, scale: 0.9 };
+
+  const transition = reducedMotion
+    ? { duration: 0.2, delay: 0 }
+    : { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={initial}
+      animate={isInView ? animate : initial}
+      transition={transition}
       className={className}
     >
       {children}

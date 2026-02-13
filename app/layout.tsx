@@ -7,6 +7,7 @@ import PageTransition from '@/components/PageTransition';
 import BackToTop from '@/components/BackToTop';
 import CookieConsent from '@/components/CookieConsent';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
+import { WebSiteSchema } from '@/components/StructuredData';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
     default: "Rahab Kinity | Official Website",
     template: "%s | Rahab Kinity",
   },
-  description: "Rahab Kinity - Independent artist creating soulful music that resonates with hearts worldwide. Explore albums, singles, videos, tour dates, and more.",
-  keywords: ['music', 'artist', 'pop', 'indie', 'albums', 'singles', 'concerts', 'tour', 'starlet', 'musician', 'singer', 'songwriter'],
+  description: "Rahab Kinity - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer. Explore albums, singles, videos, tour dates, and more.",
+  keywords: ['Rahab Kinity', 'gospel music', 'christian artist', 'kenyan music', 'worship', 'live performance', 'cancer survivor', 'refugee story', 'Maasai heritage'],
   authors: [{ name: "Rahab Kinity" }],
   creator: "Rahab Kinity",
   publisher: "Rahab Kinity",
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Rahab Kinity | Official Website",
-    description: "Independent artist creating soulful music that resonates with hearts worldwide.",
+    description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     url: 'https://starletmusic.com',
     siteName: "Rahab Kinity",
     locale: 'en_US',
@@ -57,8 +58,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Rahab Kinity | Official Website",
-    description: "Independent artist creating soulful music that resonates with hearts worldwide.",
+    description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     images: ['/og-image.jpg'],
+    creator: '@rahabkinity',
   },
   robots: {
     index: true,
@@ -71,6 +73,10 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
+  category: 'music',
 };
 
 export default function RootLayout({
@@ -81,6 +87,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className={`${inter.className} antialiased bg-slate-950 text-white overscroll-none`}>
+        <WebSiteSchema />
         <div className="fixed inset-0 bg-gradient-mesh pointer-events-none z-0" />
         <ReadingProgressBar />
         <Navbar />
