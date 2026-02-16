@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 /**
- * SEO Metadata Configuration for Rahab Kinity - Kenyan-American Gospel/Inspirational Singer
+ * SEO Metadata Configuration for Star Amillion - Kenyan-American Gospel/Inspirational Singer
  * Base URL: https://starletmusic.com
  */
 
@@ -10,15 +10,15 @@ import { Metadata } from 'next';
 // ============================================================================
 
 export const SITE_CONFIG = {
-  name: 'Rahab Kinity',
-  title: 'Rahab Kinity | Official Website',
+  name: 'Star Amillion',
+  title: 'Star Amillion | Official Website',
   description:
-    'Official website of Rahab Kinity - Kenyan-American gospel and inspirational singer. Experience soul-stirring music that blends Kenyan heritage with contemporary sound.',
+    'Official website of Star Amillion - Kenyan-American gospel and inspirational singer. Experience soul-stirring music that blends Kenyan heritage with contemporary sound.',
   url: 'https://starletmusic.com',
   locale: 'en_US',
-  author: 'Rahab Kinity',
+  author: 'Star Amillion',
   keywords: [
-    'Rahab Kinity',
+    'Star Amillion',
     'Kenyan gospel singer',
     'African gospel music',
     'inspirational music',
@@ -109,7 +109,7 @@ export function generateHomeMetadata(): Metadata {
   return createMetadata({
     title: 'Home',
     description:
-      'Welcome to the official website of Rahab Kinity. Discover soulful gospel music, upcoming events, and the inspiring journey of a Kenyan-American artist.',
+      'Welcome to the official website of Star Amillion. Discover soulful gospel music, upcoming events, and the inspiring journey of a Kenyan-American artist.',
     path: '/',
     keywords: [
       'official website',
@@ -128,7 +128,7 @@ export function generateMusicMetadata(): Metadata {
   return createMetadata({
     title: 'Music',
     description:
-      'Stream and download Rahab Kinity\'s gospel and inspirational music. Explore albums, singles, and collaborations that celebrate faith and Kenyan heritage.',
+      'Stream and download Star Amillion\'s gospel and inspirational music. Explore albums, singles, and collaborations that celebrate faith and Kenyan heritage.',
     path: '/music',
     keywords: [
       'music streaming',
@@ -152,7 +152,7 @@ export function generateVideosMetadata(): Metadata {
   return createMetadata({
     title: 'Videos',
     description:
-      'Watch music videos, live performances, and behind-the-scenes content from Rahab Kinity. Experience the energy of Kenyan-American gospel performances.',
+      'Watch music videos, live performances, and behind-the-scenes content from Star Amillion. Experience the energy of Kenyan-American gospel performances.',
     path: '/videos',
     keywords: [
       'music videos',
@@ -174,7 +174,7 @@ export function generateEventsMetadata(): Metadata {
   return createMetadata({
     title: 'Events',
     description:
-      'Find upcoming concerts, tours, and live performances by Rahab Kinity. Get tickets and experience the powerful energy of live gospel music.',
+      'Find upcoming concerts, tours, and live performances by Star Amillion. Get tickets and experience the powerful energy of live gospel music.',
     path: '/events',
     keywords: [
       'concerts',
@@ -196,12 +196,12 @@ export function generateAboutMetadata(): Metadata {
   return createMetadata({
     title: 'About',
     description:
-      'Learn the inspiring story of Rahab Kinity - from Kenyan refugee to gospel singer and cancer survivor. Discover her journey of resilience through music.',
+      'Learn the inspiring story of Star Amillion - from Kenyan refugee to gospel singer and cancer survivor. Discover her journey of resilience through music.',
     path: '/about',
     keywords: [
       'biography',
       'artist story',
-      'about Rahab Kinity',
+      'about Star Amillion',
       'Kenyan heritage',
       'Maasai culture',
       'refugee journey',
@@ -219,7 +219,7 @@ export function generateBlogMetadata(): Metadata {
   return createMetadata({
     title: 'Blog',
     description:
-      'Read the latest news, stories, and updates from Rahab Kinity. Insights into music, faith, Kenyan culture, and the journey of an inspirational artist.',
+      'Read the latest news, stories, and updates from Star Amillion. Insights into music, faith, Kenyan culture, and the journey of an inspirational artist.',
     path: '/blog',
     keywords: [
       'blog',
@@ -242,7 +242,7 @@ export function generateContactMetadata(): Metadata {
   return createMetadata({
     title: 'Contact',
     description:
-      'Get in touch with Rahab Kinity for bookings, press inquiries, collaborations, and fan messages. Connect with this Kenyan-American gospel artist today.',
+      'Get in touch with Star Amillion for bookings, press inquiries, collaborations, and fan messages. Connect with this Kenyan-American gospel artist today.',
     path: '/contact',
     keywords: [
       'contact',
@@ -265,7 +265,7 @@ export function generatePrivacyMetadata(): Metadata {
   return createMetadata({
     title: 'Privacy Policy',
     description:
-      'Privacy policy for Rahab Kinity\'s official website. Learn how we collect, use, and protect your personal information and data privacy rights.',
+      'Privacy policy for Star Amillion\'s official website. Learn how we collect, use, and protect your personal information and data privacy rights.',
     path: '/privacy',
     keywords: [
       'privacy policy',
@@ -285,7 +285,7 @@ export function generateTermsMetadata(): Metadata {
   return createMetadata({
     title: 'Terms of Service',
     description:
-      'Terms and conditions for using Rahab Kinity\'s official website. Read our terms of service, usage policies, and legal agreements.',
+      'Terms and conditions for using Star Amillion\'s official website. Read our terms of service, usage policies, and legal agreements.',
     path: '/terms',
     keywords: [
       'terms of service',
@@ -305,7 +305,7 @@ export function generateAccessibilityMetadata(): Metadata {
   return createMetadata({
     title: 'Accessibility',
     description:
-      'Accessibility statement for Rahab Kinity\'s website. Our commitment to making music and content accessible to all fans, regardless of ability.',
+      'Accessibility statement for Star Amillion\'s website. Our commitment to making music and content accessible to all fans, regardless of ability.',
     path: '/accessibility',
     keywords: [
       'accessibility',
@@ -390,7 +390,7 @@ export function generateMusicTrackMetadata(params: MusicTrackMetadataParams): Me
 
   return createMetadata({
     title: `${title} - ${type.charAt(0).toUpperCase() + type.slice(1)}`,
-    description: description || `Listen to ${title} by Rahab Kinity. Available on all streaming platforms.`,
+    description: description || `Listen to ${title} by Star Amillion. Available on all streaming platforms.`,
     path: `/music/${slug}`,
     ogImage: coverImage,
     keywords: [type, 'new release', 'streaming', 'download'],

@@ -7,11 +7,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Videos | Rahab Kinity',
-  description: 'Watch official music videos, live performances, behind-the-scenes footage, and worship sessions from Rahab Kinity on YouTube.',
+  title: 'Videos | Star Amillion',
+  description: 'Watch official music videos, live performances, behind-the-scenes footage, and worship sessions from Star Amillion on YouTube.',
   keywords: ['music videos', 'live performances', 'youtube', 'behind the scenes', 'worship videos', 'gospel videos'],
   openGraph: {
-    title: 'Videos | Rahab Kinity',
+    title: 'Videos | Star Amillion',
     description: 'Watch official music videos, live performances, and behind-the-scenes footage.',
     type: 'video.other',
     url: 'https://starletmusic.com/videos',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Rahab Kinity Videos',
+        alt: 'Star Amillion Videos',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Videos | Rahab Kinity',
+    title: 'Videos | Star Amillion',
     description: 'Watch official music videos and live performances.',
   },
   alternates: {

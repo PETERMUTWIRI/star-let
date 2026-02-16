@@ -157,7 +157,7 @@ export default function DashboardContent() {
     <div className="max-w-7xl mx-auto p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-black text-white flex items-center gap-3">
-          <FaMusic className="text-blue-600" /> Rahab Kinity Music Admin
+          <FaMusic className="text-blue-600" /> Star Amillion Music Admin
         </h1>
         <div className="text-sm text-gray-400">
           {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}

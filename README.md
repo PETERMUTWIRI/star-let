@@ -1,8 +1,8 @@
-# Rahab Kinity Music - Gospel Artist Website
+# Star Amillion Music - Gospel Artist Website
 
 A modern, full-stack musician portfolio website built with Next.js 16, TypeScript, Prisma, and Stripe.
 
-![Rahab Kinity Music](https://starletmusic.com/og-image.jpg)
+![Star Amillion Music](https://starletmusic.com/og-image.jpg)
 
 ## ✨ Features
 

@@ -8,12 +8,12 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Events & Concerts | Rahab Kinity',
-  description: 'See Rahab Kinity live! View upcoming concerts, worship nights, and community events. Get tickets and experience the energy of Kenyan-American gospel music.',
+  title: 'Events & Concerts | Star Amillion',
+  description: 'See Star Amillion live! View upcoming concerts, worship nights, and community events. Get tickets and experience the energy of Kenyan-American gospel music.',
   keywords: ['concerts', 'live events', 'gospel concerts', 'worship nights', 'tour dates', 'tickets', 'performances'],
   openGraph: {
-    title: 'Events & Concerts | Rahab Kinity',
-    description: 'See Rahab Kinity live! View upcoming concerts, worship nights, and community events. Get tickets now.',
+    title: 'Events & Concerts | Star Amillion',
+    description: 'See Star Amillion live! View upcoming concerts, worship nights, and community events. Get tickets now.',
     type: 'website',
     url: 'https://starletmusic.com/events',
     images: [
@@ -21,14 +21,14 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Rahab Kinity Live Events',
+        alt: 'Star Amillion Live Events',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Events & Concerts | Rahab Kinity',
-    description: 'See Rahab Kinity live! View upcoming concerts and get tickets.',
+    title: 'Events & Concerts | Star Amillion',
+    description: 'See Star Amillion live! View upcoming concerts and get tickets.',
   },
   alternates: {
     canonical: 'https://starletmusic.com/events',

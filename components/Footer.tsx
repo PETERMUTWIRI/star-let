@@ -54,7 +54,7 @@ export default function Footer() {
               <div className="relative w-20 h-20 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
                 <Image
                   src="/rahab_kinity_logo.png"
-                  alt="Rahab Kinity"
+                  alt="Star Amillion"
                   fill
                   className="object-contain"
                 />
@@ -143,7 +143,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-slate-500 text-sm">
-              © {currentYear} Rahab Kinity Music. All rights reserved.
+              © {currentYear} Star Amillion Music. All rights reserved.
             </p>
             
             <div className="flex items-center gap-6 text-sm text-slate-500">

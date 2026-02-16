@@ -17,14 +17,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Rahab Kinity | Official Website",
-    template: "%s | Rahab Kinity",
+    default: "Star Amillion | Official Website",
+    template: "%s | Star Amillion",
   },
-  description: "Rahab Kinity - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer. Explore albums, singles, videos, tour dates, and more.",
-  keywords: ['Rahab Kinity', 'gospel music', 'christian artist', 'kenyan music', 'worship', 'live performance', 'cancer survivor', 'refugee story', 'Maasai heritage'],
-  authors: [{ name: "Rahab Kinity" }],
-  creator: "Rahab Kinity",
-  publisher: "Rahab Kinity",
+  description: "Star Amillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer. Explore albums, singles, videos, tour dates, and more.",
+  keywords: ['Star Amillion', 'gospel music', 'christian artist', 'kenyan music', 'worship', 'live performance', 'cancer survivor', 'refugee story', 'Maasai heritage'],
+  authors: [{ name: "Star Amillion" }],
+  creator: "Star Amillion",
+  publisher: "Star Amillion",
   formatDetection: {
     email: false,
     address: false,
@@ -40,10 +40,10 @@ export const metadata: Metadata = {
     apple: '/rahab_kinity_logo.png',
   },
   openGraph: {
-    title: "Rahab Kinity | Official Website",
+    title: "Star Amillion | Official Website",
     description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     url: 'https://starletmusic.com',
-    siteName: "Rahab Kinity",
+    siteName: "Star Amillion",
     locale: 'en_US',
     type: 'website',
     images: [
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Rahab Kinity - Official Website',
+        alt: 'Star Amillion - Official Website',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Rahab Kinity | Official Website",
+    title: "Star Amillion | Official Website",
     description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     images: ['/og-image.jpg'],
     creator: '@rahabkinity',

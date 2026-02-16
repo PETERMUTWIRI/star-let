@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
               <FaMusic className="text-white" />
             </div>
-            <h1 className="text-xl font-black text-white">Rahab Kinity Admin</h1>
+            <h1 className="text-xl font-black text-white">Star Amillion Admin</h1>
           </Link>
           
           {/* sign-out button */}

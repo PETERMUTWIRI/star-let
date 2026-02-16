@@ -62,7 +62,7 @@ export default function MusicClient({ music }: MusicClientProps) {
                 Music & Videos
               </motion.span>
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                Rahab Kinity <span className="text-gradient">Music</span>
+                Star Amillion <span className="text-gradient">Music</span>
               </h1>
               <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
                 Experience worship, live performances, and music videos. Stream on YouTube.

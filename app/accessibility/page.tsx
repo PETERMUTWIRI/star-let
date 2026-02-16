@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: 'Accessibility Statement | Rahab Kinity',
+  title: 'Accessibility Statement | Star Amillion',
   description: 'Our commitment to making music and digital content accessible to everyone. Learn about our WCAG 2.1 Level AA compliance and accessibility features.',
   keywords: ['accessibility', 'WCAG', 'screen reader', 'keyboard navigation', 'inclusive design', 'disability access'],
   alternates: {
@@ -42,7 +42,7 @@ export default function AccessibilityPage() {
             <div className="prose prose-lg max-w-none text-brand-text/80">
               
               <p className="text-xl text-brand-text/70 mb-8">
-                Rahab Kinity Music is committed to ensuring digital accessibility for people with 
+                Star Amillion Music is committed to ensuring digital accessibility for people with 
                 disabilities. We believe that music should be accessible to everyone, and we 
                 continually work to improve the user experience for all visitors to our website.
               </p>
@@ -52,7 +52,7 @@ export default function AccessibilityPage() {
                 We are dedicated to creating an inclusive digital experience that allows all fans 
                 to engage with our music, videos, events, and merchandise. Whether you are using 
                 assistive technologies or have specific accessibility needs, we want you to be able 
-                to enjoy everything Rahab Kinity Music has to offer.
+                to enjoy everything Star Amillion Music has to offer.
               </p>
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">Conformance Status</h2>
@@ -67,7 +67,7 @@ export default function AccessibilityPage() {
                 <li>Level AAA (highest)</li>
               </ul>
               <p className="mb-4">
-                Rahab Kinity Music strives to conform to <strong>WCAG 2.1 Level AA</strong> standards. 
+                Star Amillion Music strives to conform to <strong>WCAG 2.1 Level AA</strong> standards. 
                 We are continuously working to improve the accessibility of our website to ensure 
                 all fans can access our content.
               </p>

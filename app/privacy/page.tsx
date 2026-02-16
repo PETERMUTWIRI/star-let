@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Rahab Kinity',
-  description: 'Learn how Rahab Kinity Music collects, uses, and protects your personal information. Our commitment to your privacy and data security.',
+  title: 'Privacy Policy | Star Amillion',
+  description: 'Learn how Star Amillion Music collects, uses, and protects your personal information. Our commitment to your privacy and data security.',
   keywords: ['privacy policy', 'data protection', 'GDPR', 'personal information', 'cookies'],
   alternates: {
     canonical: 'https://starletmusic.com/privacy',
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
             <div className="prose prose-lg max-w-none text-brand-text/80">
               
               <p className="text-xl text-brand-text/70 mb-8">
-                Rahab Kinity Music is committed to protecting your privacy. This Privacy Policy explains 
+                Star Amillion Music is committed to protecting your privacy. This Privacy Policy explains 
                 how we collect, use, and safeguard your personal information when you visit our 
                 website, purchase tickets, buy merchandise, or subscribe to our newsletter.
               </p>
@@ -173,7 +173,7 @@ export default function PrivacyPolicyPage() {
                 practices, please contact us:
               </p>
               <div className="bg-white rounded-xl p-6 mt-4 shadow-sm">
-                <p className="mb-1"><strong>Rahab Kinity Music</strong></p>
+                <p className="mb-1"><strong>Star Amillion Music</strong></p>
                 <p className="mb-1">Email: <a href="mailto:privacy@starletmusic.com" className="text-brand-dark hover:underline">privacy@starletmusic.com</a></p>
                 <p>Management: <a href="mailto:booking@starletmusic.com" className="text-brand-dark hover:underline">booking@starletmusic.com</a></p>
               </div>

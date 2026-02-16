@@ -7,11 +7,11 @@ export function MusicGroupSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
-    name: 'Rahab Kinity',
+    name: 'Star Amillion',
     url: 'https://starletmusic.com',
     logo: 'https://starletmusic.com/rahab_kinity_logo.png',
     image: 'https://starletmusic.com/images/about/Rahab.jpeg',
-    description: 'Rahab Kinity - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer.',
+    description: 'Star Amillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer.',
     genre: ['Gospel', 'Christian', 'World Music', 'Contemporary Worship'],
     origin: {
       '@type': 'Country',
@@ -29,7 +29,7 @@ export function MusicGroupSchema() {
     ],
     member: {
       '@type': 'Person',
-      name: 'Rahab Kinity',
+      name: 'Star Amillion',
       jobTitle: 'Singer-Songwriter',
       nationality: {
         '@type': 'Country',
@@ -65,7 +65,7 @@ export function MusicAlbumSchema({
   datePublished,
   numTracks = 1,
   genre = ['Gospel', 'Christian'],
-  byArtist = 'Rahab Kinity',
+  byArtist = 'Star Amillion',
 }: MusicAlbumSchemaProps) {
   const schema = {
     '@context': 'https://schema.org',
@@ -125,7 +125,7 @@ export function EventSchema({
   endDate,
   location,
   offers,
-  performer = 'Rahab Kinity',
+  performer = 'Star Amillion',
   eventStatus = 'EventScheduled',
   eventAttendanceMode = 'OfflineEventAttendanceMode',
 }: EventSchemaProps) {
@@ -183,7 +183,7 @@ export function WebSiteSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Rahab Kinity Official Website',
+    name: 'Star Amillion Official Website',
     url: 'https://starletmusic.com',
     potentialAction: {
       '@type': 'SearchAction',
@@ -253,7 +253,7 @@ export function ArticleSchema({
   image,
   datePublished,
   dateModified,
-  author = 'Rahab Kinity',
+  author = 'Star Amillion',
   category = 'Music',
   slug,
 }: ArticleSchemaProps) {
@@ -271,7 +271,7 @@ export function ArticleSchema({
     },
     publisher: {
       '@type': 'MusicGroup',
-      name: 'Rahab Kinity',
+      name: 'Star Amillion',
       logo: {
         '@type': 'ImageObject',
         url: 'https://starletmusic.com/rahab_kinity_logo.png',

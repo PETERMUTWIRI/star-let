@@ -45,7 +45,7 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         
-        // Rahab Kinity Brand Colors - Blue & Purple Gradient Theme
+        // Star Amillion Brand Colors - Blue & Purple Gradient Theme
         brand: {
           // Primary Blues
           blue: {
