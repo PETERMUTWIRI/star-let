@@ -45,7 +45,7 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         
-        // Star Amillion Brand Colors - Blue & Purple Gradient Theme
+        // Ray Armillion Brand Colors - Blue & Purple Gradient Theme
         brand: {
           // Primary Blues
           blue: {

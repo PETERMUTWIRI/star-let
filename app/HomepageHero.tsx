@@ -45,7 +45,7 @@ export default function HomepageHero() {
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter"
               >
                 <span className="bg-gradient-to-r from-amber-400 via-orange-500 to-purple-600 bg-clip-text text-transparent">
-                  STAR AMILLION
+                  RAY ARMILLION
                 </span>
               </motion.h1>
             </StaggerItem>

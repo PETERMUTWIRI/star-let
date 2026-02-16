@@ -7,11 +7,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Music | Star Amillion',
-  description: 'Stream Star Amillion\'s latest gospel music, worship songs, and live performances. Experience soulful melodies that inspire hope and faith.',
+  title: 'Music | Ray Armillion',
+  description: 'Stream Ray Armillion\'s latest gospel music, worship songs, and live performances. Experience soulful melodies that inspire hope and faith.',
   keywords: ['gospel music', 'christian music', 'worship songs', 'kenyan artist', 'praise music', 'live performance'],
   openGraph: {
-    title: 'Music | Star Amillion',
+    title: 'Music | Ray Armillion',
     description: 'Stream the latest gospel music, worship songs, and live performances. Experience soulful melodies that inspire hope.',
     type: 'music.playlist',
     url: 'https://starletmusic.com/music',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Star Amillion Music',
+        alt: 'Ray Armillion Music',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Music | Star Amillion',
+    title: 'Music | Ray Armillion',
     description: 'Stream the latest gospel music and worship songs.',
   },
   alternates: {

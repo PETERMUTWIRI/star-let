@@ -1,5 +1,5 @@
 /**
- * Structured Data (JSON-LD) Utility for Star Amillion Music Website
+ * Structured Data (JSON-LD) Utility for Ray Armillion Music Website
  * 
  * This module provides functions to generate schema.org JSON-LD structured data
  * for various content types on the starletmusic.com website.
@@ -20,7 +20,7 @@ export const DEFAULT_LOCALE = 'en-US';
 
 /** Artist/Organization Information */
 export const ARTIST_INFO = {
-  name: 'Star Amillion',
+  name: 'Ray Armillion',
   alternateName: 'Starlet Music',
   description: 'Kenyan-American gospel and inspirational singer spreading hope through powerful vocals and uplifting music.',
   tagline: 'Inspiring Hearts Through Music',

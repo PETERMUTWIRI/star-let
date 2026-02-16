@@ -119,7 +119,7 @@ export default async function HomePage() {
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden glow-mixed">
                   <Image
                     src="/images/about/Rahab.jpeg"
-                    alt="Star Amillion - Gospel Artist"
+                    alt="Ray Armillion - Gospel Artist"
                     fill
                     className="object-cover"
                     priority
@@ -154,7 +154,7 @@ export default async function HomePage() {
                 
                 <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                   <p>
-                    <span className="text-amber-400 font-medium">Star Amillion</span> brings the vibrant spirit of Kenya to American stages, 
+                    <span className="text-amber-400 font-medium">Ray Armillion</span> brings the vibrant spirit of Kenya to American stages, 
                     weaving traditional <span className="text-cyan-400">Maasai culture</span> into powerful performances that dance between 
                     gospel roots and contemporary sound.
                   </p>

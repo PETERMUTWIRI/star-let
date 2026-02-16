@@ -17,14 +17,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Star Amillion | Official Website",
-    template: "%s | Star Amillion",
+    default: "Ray Armillion | Official Website",
+    template: "%s | Ray Armillion",
   },
-  description: "Star Amillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer. Explore albums, singles, videos, tour dates, and more.",
-  keywords: ['Star Amillion', 'gospel music', 'christian artist', 'kenyan music', 'worship', 'live performance', 'cancer survivor', 'refugee story', 'Maasai heritage'],
-  authors: [{ name: "Star Amillion" }],
-  creator: "Star Amillion",
-  publisher: "Star Amillion",
+  description: "Ray Armillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer. Explore albums, singles, videos, tour dates, and more.",
+  keywords: ['Ray Armillion', 'gospel music', 'christian artist', 'kenyan music', 'worship', 'live performance', 'cancer survivor', 'refugee story', 'Maasai heritage'],
+  authors: [{ name: "Ray Armillion" }],
+  creator: "Ray Armillion",
+  publisher: "Ray Armillion",
   formatDetection: {
     email: false,
     address: false,
@@ -40,10 +40,10 @@ export const metadata: Metadata = {
     apple: '/rahab_kinity_logo.png',
   },
   openGraph: {
-    title: "Star Amillion | Official Website",
+    title: "Ray Armillion | Official Website",
     description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     url: 'https://starletmusic.com',
-    siteName: "Star Amillion",
+    siteName: "Ray Armillion",
     locale: 'en_US',
     type: 'website',
     images: [
@@ -51,13 +51,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Star Amillion - Official Website',
+        alt: 'Ray Armillion - Official Website',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Star Amillion | Official Website",
+    title: "Ray Armillion | Official Website",
     description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
     images: ['/og-image.jpg'],
     creator: '@rahabkinity',

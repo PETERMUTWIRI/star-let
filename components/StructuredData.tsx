@@ -7,11 +7,11 @@ export function MusicGroupSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
-    name: 'Star Amillion',
+    name: 'Ray Armillion',
     url: 'https://starletmusic.com',
     logo: 'https://starletmusic.com/rahab_kinity_logo.png',
     image: 'https://starletmusic.com/images/about/Rahab.jpeg',
-    description: 'Star Amillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer.',
+    description: 'Ray Armillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer.',
     genre: ['Gospel', 'Christian', 'World Music', 'Contemporary Worship'],
     origin: {
       '@type': 'Country',
@@ -29,7 +29,7 @@ export function MusicGroupSchema() {
     ],
     member: {
       '@type': 'Person',
-      name: 'Star Amillion',
+      name: 'Ray Armillion',
       jobTitle: 'Singer-Songwriter',
       nationality: {
         '@type': 'Country',
@@ -65,7 +65,7 @@ export function MusicAlbumSchema({
   datePublished,
   numTracks = 1,
   genre = ['Gospel', 'Christian'],
-  byArtist = 'Star Amillion',
+  byArtist = 'Ray Armillion',
 }: MusicAlbumSchemaProps) {
   const schema = {
     '@context': 'https://schema.org',
@@ -125,7 +125,7 @@ export function EventSchema({
   endDate,
   location,
   offers,
-  performer = 'Star Amillion',
+  performer = 'Ray Armillion',
   eventStatus = 'EventScheduled',
   eventAttendanceMode = 'OfflineEventAttendanceMode',
 }: EventSchemaProps) {
@@ -183,7 +183,7 @@ export function WebSiteSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Star Amillion Official Website',
+    name: 'Ray Armillion Official Website',
     url: 'https://starletmusic.com',
     potentialAction: {
       '@type': 'SearchAction',
@@ -253,7 +253,7 @@ export function ArticleSchema({
   image,
   datePublished,
   dateModified,
-  author = 'Star Amillion',
+  author = 'Ray Armillion',
   category = 'Music',
   slug,
 }: ArticleSchemaProps) {
@@ -271,7 +271,7 @@ export function ArticleSchema({
     },
     publisher: {
       '@type': 'MusicGroup',
-      name: 'Star Amillion',
+      name: 'Ray Armillion',
       logo: {
         '@type': 'ImageObject',
         url: 'https://starletmusic.com/rahab_kinity_logo.png',

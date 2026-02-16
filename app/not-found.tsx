@@ -99,7 +99,7 @@ export default function NotFound() {
           <p className="text-slate-500 text-sm italic">
             &ldquo;Even when the path seems lost, the music always finds its way home.&rdquo;
           </p>
-          <p className="text-slate-600 text-xs mt-2">— Star Amillion</p>
+          <p className="text-slate-600 text-xs mt-2">— Ray Armillion</p>
         </motion.div>
       </motion.div>
     </div>

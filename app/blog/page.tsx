@@ -7,12 +7,12 @@ import type { Metadata } from 'next';
 import { MusicGroupSchema, ArticleSchema } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: 'Blog & Stories | Star Amillion',
-  description: 'Read inspiring stories, impact narratives, and updates from Star Amillion. Discover the journey of faith, music, and community transformation.',
+  title: 'Blog & Stories | Ray Armillion',
+  description: 'Read inspiring stories, impact narratives, and updates from Ray Armillion. Discover the journey of faith, music, and community transformation.',
   keywords: ['blog', 'stories', 'inspiration', 'faith', 'testimony', 'community', 'impact'],
   openGraph: {
-    title: 'Blog & Stories | Star Amillion',
-    description: 'Read inspiring stories and updates from Star Amillion.',
+    title: 'Blog & Stories | Ray Armillion',
+    description: 'Read inspiring stories and updates from Ray Armillion.',
     type: 'website',
     url: 'https://starletmusic.com/blog',
     images: [
@@ -20,14 +20,14 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Star Amillion Blog',
+        alt: 'Ray Armillion Blog',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog & Stories | Star Amillion',
-    description: 'Read inspiring stories and updates from Star Amillion.',
+    title: 'Blog & Stories | Ray Armillion',
+    description: 'Read inspiring stories and updates from Ray Armillion.',
   },
   alternates: {
     canonical: 'https://starletmusic.com/blog',
@@ -93,7 +93,7 @@ export default async function BlogPage() {
           image={latestPost.cover || undefined}
           datePublished={latestPost.publishedAt}
           dateModified={latestPost.updatedAt}
-          author={latestPost.author || 'Star Amillion'}
+          author={latestPost.author || 'Ray Armillion'}
           category={latestPost.category}
           slug={latestPost.slug}
         />

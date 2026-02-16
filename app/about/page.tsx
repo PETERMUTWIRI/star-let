@@ -50,7 +50,7 @@ const journeyMilestones = [
 const pressQuotes = [
   {
     source: 'World Refugee Day, New Haven',
-    quote: 'Star Amillion embodies the spirit of resilience. Her performances bring communities together, celebrating both Kenyan heritage and American dreams.',
+    quote: 'Ray Armillion embodies the spirit of resilience. Her performances bring communities together, celebrating both Kenyan heritage and American dreams.',
     rating: 5,
   },
   {
@@ -96,7 +96,7 @@ export default function AboutPage() {
                   <div className="relative aspect-[4/5] rounded-3xl overflow-hidden glow-mixed">
                     <Image
                       src="/images/about/Rahab.jpeg"
-                      alt="Star Amillion - Kenyan Singer & Performer"
+                      alt="Ray Armillion - Kenyan Singer & Performer"
                       fill
                       className="object-cover"
                       priority
@@ -140,7 +140,7 @@ export default function AboutPage() {
                 <ScrollReveal delay={0.2}>
                   <div className="space-y-4 text-lg text-slate-300 leading-relaxed">
                     <p>
-                      Born in Kenya and now calling America home, <span className="text-amber-400 font-medium">Star Amillion</span> brings 
+                      Born in Kenya and now calling America home, <span className="text-amber-400 font-medium">Ray Armillion</span> brings 
                       a unique fusion of traditional Kenyan culture and contemporary performance to every stage she touches.
                     </p>
                     <p>
@@ -297,7 +297,7 @@ export default function AboutPage() {
                         <FaMicrophone className="w-6 h-6 text-white" />
                       </div>
                       <div>
-                        <div className="font-semibold text-white">Star Amillion</div>
+                        <div className="font-semibold text-white">Ray Armillion</div>
                         <div className="text-sm text-slate-500">On her performance philosophy</div>
                       </div>
                     </div>

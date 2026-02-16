@@ -7,11 +7,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Videos | Star Amillion',
-  description: 'Watch official music videos, live performances, behind-the-scenes footage, and worship sessions from Star Amillion on YouTube.',
+  title: 'Videos | Ray Armillion',
+  description: 'Watch official music videos, live performances, behind-the-scenes footage, and worship sessions from Ray Armillion on YouTube.',
   keywords: ['music videos', 'live performances', 'youtube', 'behind the scenes', 'worship videos', 'gospel videos'],
   openGraph: {
-    title: 'Videos | Star Amillion',
+    title: 'Videos | Ray Armillion',
     description: 'Watch official music videos, live performances, and behind-the-scenes footage.',
     type: 'video.other',
     url: 'https://starletmusic.com/videos',
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Star Amillion Videos',
+        alt: 'Ray Armillion Videos',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Videos | Star Amillion',
+    title: 'Videos | Ray Armillion',
     description: 'Watch official music videos and live performances.',
   },
   alternates: {

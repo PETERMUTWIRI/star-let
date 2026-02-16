@@ -42,7 +42,7 @@ export default function SignInPage() {
                   <FaMusic className="text-white text-lg" />
                 </div>
               </div>
-              <h1 className="text-2xl font-black text-white">Star Amillion Admin</h1>
+              <h1 className="text-2xl font-black text-white">Ray Armillion Admin</h1>
               <p className="text-white/80 text-sm mt-1">Sign in to manage your content</p>
             </div>
             

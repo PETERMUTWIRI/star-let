@@ -50,7 +50,7 @@ export default function HomepageBookingSection() {
             Bring the <span className="text-gradient">Experience</span> to Your Event
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-            Star Amillion brings energy, inspiration, and an unforgettable performance to events of all kinds.
+            Ray Armillion brings energy, inspiration, and an unforgettable performance to events of all kinds.
           </p>
         </ScrollReveal>
 
@@ -84,7 +84,7 @@ export default function HomepageBookingSection() {
             <div className="relative h-full min-h-[350px] lg:min-h-full rounded-2xl overflow-hidden border border-white/10">
               <iframe
                 src="https://www.youtube.com/embed/UApoQM5A7vI?autoplay=1&mute=1&loop=1&playlist=UApoQM5A7vI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-                title="Star Amillion Performance"
+                title="Ray Armillion Performance"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 className="absolute inset-0 w-full h-full"
               />

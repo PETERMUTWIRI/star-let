@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { BreadcrumbSchema } from '@/components/StructuredData';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Star Amillion',
-  description: 'Read the Terms of Service for using the Star Amillion Music website. Guidelines for ticket purchases, merchandise, and content usage.',
+  title: 'Terms of Service | Ray Armillion',
+  description: 'Read the Terms of Service for using the Ray Armillion Music website. Guidelines for ticket purchases, merchandise, and content usage.',
   keywords: ['terms of service', 'terms and conditions', 'user agreement', 'legal'],
   alternates: {
     canonical: 'https://starletmusic.com/terms',
@@ -42,14 +42,14 @@ export default function TermsOfServicePage() {
             <div className="prose prose-lg max-w-none text-brand-text/80">
               
               <p className="text-xl text-brand-text/70 mb-8">
-                Welcome to Star Amillion Music (starletmusic.com). By accessing or using our website, 
+                Welcome to Ray Armillion Music (starletmusic.com). By accessing or using our website, 
                 you agree to be bound by these Terms of Service. Please read them carefully 
                 before using our services.
               </p>
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">1. Introduction</h2>
               <p className="mb-4">
-                These Terms of Service govern your use of the Star Amillion Music website and all 
+                These Terms of Service govern your use of the Ray Armillion Music website and all 
                 related services, including music streaming, ticket purchases for live events, 
                 merchandise sales, and fan community features. By accessing or using our website, 
                 you agree to comply with these terms.
@@ -57,7 +57,7 @@ export default function TermsOfServicePage() {
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">2. Use of Website</h2>
               <p className="mb-4">
-                Star Amillion Music provides a platform for fans to:
+                Ray Armillion Music provides a platform for fans to:
               </p>
               <ul className="list-disc pl-6 mb-6 space-y-2">
                 <li>Stream and preview music tracks and albums</li>
@@ -74,7 +74,7 @@ export default function TermsOfServicePage() {
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">3. Ticket Purchases</h2>
               <p className="mb-4">
-                When purchasing tickets through Star Amillion Music:
+                When purchasing tickets through Ray Armillion Music:
               </p>
               <ul className="list-disc pl-6 mb-6 space-y-2">
                 <li>All ticket sales are processed securely through our payment provider Stripe</li>
@@ -88,7 +88,7 @@ export default function TermsOfServicePage() {
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">4. Intellectual Property</h2>
               <p className="mb-4">
                 All content on this website, including but not limited to music, videos, images, 
-                logos, lyrics, and artwork, is the exclusive property of Star Amillion Music or its 
+                logos, lyrics, and artwork, is the exclusive property of Ray Armillion Music or its 
                 licensors and is protected by copyright, trademark, and other intellectual property laws.
               </p>
               <p className="mb-4">
@@ -115,7 +115,7 @@ export default function TermsOfServicePage() {
                 By submitting content to our website (including comments, fan art, and messages):
               </p>
               <ul className="list-disc pl-6 mb-6 space-y-2">
-                <li>You grant Star Amillion Music a non-exclusive, royalty-free license to use, display, 
+                <li>You grant Ray Armillion Music a non-exclusive, royalty-free license to use, display, 
                     and share your content</li>
                 <li>You confirm that your content does not infringe on any third-party rights</li>
                 <li>We reserve the right to remove any content that violates these terms or is 
@@ -140,7 +140,7 @@ export default function TermsOfServicePage() {
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">8. Limitation of Liability</h2>
               <p className="mb-4">
-                To the fullest extent permitted by law, Star Amillion Music shall not be liable for any 
+                To the fullest extent permitted by law, Ray Armillion Music shall not be liable for any 
                 indirect, incidental, special, consequential, or punitive damages arising out of 
                 or relating to your use of the website, even if we have been advised of the 
                 possibility of such damages.
@@ -158,7 +158,7 @@ export default function TermsOfServicePage() {
                 If you have any questions about these Terms of Service, please contact us:
               </p>
               <div className="bg-white rounded-xl p-6 mt-4 shadow-sm">
-                <p className="mb-1"><strong>Star Amillion Music</strong></p>
+                <p className="mb-1"><strong>Ray Armillion Music</strong></p>
                 <p className="mb-1">Email: <a href="mailto:legal@starletmusic.com" className="text-brand-dark hover:underline">legal@starletmusic.com</a></p>
                 <p className="mb-1">Management: <a href="mailto:booking@starletmusic.com" className="text-brand-dark hover:underline">booking@starletmusic.com</a></p>
               </div>

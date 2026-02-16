@@ -1,8 +1,8 @@
-# Star Amillion Music - Gospel Artist Website
+# Ray Armillion Music - Gospel Artist Website
 
 A modern, full-stack musician portfolio website built with Next.js 16, TypeScript, Prisma, and Stripe.
 
-![Star Amillion Music](https://starletmusic.com/og-image.jpg)
+![Ray Armillion Music](https://starletmusic.com/og-image.jpg)
 
 ## ✨ Features
 

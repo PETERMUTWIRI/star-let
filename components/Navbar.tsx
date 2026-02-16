@@ -66,7 +66,7 @@ export default function Navbar() {
               <div className="relative w-20 h-20 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">
                 <Image
                   src="/rahab_kinity_logo.png"
-                  alt="Star Amillion"
+                  alt="Ray Armillion"
                   fill
                   className="object-contain"
                   priority
