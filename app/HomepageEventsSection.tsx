@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCalendar, FaClock, FaMapPin, FaUsers, FaTicket, FaArrowUpRightFromSquare, FaArrowRight } from 'react-icons/fa6';
+import { FaCalendar, FaClock, FaMapPin, FaUsers, FaTicket, FaArrowUpRightFromSquare, FaArrowRight, FaEnvelope } from 'react-icons/fa6';
 import Image from 'next/image';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
+import EventRegistrationModal from '@/components/EventRegistrationModal';
 
 interface Event {
   id: number;
@@ -19,6 +21,7 @@ interface Event {
   venue?: string;
   address?: string;
   registrationLink?: string;
+  registrationType?: 'native' | 'external' | 'email' | 'none';
   maxAttendees?: number;
   isFree?: boolean;
   ticketPrice?: string;
@@ -33,7 +36,16 @@ interface HomepageEventsSectionProps {
 }
 
 export default function HomepageEventsSection({ upcomingEvents }: HomepageEventsSectionProps) {
+  const [registrationEvent, setRegistrationEvent] = useState<Event | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const latestEvent = upcomingEvents[0];
+
+  const handleRegisterClick = (event: Event, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRegistrationEvent(event);
+    setIsModalOpen(true);
+  };
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -184,20 +196,40 @@ export default function HomepageEventsSection({ upcomingEvents }: HomepageEvents
                       <span className="px-8 py-4 rounded-full bg-slate-800 text-slate-500 font-bold cursor-not-allowed">
                         Sold Out
                       </span>
-                    ) : latestEvent.registrationLink ? (
+                    ) : latestEvent.registrationType === 'external' ? (
                       <a
-                        href={latestEvent.registrationLink}
+                        href={latestEvent.registrationLink || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300 hover:scale-105"
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
+                      >
+                        <FaArrowUpRightFromSquare className="w-5 h-5" />
+                        Get Tickets
+                        <FaArrowUpRightFromSquare className="w-4 h-4" />
+                      </a>
+                    ) : latestEvent.registrationType === 'email' ? (
+                      <button
+                        onClick={(e) => handleRegisterClick(latestEvent, e)}
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105"
+                      >
+                        <FaEnvelope className="w-5 h-5" />
+                        RSVP by Email
+                      </button>
+                    ) : latestEvent.registrationType === 'none' ? (
+                      <button className="px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
+                        Coming Soon
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(e) => handleRegisterClick(latestEvent, e)}
+                        className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 ${
+                          latestEvent.isFree
+                            ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-green-500/25'
+                            : 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:shadow-amber-500/25'
+                        }`}
                       >
                         <FaTicket className="w-5 h-5" />
                         {latestEvent.isFree ? 'Register Free' : 'Get Tickets'}
-                        <FaArrowUpRightFromSquare className="w-4 h-4" />
-                      </a>
-                    ) : (
-                      <button className="px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
-                        Coming Soon
                       </button>
                     )}
 
@@ -229,6 +261,13 @@ export default function HomepageEventsSection({ upcomingEvents }: HomepageEvents
           </Link>
         </div>
       </div>
+
+      {/* Registration Modal */}
+      <EventRegistrationModal
+        event={registrationEvent}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }

@@ -18,6 +18,10 @@ import HomepageEventsSection from './HomepageEventsSection';
 import HomepageBlogSection from './HomepageBlogSection';
 import HomepageBookingSection from './HomepageBookingSection';
 
+// Force dynamic rendering to get fresh data on every request
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Server-side data fetching
 async function getUpcomingEvents() {
   try {
@@ -55,6 +59,7 @@ async function getUpcomingEvents() {
       venue: e.venue ?? undefined,
       address: e.address ?? undefined,
       registrationLink: e.registrationLink ?? undefined,
+      registrationType: e.registrationType ?? undefined,
       maxAttendees: e.maxAttendees ?? undefined,
       isFree: e.isFree ?? true,
       ticketPrice: e.ticketPrice ?? undefined,
