@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { stripe, isStripeConfigured } from '@/lib/stripe';
+import { generateTicketCode } from '@/lib/tickets';
 
 /* ---------- types ---------- */
 interface CheckoutRequest {
@@ -92,6 +93,24 @@ export async function POST(req: NextRequest) {
 
     // For free events, create registration immediately without Stripe
     if (isFreeEvent) {
+      // Generate unique ticket code
+      let ticketCode = generateTicketCode();
+      let isUnique = false;
+      let attempts = 0;
+      
+      // Ensure ticket code is unique
+      while (!isUnique && attempts < 10) {
+        const existing = await prisma.registration.findUnique({
+          where: { ticketCode },
+        });
+        if (!existing) {
+          isUnique = true;
+        } else {
+          ticketCode = generateTicketCode();
+          attempts++;
+        }
+      }
+
       const registration = await prisma.registration.create({
         data: {
           eventId: eventIdNum,
@@ -99,6 +118,7 @@ export async function POST(req: NextRequest) {
           name,
           amountPaid: 0,
           status: 'completed',
+          ticketCode,
         },
       });
 
@@ -106,6 +126,7 @@ export async function POST(req: NextRequest) {
         success: true,
         isFree: true,
         registrationId: registration.id,
+        ticketCode: registration.ticketCode,
         message: 'Registration successful for free event',
       });
     }
@@ -140,6 +161,24 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Generate unique ticket code (will be activated after payment)
+    let ticketCode = generateTicketCode();
+    let isUnique = false;
+    let attempts = 0;
+    
+    // Ensure ticket code is unique
+    while (!isUnique && attempts < 10) {
+      const existing = await prisma.registration.findUnique({
+        where: { ticketCode },
+      });
+      if (!existing) {
+        isUnique = true;
+      } else {
+        ticketCode = generateTicketCode();
+        attempts++;
+      }
+    }
+
     // Create pending registration
     const registration = await prisma.registration.create({
       data: {
@@ -148,6 +187,7 @@ export async function POST(req: NextRequest) {
         name,
         amountPaid: priceInCents,
         status: 'pending',
+        ticketCode,
       },
     });
 
@@ -161,8 +201,8 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${baseUrl}/events/${eventIdNum}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/events/${eventIdNum}/cancel`,
+      success_url: `${baseUrl}/events/${event.slug}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/events/${event.slug}/cancel`,
       metadata: {
         registrationId: String(registration.id),
         eventId: String(eventIdNum),

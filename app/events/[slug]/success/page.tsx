@@ -55,14 +55,9 @@ async function verifyAndUpdateRegistration(sessionId: string, registrationId?: s
       return { error: 'Payment not completed' };
     }
 
-    // Find registration by Stripe session ID or registration ID
-    const registration = await prisma.registration.findFirst({
-      where: {
-        OR: [
-          { stripeSessionId: sessionId },
-          ...(registrationId ? [{ id: Number(registrationId) }] : []),
-        ],
-      },
+    // Find registration by Stripe session ID first
+    let registration = await prisma.registration.findFirst({
+      where: { stripeSessionId: sessionId },
       include: {
         event: {
           select: {
@@ -79,17 +74,60 @@ async function verifyAndUpdateRegistration(sessionId: string, registrationId?: s
       },
     });
 
+    // If not found by session ID, try by registration ID from metadata
+    if (!registration && registrationId) {
+      registration = await prisma.registration.findUnique({
+        where: { id: Number(registrationId) },
+        include: {
+          event: {
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              startDate: true,
+              endDate: true,
+              location: true,
+              venue: true,
+              cover: true,
+            },
+          },
+        },
+      });
+    }
+
+    // If still not found, try by metadata in the session
+    if (!registration && session.metadata?.registrationId) {
+      registration = await prisma.registration.findUnique({
+        where: { id: Number(session.metadata.registrationId) },
+        include: {
+          event: {
+            select: {
+              id: true,
+              title: true,
+              slug: true,
+              startDate: true,
+              endDate: true,
+              location: true,
+              venue: true,
+              cover: true,
+            },
+          },
+        },
+      });
+    }
+
     if (!registration) {
       return { error: 'Registration not found' };
     }
 
-    // Update registration status to completed
+    // Update registration status to completed and store amount paid
     if (registration.status !== 'completed') {
       await prisma.registration.update({
         where: { id: registration.id },
         data: {
           status: 'completed',
           amountPaid: session.amount_total || registration.amountPaid,
+          stripeSessionId: sessionId, // Ensure session ID is stored
         },
       });
     }
@@ -202,6 +240,20 @@ async function SuccessContent({ searchParams, params }: SuccessPageProps) {
                 </p>
               </div>
             </div>
+
+            {/* Ticket Code - Prominent Display */}
+            {registration.ticketCode && (
+              <div className="border-b border-white/10 pb-6 mb-6">
+                <h2 className="text-lg font-semibold text-white mb-4">Your Ticket Code</h2>
+                <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl p-6 text-center border border-cyan-500/30">
+                  <p className="text-xs text-cyan-400 uppercase tracking-wider mb-2">Present this at the event</p>
+                  <p className="text-3xl sm:text-4xl font-black text-white font-mono tracking-wider">
+                    NIH-{registration.ticketCode}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-2">Save this code - it will be emailed to you</p>
+                </div>
+              </div>
+            )}
 
             {/* Registration Info */}
             <div className="border-b border-white/10 pb-6 mb-6">

@@ -6,6 +6,7 @@ import { verifyAdminAuth, unauthorizedResponse } from '@/lib/auth/middleware';
 import { stripe } from '@/lib/stripe';
 import { getBaseUrl } from '@/lib/utils';
 import { sendEmail } from '@/lib/email/resend';
+import { generateTicketCode } from '@/lib/tickets';
 
 const prisma = new PrismaClient();
 
@@ -160,6 +161,23 @@ export async function POST(req: NextRequest) {
 
     // For free events: create registration directly
     if (event.isFree) {
+      // Generate unique ticket code
+      let ticketCode = generateTicketCode();
+      let isUnique = false;
+      let attempts = 0;
+      
+      while (!isUnique && attempts < 10) {
+        const existing = await prisma.registration.findUnique({
+          where: { ticketCode },
+        });
+        if (!existing) {
+          isUnique = true;
+        } else {
+          ticketCode = generateTicketCode();
+          attempts++;
+        }
+      }
+
       const registration = await prisma.registration.create({
         data: {
           eventId: validated.eventId,
@@ -167,6 +185,7 @@ export async function POST(req: NextRequest) {
           name: validated.name,
           status: 'completed',
           amountPaid: 0,
+          ticketCode,
         },
         include: {
           event: {
@@ -202,6 +221,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Generate unique ticket code (will be activated after payment)
+    let ticketCode = generateTicketCode();
+    let isUnique = false;
+    let attempts = 0;
+    
+    while (!isUnique && attempts < 10) {
+      const existing = await prisma.registration.findUnique({
+        where: { ticketCode },
+      });
+      if (!existing) {
+        isUnique = true;
+      } else {
+        ticketCode = generateTicketCode();
+        attempts++;
+      }
+    }
+
     // Create pending registration first
     const registration = await prisma.registration.create({
       data: {
@@ -210,6 +246,7 @@ export async function POST(req: NextRequest) {
         name: validated.name,
         status: 'pending',
         amountPaid: event.ticketPriceCents,
+        ticketCode,
       },
     });
 

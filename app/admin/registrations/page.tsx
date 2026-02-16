@@ -23,6 +23,7 @@ interface Registration {
   registrationDate: string;
   phone?: string;
   tickets?: number;
+  ticketCode?: string;
 }
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -62,11 +63,20 @@ export default function AdminRegistrationsPage() {
     return matchesEvent && matchesStatus;
   });
 
+  // Convert cents to dollars for display
+  const centsToDollars = (cents: number) => (cents || 0) / 100;
+
   const stats = {
     total: filteredRegistrations.length,
     totalRevenue: filteredRegistrations
       .filter(r => r.status === 'completed')
-      .reduce((sum, r) => sum + r.amountPaid, 0),
+      .reduce((sum, r) => sum + centsToDollars(r.amountPaid), 0),
+    pendingRevenue: filteredRegistrations
+      .filter(r => r.status === 'pending')
+      .reduce((sum, r) => sum + centsToDollars(r.amountPaid), 0),
+    projectedRevenue: filteredRegistrations
+      .filter(r => r.status === 'completed' || r.status === 'pending')
+      .reduce((sum, r) => sum + centsToDollars(r.amountPaid), 0),
     pending: filteredRegistrations.filter(r => r.status === 'pending').length,
     completed: filteredRegistrations.filter(r => r.status === 'completed').length,
     refunded: filteredRegistrations.filter(r => r.status === 'refunded').length,
@@ -74,15 +84,16 @@ export default function AdminRegistrationsPage() {
 
   /* ---------- export CSV ---------- */
   const exportCSV = () => {
-    const headers = ['Registration ID', 'Event Name', 'Attendee Name', 'Email', 'Phone', 'Tickets', 'Amount Paid', 'Status', 'Registration Date'];
+    const headers = ['Registration ID', 'Ticket Code', 'Event Name', 'Attendee Name', 'Email', 'Phone', 'Tickets', 'Amount Paid', 'Status', 'Registration Date'];
     const rows = filteredRegistrations.map(r => [
       r.id,
+      r.ticketCode ? `NIH-${r.ticketCode}` : '',
       r.eventName,
       r.attendeeName,
       r.email,
       r.phone || '',
       r.tickets || 1,
-      r.amountPaid.toFixed(2),
+      centsToDollars(r.amountPaid).toFixed(2),
       r.status,
       new Date(r.registrationDate).toLocaleString(),
     ]);
@@ -146,7 +157,7 @@ export default function AdminRegistrationsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid md:grid-cols-4 gap-6 mb-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -156,31 +167,45 @@ export default function AdminRegistrationsPage() {
             <div className="text-3xl text-blue-500"><FaClipboardList /></div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-white rounded-2xl shadow p-6 border-l-4 border-green-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Total Revenue</p>
-              <p className="text-3xl font-black text-green-600 mt-1">${stats.totalRevenue.toFixed(2)}</p>
+              <p className="text-sm text-gray-500">Confirmed Revenue</p>
+              <p className="text-2xl font-black text-green-600 mt-1">${stats.totalRevenue.toFixed(2)}</p>
+              <p className="text-xs text-gray-400 mt-1">{stats.completed} paid registrations</p>
             </div>
             <div className="text-3xl text-green-500"><FaDollarSign /></div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-white rounded-2xl shadow p-6 border-l-4 border-yellow-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Completed</p>
-              <p className="text-3xl font-black text-green-600 mt-1">{stats.completed}</p>
+              <p className="text-sm text-gray-500">Pending Revenue</p>
+              <p className="text-2xl font-black text-yellow-600 mt-1">${stats.pendingRevenue.toFixed(2)}</p>
+              <p className="text-xs text-gray-400 mt-1">{stats.pending} awaiting payment</p>
             </div>
-            <div className="text-3xl text-green-500"><FaChartBar /></div>
+            <div className="text-3xl text-yellow-500"><FaDollarSign /></div>
+          </div>
+        </div>
+        <div className="bg-white rounded-2xl shadow p-6 border-l-4 border-blue-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Projected Total</p>
+              <p className="text-2xl font-black text-blue-600 mt-1">${stats.projectedRevenue.toFixed(2)}</p>
+              <p className="text-xs text-gray-400 mt-1">Confirmed + Pending</p>
+            </div>
+            <div className="text-3xl text-blue-500"><FaChartBar /></div>
           </div>
         </div>
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Pending</p>
-              <p className="text-3xl font-black text-yellow-600 mt-1">{stats.pending}</p>
+              <p className="text-sm text-gray-500">Free Registrations</p>
+              <p className="text-3xl font-black text-purple-600 mt-1">
+                {filteredRegistrations.filter(r => r.amountPaid === 0).length}
+              </p>
             </div>
-            <div className="text-3xl text-yellow-500"><FaUser /></div>
+            <div className="text-3xl text-purple-500"><FaUser /></div>
           </div>
         </div>
       </div>
@@ -240,6 +265,7 @@ export default function AdminRegistrationsPage() {
             <thead className="bg-gray-50 border-b">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">Reg ID</th>
+                <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">Ticket Code</th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">Event</th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">Attendee</th>
                 <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">Email</th>
@@ -254,6 +280,15 @@ export default function AdminRegistrationsPage() {
                   <tr key={reg.id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 text-sm text-gray-600">#{reg.id}</td>
                     <td className="px-6 py-4">
+                      {reg.ticketCode ? (
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-cyan-50 border border-cyan-200 text-cyan-700 font-mono text-sm font-semibold">
+                          NIH-{reg.ticketCode}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
                       <div className="font-semibold text-gray-900">{reg.eventName}</div>
                     </td>
                     <td className="px-6 py-4">
@@ -265,7 +300,7 @@ export default function AdminRegistrationsPage() {
                     <td className="px-6 py-4 text-sm text-gray-600">{reg.email}</td>
                     <td className="px-6 py-4">
                       <span className={`font-semibold ${reg.status === 'completed' ? 'text-green-600' : 'text-gray-600'}`}>
-                        ${reg.amountPaid.toFixed(2)}
+                        ${centsToDollars(reg.amountPaid).toFixed(2)}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -281,7 +316,7 @@ export default function AdminRegistrationsPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={8} className="px-6 py-12 text-center text-gray-500">
                     <div className="flex flex-col items-center gap-2">
                       <FaClipboardList className="text-4xl text-gray-300" />
                       <p>No registrations found</p>

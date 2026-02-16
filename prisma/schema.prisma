@@ -116,6 +116,7 @@ model Registration {
   stripeSessionId String?  @db.VarChar(255)
   amountPaid      Int?
   status          String   @default("pending")
+  ticketCode      String?  @unique @db.VarChar(20)  // Unique ticket code for email confirmation
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   event           Event    @relation(fields: [eventId], references: [id])
