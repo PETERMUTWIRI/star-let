@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { stripe, isStripeConfigured } from '@/lib/stripe';
 import Link from 'next/link';
+import PrintTicketButton from '@/components/PrintTicketButton';
 
 interface SuccessPageProps {
   searchParams: Promise<{
@@ -291,15 +292,7 @@ async function SuccessContent({ searchParams, params }: SuccessPageProps) {
             {/* Actions */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={() => window.print()}
-                  className="flex-1 inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:border-white/20 transition-all"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                  </svg>
-                  Print Ticket
-                </button>
+                <PrintTicketButton variant="dark" />
                 <Link
                   href={`/events/${registration.event.slug}`}
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all"

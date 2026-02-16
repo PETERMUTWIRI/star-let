@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { PrismaClient } from '@prisma/client';
 import { stripe } from '@/lib/stripe';
 import Link from 'next/link';
+import PrintTicketButton from '@/components/PrintTicketButton';
 
 const prisma = new PrismaClient();
 
@@ -200,15 +201,7 @@ async function SuccessContent({ searchParams }: SuccessPageProps) {
             {/* Actions */}
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={() => window.print()}
-                  className="flex-1 inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Download Ticket
-                </button>
+                <PrintTicketButton variant="light" label="Download Ticket" />
                 <Link
                   href={`/events/${registration.event.slug}`}
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
