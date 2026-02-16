@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare, FaClock, FaMapPin, FaUsers, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa6';
+import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare, FaClock, FaMapPin, FaUsers, FaEnvelope } from 'react-icons/fa6';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
 import EventRegistrationModal from '@/components/EventRegistrationModal';
@@ -284,7 +284,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                     className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
                                     onClick={(e) => e.stopPropagation()}
                                   >
-                                    <FaExternalLinkAlt className="w-5 h-5" />
+                                    <FaArrowUpRightFromSquare className="w-5 h-5" />
                                     Get Tickets
                                     <FaArrowUpRightFromSquare className="w-4 h-4" />
                                   </a>
@@ -536,7 +536,7 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                     rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
                   >
-                    <FaExternalLinkAlt className="w-5 h-5" />
+                    <FaArrowUpRightFromSquare className="w-5 h-5" />
                     Get Tickets
                     <FaArrowUpRightFromSquare className="w-4 h-4" />
                   </a>
