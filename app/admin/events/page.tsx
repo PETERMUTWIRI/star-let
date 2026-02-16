@@ -35,6 +35,7 @@ function EventEditor() {
     venue: '',
     address: '',
     registrationLink: '',
+    registrationType: 'native' as 'native' | 'external' | 'email' | 'none',
     maxAttendees: '',
     isFree: true,
     ticketPrice: '',
@@ -62,6 +63,7 @@ function EventEditor() {
         gallery: ev.gallery || [], 
         maxAttendees: ev.maxAttendees?.toString() ?? '',
         ticketPriceCents: ev.ticketPriceCents?.toString() ?? '',
+        registrationType: ev.registrationType || 'native',
       });
     } catch (e) {
       console.error(e);
@@ -130,6 +132,10 @@ function EventEditor() {
         maxAttendees: form.maxAttendees ? Number(form.maxAttendees) : null,
         ticketPrice: form.isFree ? undefined : form.ticketPrice,
         ticketPriceCents: form.isFree ? undefined : (form.ticketPriceCents ? Number(form.ticketPriceCents) : undefined),
+        // Only include registrationLink when relevant
+        registrationLink: (form.registrationType === 'external' || form.registrationType === 'email') 
+          ? form.registrationLink 
+          : undefined,
       };
 
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -256,10 +262,88 @@ function EventEditor() {
               <input type="number" name="maxAttendees" value={form.maxAttendees} onChange={handleChange} placeholder="Max attendees (optional)" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
             </div>
 
-            {/* registration */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Registration</label>
-              <input name="registrationLink" value={form.registrationLink} onChange={handleChange} placeholder="https://... or newinternationalhope@gmail.com" className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" disabled={isLoading} />
+            {/* registration type */}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-4">Registration Method</h4>
+              
+              <div className="space-y-3 mb-4">
+                <label className="flex items-start gap-3 p-3 rounded-lg bg-white border cursor-pointer hover:border-blue-400 transition-colors">
+                  <input 
+                    type="radio" 
+                    name="registrationType" 
+                    value="native" 
+                    checked={form.registrationType === 'native'}
+                    onChange={handleChange}
+                    className="mt-1 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Built-in Registration</span>
+                    <p className="text-sm text-gray-500">Use our native checkout (Stripe for paid, instant confirmation for free)</p>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-3 rounded-lg bg-white border cursor-pointer hover:border-purple-400 transition-colors">
+                  <input 
+                    type="radio" 
+                    name="registrationType" 
+                    value="external" 
+                    checked={form.registrationType === 'external'}
+                    onChange={handleChange}
+                    className="mt-1 w-4 h-4 text-purple-600"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">External Link</span>
+                    <p className="text-sm text-gray-500">Link to Eventbrite, Ticketmaster, or other ticketing platform</p>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-3 rounded-lg bg-white border cursor-pointer hover:border-green-400 transition-colors">
+                  <input 
+                    type="radio" 
+                    name="registrationType" 
+                    value="email" 
+                    checked={form.registrationType === 'email'}
+                    onChange={handleChange}
+                    className="mt-1 w-4 h-4 text-green-600"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Email RSVP</span>
+                    <p className="text-sm text-gray-500">Attendees send an RSVP email to you</p>
+                  </div>
+                </label>
+
+                <label className="flex items-start gap-3 p-3 rounded-lg bg-white border cursor-pointer hover:border-gray-400 transition-colors">
+                  <input 
+                    type="radio" 
+                    name="registrationType" 
+                    value="none" 
+                    checked={form.registrationType === 'none'}
+                    onChange={handleChange}
+                    className="mt-1 w-4 h-4 text-gray-600"
+                  />
+                  <div>
+                    <span className="font-medium text-gray-900">Coming Soon</span>
+                    <p className="text-sm text-gray-500">Registration not open yet</p>
+                  </div>
+                </label>
+              </div>
+
+              {/* Show registration link input only for external or email */}
+              {(form.registrationType === 'external' || form.registrationType === 'email') && (
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    {form.registrationType === 'external' ? 'External URL' : 'Email Address'}
+                  </label>
+                  <input 
+                    name="registrationLink" 
+                    value={form.registrationLink} 
+                    onChange={handleChange} 
+                    placeholder={form.registrationType === 'external' ? 'https://eventbrite.com/...' : 'newinternationalhope@gmail.com'} 
+                    className="w-full px-4 py-3 border rounded-lg bg-white text-gray-900" 
+                    disabled={isLoading} 
+                  />
+                </div>
+              )}
             </div>
 
             {/* COVER IMAGE */}

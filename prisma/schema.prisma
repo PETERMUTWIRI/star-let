@@ -34,34 +34,35 @@ model Post {
 }
 
 model Event {
-  id               Int            @id @default(autoincrement())
-  title            String         @db.VarChar(255)
-  slug             String         @unique
+  id               Int              @id @default(autoincrement())
+  title            String           @db.VarChar(255)
+  slug             String           @unique
   description      String?
-  category         String         @db.VarChar(50)
-  cover            String?        @db.VarChar(500)
-  location         String         @db.VarChar(255)
+  category         String           @db.VarChar(50)
+  cover            String?          @db.VarChar(500)
+  location         String           @db.VarChar(255)
   startDate        DateTime
   endDate          DateTime?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  author           String?        @db.VarChar(255)
-  deletedAt        DateTime?      @db.Timestamp(6)
-  metaTitle        String?        @db.VarChar(100)
-  metaDesc         String?        @db.VarChar(160)
-  ogImage          String?        @db.VarChar(500)
-  venue            String?        @db.VarChar(255)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  author           String?          @db.VarChar(255)
+  deletedAt        DateTime?        @db.Timestamp(6)
+  metaTitle        String?          @db.VarChar(100)
+  metaDesc         String?          @db.VarChar(160)
+  ogImage          String?          @db.VarChar(500)
+  venue            String?          @db.VarChar(255)
   address          String?
-  registrationLink String?        @db.VarChar(500)
+  registrationLink String?          @db.VarChar(500)
   maxAttendees     Int?
-  isFree           Boolean?       @default(true)
-  ticketPrice      String?        @db.VarChar(50)
+  isFree           Boolean?         @default(true)
+  ticketPrice      String?          @db.VarChar(50)
   gallery          Json?
   content          String?
   excerpt          String?
   ticketPriceCents Int?
-  stripeProductId  String?        @db.VarChar(255)
-  stripePriceId    String?        @db.VarChar(255)
+  stripeProductId  String?          @db.VarChar(255)
+  stripePriceId    String?          @db.VarChar(255)
+  registrationType RegistrationType @default(native)
   registrations    Registration[]
 
   @@unique([slug, deletedAt])
@@ -146,4 +147,11 @@ model Music {
   @@index([order])
   @@index([published])
   @@index([slug])
+}
+
+enum RegistrationType {
+  native
+  external
+  email
+  none
 }

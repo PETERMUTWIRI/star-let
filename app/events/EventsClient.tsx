@@ -2,9 +2,10 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare, FaClock, FaMapPin, FaUsers } from 'react-icons/fa6';
+import { FaCalendar, FaLocationDot, FaTicket, FaArrowUpRightFromSquare, FaClock, FaMapPin, FaUsers, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa6';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import EventRegistrationModal from '@/components/EventRegistrationModal';
 
 interface Event {
   id: number;
@@ -19,6 +20,7 @@ interface Event {
   venue?: string;
   address?: string;
   registrationLink?: string;
+  registrationType?: 'native' | 'external' | 'email' | 'none';
   maxAttendees?: number;
   isFree?: boolean;
   ticketPrice?: string;
@@ -37,8 +39,16 @@ type FilterType = 'upcoming' | 'past';
 export default function EventsClient({ initialEvents }: EventsClientProps) {
   const [filter, setFilter] = useState<FilterType>('upcoming');
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [registrationEvent, setRegistrationEvent] = useState<Event | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const now = new Date();
+
+  const handleRegisterClick = (event: Event, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setRegistrationEvent(event);
+    setIsModalOpen(true);
+  };
 
   const filteredEvents = useMemo(() => {
     return initialEvents.filter((event) => {
@@ -266,21 +276,41 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                   <span className="px-8 py-4 rounded-full bg-slate-800 text-slate-500 font-bold cursor-not-allowed">
                                     Sold Out
                                   </span>
-                                ) : featuredEvent.registrationLink ? (
+                                ) : featuredEvent.registrationType === 'external' ? (
                                   <a
-                                    href={featuredEvent.registrationLink}
+                                    href={featuredEvent.registrationLink || '#'}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
+                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
                                     onClick={(e) => e.stopPropagation()}
+                                  >
+                                    <FaExternalLinkAlt className="w-5 h-5" />
+                                    Get Tickets
+                                    <FaArrowUpRightFromSquare className="w-4 h-4" />
+                                  </a>
+                                ) : featuredEvent.registrationType === 'email' ? (
+                                  <button
+                                    onClick={(e) => handleRegisterClick(featuredEvent, e)}
+                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105"
+                                  >
+                                    <FaEnvelope className="w-5 h-5" />
+                                    RSVP by Email
+                                  </button>
+                                ) : featuredEvent.registrationType === 'none' ? (
+                                  <button className="px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
+                                    Coming Soon
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={(e) => handleRegisterClick(featuredEvent, e)}
+                                    className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 ${
+                                      featuredEvent.isFree
+                                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-green-500/25'
+                                        : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:shadow-cyan-500/25'
+                                    }`}
                                   >
                                     <FaTicket className="w-5 h-5" />
                                     {featuredEvent.isFree ? 'Register Free' : 'Get Tickets'}
-                                    <FaArrowUpRightFromSquare className="w-4 h-4" />
-                                  </a>
-                                ) : (
-                                  <button className="px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
-                                    Coming Soon
                                   </button>
                                 )}
 
@@ -495,20 +525,50 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                   </div>
                 </div>
 
-                {selectedEvent.registrationLink ? (
+                {isSoldOut(selectedEvent) ? (
+                  <button className="w-full px-8 py-4 rounded-full bg-slate-800 text-slate-500 font-bold cursor-not-allowed">
+                    Sold Out
+                  </button>
+                ) : selectedEvent.registrationType === 'external' ? (
                   <a
-                    href={selectedEvent.registrationLink}
+                    href={selectedEvent.registrationLink || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+                    className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                  >
+                    <FaExternalLinkAlt className="w-5 h-5" />
+                    Get Tickets
+                    <FaArrowUpRightFromSquare className="w-4 h-4" />
+                  </a>
+                ) : selectedEvent.registrationType === 'email' ? (
+                  <button
+                    onClick={() => {
+                      setRegistrationEvent(selectedEvent);
+                      setIsModalOpen(true);
+                    }}
+                    className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300"
+                  >
+                    <FaEnvelope className="w-5 h-5" />
+                    RSVP by Email
+                  </button>
+                ) : selectedEvent.registrationType === 'none' ? (
+                  <button className="w-full px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
+                    Registration Opening Soon
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setRegistrationEvent(selectedEvent);
+                      setIsModalOpen(true);
+                    }}
+                    className={`w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full font-bold hover:shadow-lg transition-all duration-300 ${
+                      selectedEvent.isFree
+                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-green-500/25'
+                        : 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:shadow-cyan-500/25'
+                    }`}
                   >
                     <FaTicket className="w-5 h-5" />
                     {selectedEvent.isFree ? 'Register Now' : 'Get Tickets'}
-                    <FaArrowUpRightFromSquare className="w-4 h-4" />
-                  </a>
-                ) : (
-                  <button className="w-full px-8 py-4 rounded-full bg-slate-800 text-slate-400 font-bold cursor-not-allowed">
-                    Registration Opening Soon
                   </button>
                 )}
               </div>
@@ -552,6 +612,13 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* Registration Modal */}
+      <EventRegistrationModal
+        event={registrationEvent}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

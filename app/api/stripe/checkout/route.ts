@@ -1,9 +1,7 @@
 // app/api/stripe/checkout/route.ts - Stripe checkout for event tickets
-// Build: force refresh
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { stripe } from '@/lib/stripe';
-import { neonAuth } from '@neondatabase/auth/next/server';
+import { stripe, isStripeConfigured } from '@/lib/stripe';
 
 /* ---------- types ---------- */
 interface CheckoutRequest {
@@ -15,12 +13,11 @@ interface CheckoutRequest {
 /* ---------- POST ---------- */
 export async function POST(req: NextRequest) {
   try {
-    // Verify user authentication for purchases
-    const { session, user } = await neonAuth();
-    if (!session || !user) {
+    // Check if Stripe is configured
+    if (!isStripeConfigured()) {
       return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
+        { error: 'Payment service not configured' },
+        { status: 503 }
       );
     }
 
@@ -31,6 +28,15 @@ export async function POST(req: NextRequest) {
     if (!eventId || !email || !name) {
       return NextResponse.json(
         { error: 'Missing required fields: eventId, email, name' },
+        { status: 400 }
+      );
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
         { status: 400 }
       );
     }
@@ -157,6 +163,8 @@ export async function POST(req: NextRequest) {
       metadata: {
         registrationId: String(registration.id),
         eventId: String(eventIdNum),
+        customerEmail: email,
+        customerName: name,
       },
     });
 
@@ -176,6 +184,13 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('POST /api/stripe/checkout error:', error);
+    
+    if (error instanceof Error && error.message.includes('STRIPE_SECRET_KEY')) {
+      return NextResponse.json(
+        { error: 'Payment service not configured', message: 'Stripe is not set up' },
+        { status: 503 }
+      );
+    }
     
     if (error instanceof Error && error.message.includes('stripe')) {
       return NextResponse.json(
