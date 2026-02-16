@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FaDownload, FaFilter, FaCalendar, FaUser, FaDollarSign, FaArrowLeft, FaClipboardList, FaChartBar } from 'react-icons/fa';
+import { FaDownload, FaFilter, FaCalendar, FaUser, FaDollarSign, FaArrowLeft, FaClipboardList, FaChartBar, FaSync } from 'react-icons/fa';
 import Link from 'next/link';
 
 /* ---------- types ---------- */
@@ -15,15 +15,18 @@ interface Event {
 interface Registration {
   id: number;
   eventId: number;
-  eventName: string;
-  attendeeName: string;
+  name: string;
   email: string;
   amountPaid: number;
   status: 'pending' | 'completed' | 'refunded' | 'expired';
-  registrationDate: string;
-  phone?: string;
-  tickets?: number;
+  createdAt: string;
   ticketCode?: string;
+  event?: {
+    id: number;
+    title: string;
+    startDate: string;
+    slug?: string;
+  };
 }
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -47,7 +50,16 @@ export default function AdminRegistrationsPage() {
         fetcher('/api/registrations'),
         fetcher('/api/events'),
       ]);
-      setRegistrations(regsData || []);
+      console.log('Registrations loaded:', regsData);
+      console.log('Events loaded:', eventsData);
+      
+      // Handle error response
+      if (regsData.error) {
+        console.error('API Error:', regsData.error);
+        setRegistrations([]);
+      } else {
+        setRegistrations(regsData || []);
+      }
       setEvents(eventsData || []);
     } catch (e) {
       console.error('Failed to load data:', e);
@@ -84,18 +96,16 @@ export default function AdminRegistrationsPage() {
 
   /* ---------- export CSV ---------- */
   const exportCSV = () => {
-    const headers = ['Registration ID', 'Ticket Code', 'Event Name', 'Attendee Name', 'Email', 'Phone', 'Tickets', 'Amount Paid', 'Status', 'Registration Date'];
+    const headers = ['Registration ID', 'Ticket Code', 'Event Name', 'Attendee Name', 'Email', 'Amount Paid', 'Status', 'Registration Date'];
     const rows = filteredRegistrations.map(r => [
       r.id,
       r.ticketCode ? `NIH-${r.ticketCode}` : '',
-      r.eventName,
-      r.attendeeName,
+      r.event?.title || 'Unknown Event',
+      r.name,
       r.email,
-      r.phone || '',
-      r.tickets || 1,
       centsToDollars(r.amountPaid).toFixed(2),
       r.status,
-      new Date(r.registrationDate).toLocaleString(),
+      new Date(r.createdAt).toLocaleString(),
     ]);
     
     const csv = [headers.join(','), ...rows.map(row => row.map(cell => `"${cell}"`).join(','))].join('\n');
@@ -148,12 +158,21 @@ export default function AdminRegistrationsPage() {
           </Link>
           <h1 className="text-3xl font-black text-gray-900">Event Registrations</h1>
         </div>
-        <button
-          onClick={exportCSV}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition flex items-center gap-2"
-        >
-          <FaDownload /> Export CSV
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={loadData}
+            disabled={isLoading}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2 disabled:opacity-50"
+          >
+            <FaSync className={isLoading ? 'animate-spin' : ''} /> Refresh
+          </button>
+          <button
+            onClick={exportCSV}
+            className="bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition flex items-center gap-2"
+          >
+            <FaDownload /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* Stats Cards */}
@@ -289,12 +308,12 @@ export default function AdminRegistrationsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-semibold text-gray-900">{reg.eventName}</div>
+                      <div className="font-semibold text-gray-900">{reg.event?.title || 'Unknown Event'}</div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FaUser className="text-gray-400 text-xs" />
-                        <span className="font-medium text-gray-900">{reg.attendeeName}</span>
+                        <span className="font-medium text-gray-900">{reg.name}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">{reg.email}</td>
@@ -309,7 +328,7 @@ export default function AdminRegistrationsPage() {
                     <td className="px-6 py-4 text-sm text-gray-500">
                       <div className="flex items-center gap-2">
                         <FaCalendar className="text-gray-400 text-xs" />
-                        {new Date(reg.registrationDate).toLocaleDateString()}
+                        {new Date(reg.createdAt).toLocaleDateString()}
                       </div>
                     </td>
                   </tr>
