@@ -49,12 +49,15 @@ interface Music {
 interface Registration {
   id: number;
   eventId: number;
-  eventName: string;
-  attendeeName: string;
+  name: string;
   email: string;
   amountPaid: number;
   status: 'pending' | 'completed' | 'refunded' | 'expired';
-  registrationDate: string;
+  createdAt: string;
+  ticketCode: string | null;
+  event: {
+    title: string;
+  } | null;
 }
 
 // Safe fetcher that returns empty array on error
@@ -79,7 +82,7 @@ export default function DashboardContent() {
   const { data: events, mutate: mutateEvents } = useSWR<Event[]>('/api/events', fetcher);
   const { data: videos, mutate: mutateVideos } = useSWR<Video[]>('/api/videos', fetcher);
   const { data: music, mutate: mutateMusic } = useSWR<Music[]>('/api/music', fetcher);
-  const { data: registrations } = useSWR<Registration[]>('/api/registrations', fetcher);
+  const { data: registrations } = useSWR<Registration[]>('/api/registrations/all', fetcher);
 
   const deletePost = async (id: number) => {
     if (!confirm('Delete this post?')) return;
@@ -106,9 +109,9 @@ export default function DashboardContent() {
   };
 
   /* ---------- computed stats ---------- */
-  const totalRevenue = registrations
+  const totalRevenue = (registrations
     ?.filter(r => r.status === 'completed')
-    .reduce((sum, r) => sum + r.amountPaid, 0) || 0;
+    .reduce((sum, r) => sum + (r.amountPaid || 0), 0) || 0) / 100;
 
   const upcomingEvents = events
     ?.filter(e => new Date(e.startDate) > new Date())
@@ -121,7 +124,7 @@ export default function DashboardContent() {
     ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
 
   const recentRegistrations = registrations
-    ?.sort((a, b) => new Date(b.registrationDate).getTime() - new Date(a.registrationDate).getTime())
+    ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 5) || [];
 
   /* ---------- skeleton while loading ---------- */
@@ -292,8 +295,8 @@ export default function DashboardContent() {
               recentRegistrations.map((r) => (
                 <div key={r.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition">
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm truncate">{r.attendeeName}</p>
-                    <p className="text-xs text-gray-400">{r.eventName}</p>
+                    <p className="font-semibold text-sm truncate">{r.name}</p>
+                    <p className="text-xs text-gray-400">{r.event?.title || `Event #${r.eventId}`}</p>
                   </div>
                   <div className="text-right">
                     <p className={`text-sm font-semibold ${r.status === 'completed' ? 'text-green-600' : 'text-gray-600'}`}>
