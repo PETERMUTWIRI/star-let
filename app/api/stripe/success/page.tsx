@@ -203,10 +203,10 @@ async function SuccessContent({ searchParams }: SuccessPageProps) {
               <div className="flex flex-col sm:flex-row gap-3">
                 <PrintTicketButton variant="light" label="Download Ticket" />
                 <Link
-                  href={`/events/${registration.event.slug}`}
+                  href="/events"
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
                 >
-                  View Event Details
+                  View All Events
                 </Link>
               </div>
 

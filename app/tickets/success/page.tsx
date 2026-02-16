@@ -304,10 +304,10 @@ function SuccessPageContent() {
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <Link
-                  href={`/events/${registration.event.slug}`}
+                  href="/events"
                   className="flex-1 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
                 >
-                  View Event Details
+                  View All Events
                 </Link>
                 <Link
                   href="/events"
