@@ -9,23 +9,24 @@ const prisma = new PrismaClient();
 /* ---------- validation ---------- */
 const eventSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  description: z.string().optional(),
+  description: z.string().optional().nullable(),
   category: z.enum(['Upcoming', 'Past']),
-  cover: z.string().optional(),
+  cover: z.string().optional().nullable(),
   location: z.string().min(1, 'Location is required'),
   startDate: z.string().min(1),
   endDate: z.string().optional().nullable(),
-  author: z.string().optional(),
-  metaTitle: z.string().max(100).optional(),
-  metaDesc: z.string().max(160).optional(),
-  ogImage: z.string().optional(),
-  venue: z.string().optional(),
-  address: z.string().optional(),
-  registrationLink: z.string().optional(),
-  maxAttendees: z.number().int().positive().optional(),
+  author: z.string().optional().nullable(),
+  metaTitle: z.string().max(100).optional().nullable(),
+  metaDesc: z.string().max(160).optional().nullable(),
+  ogImage: z.string().optional().nullable(),
+  venue: z.string().optional().nullable(),
+  address: z.string().optional().nullable(),
+  registrationLink: z.string().optional().nullable(),
+  registrationType: z.enum(['native', 'external', 'email', 'none']).optional(),
+  maxAttendees: z.number().int().positive().optional().nullable(),
   isFree: z.boolean().default(true),
-  ticketPrice: z.string().optional(),
-  ticketPriceCents: z.number().int().min(0).optional(),
+  ticketPrice: z.string().optional().nullable(),
+  ticketPriceCents: z.number().int().min(0).optional().nullable(),
   gallery: z.array(z.string()).max(10).optional(),
 });
 
@@ -282,6 +283,7 @@ export async function PUT(req: NextRequest) {
     if (body.venue !== undefined) data.venue = body.venue;
     if (body.address !== undefined) data.address = body.address;
     if (body.registrationLink !== undefined) data.registrationLink = body.registrationLink;
+    if (body.registrationType !== undefined) data.registrationType = body.registrationType;
     if (body.maxAttendees !== undefined) data.maxAttendees = body.maxAttendees;
     if (body.isFree !== undefined) {
       data.isFree = body.isFree;
