@@ -111,7 +111,10 @@ export async function POST(req: NextRequest) {
     }
 
     // For paid events, create Stripe checkout session
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+    // Get base URL from request headers (works without env var)
+    const protocol = req.headers.get('x-forwarded-proto') || 'https';
+    const host = req.headers.get('host') || req.headers.get('x-forwarded-host');
+    const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000');
 
     // Create or retrieve Stripe price
     let stripePriceId = event.stripePriceId;
