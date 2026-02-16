@@ -2,7 +2,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FaDownload, FaFilter, FaCalendar, FaUser, FaDollarSign, FaArrowLeft, FaClipboardList, FaChartBar, FaSync, FaTicket } from 'react-icons/fa';
+import { FaDownload, FaFilter, FaCalendar, FaUser, FaDollarSign, FaArrowLeft, FaClipboardList, FaChartBar, FaSync } from 'react-icons/fa';
+import { FaTicket } from 'react-icons/fa6';
 import Link from 'next/link';
 
 interface Registration {
