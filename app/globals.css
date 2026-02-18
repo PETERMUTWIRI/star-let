@@ -84,12 +84,40 @@
   header {
     box-shadow: none !important;
     filter: none !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
   }
 
   /* Remove any top borders from main content */
   main,
-  [role="main"] {
+  [role="main"],
+  main > div,
+  main > div > div,
+  [role="main"] > div,
+  [role="main"] > div > div,
+  motion > div,
+  motion-div {
     border-top: none !important;
+    border-bottom: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove all borders from elements immediately after navbar */
+  header + *,
+  header ~ main,
+  header ~ [role="main"] {
+    border-top: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove pseudo-element borders from navbar area */
+  header::before,
+  header::after,
+  main::before,
+  main::after {
+    border: none !important;
     box-shadow: none !important;
   }
 

@@ -91,7 +91,7 @@ export default function RootLayout({
         <div className="fixed inset-0 bg-gradient-mesh pointer-events-none z-0" />
         <ReadingProgressBar />
         <Navbar />
-        <main className="relative z-10 pt-20">
+        <main className="relative z-10 pt-20 !border-none !shadow-none">
           <PageTransition>
             {children}
           </PageTransition>
