@@ -140,14 +140,14 @@ export default function CommentSection({ postId, videoId, musicId }: CommentSect
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="font-semibold text-white">
+                  <span className="font-bold text-amber-400">
                     {comment.author || 'Anonymous'}
                   </span>
-                  <span className="text-sm text-slate-400">
+                  <span className="text-sm text-slate-500">
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-slate-300 leading-relaxed">{comment.content}</p>
+                <p className="text-slate-100 leading-relaxed">{comment.content}</p>
               </div>
             </div>
           ))}
