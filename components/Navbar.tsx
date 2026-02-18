@@ -54,8 +54,8 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
-            ? 'bg-slate-950 border-b border-white/5' 
+          isScrolled
+            ? 'bg-slate-950'
             : 'bg-transparent'
         }`}
       >
