@@ -147,7 +147,9 @@ export default function CommentSection({ postId, videoId, musicId }: CommentSect
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </span>
                 </div>
-                <p className="text-white leading-relaxed font-medium">{comment.content}</p>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                  <p className="text-black leading-relaxed font-medium">{comment.content}</p>
+                </div>
               </div>
             </div>
           ))}
