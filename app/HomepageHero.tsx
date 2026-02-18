@@ -32,7 +32,7 @@ export default function HomepageHero() {
                 transition={{ duration: 0.6 }}
                 className="text-amber-400 font-medium tracking-[0.2em] uppercase text-sm"
               >
-                Singer, Writer and Actor
+                Recording Artist, Music Producer and Perfomer
               </motion.p>
             </StaggerItem>
 

@@ -178,17 +178,7 @@ export default async function HomePage() {
                   </p>
                 </div>
                 
-                {/* Heritage Tags */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {['Kenyan Roots', 'Maasai Heritage', 'Gospel', 'Live Performance', 'Cancer Survivor', 'Refugee Story'].map((tag) => (
-                    <span 
-                      key={tag}
-                      className="px-3 py-1 rounded-full text-xs font-medium bg-white/5 text-slate-400 border border-white/10"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                
                 
                 {/* Streaming Platforms */}
                 <div className="flex flex-wrap gap-3 pt-4">
