@@ -221,7 +221,7 @@ export default function MusicClient({ music }: MusicClientProps) {
                   Get notified when new music videos, live performances, and worship sessions are released.
                 </p>
                 <a
-                  href="https://youtube.com"
+                  href="https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700 transition-all hover:scale-105 shadow-lg shadow-red-600/25"

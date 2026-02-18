@@ -29,12 +29,12 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: FaInstagram, href: '#', label: 'Instagram' },
-  { icon: FaTiktok, href: '#', label: 'TikTok' },
-  { icon: FaTwitter, href: '#', label: 'Twitter' },
-  { icon: FaYoutube, href: '#', label: 'YouTube' },
-  { icon: FaSpotify, href: '#', label: 'Spotify' },
-  { icon: FaApple, href: '#', label: 'Apple Music' },
+  { icon: FaInstagram, href: 'https://instagram.com/rayarmillion', label: 'Instagram' },
+  { icon: FaTiktok, href: 'https://tiktok.com/@rayarmillion', label: 'TikTok' },
+  { icon: FaTwitter, href: 'https://twitter.com/rayarmillion', label: 'Twitter' },
+  { icon: FaYoutube, href: 'https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1', label: 'YouTube' },
+  { icon: FaSpotify, href: 'https://open.spotify.com/artist/rayarmillion', label: 'Spotify' },
+  { icon: FaApple, href: 'https://music.apple.com/artist/rayarmillion', label: 'Apple Music' },
 ];
 
 export default function Footer() {

@@ -93,11 +93,11 @@ export default function ContactPage() {
   ];
 
   const socialLinks = [
-    { icon: FaInstagram, href: '#', label: 'Instagram', color: 'hover:text-pink-500' },
-    { icon: FaFacebook, href: '#', label: 'Facebook', color: 'hover:text-blue-500' },
-    { icon: FaTwitter, href: '#', label: 'Twitter', color: 'hover:text-sky-500' },
-    { icon: FaYoutube, href: '#', label: 'YouTube', color: 'hover:text-red-500' },
-    { icon: FaTiktok, href: '#', label: 'TikTok', color: 'hover:text-purple-500' },
+    { icon: FaInstagram, href: 'https://instagram.com/rayarmillion', label: 'Instagram', color: 'hover:text-pink-500' },
+    { icon: FaFacebook, href: 'https://facebook.com/rayarmillion', label: 'Facebook', color: 'hover:text-blue-500' },
+    { icon: FaTwitter, href: 'https://twitter.com/rayarmillion', label: 'Twitter', color: 'hover:text-sky-500' },
+    { icon: FaYoutube, href: 'https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1', label: 'YouTube', color: 'hover:text-red-500' },
+    { icon: FaTiktok, href: 'https://tiktok.com/@rayarmillion', label: 'TikTok', color: 'hover:text-purple-500' },
   ];
 
   return (

@@ -123,7 +123,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
               >
                 <a
-                  href="https://www.youtube.com/@RahabKinity"
+                  href="https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-red-600 text-white font-bold hover:bg-red-700 transition-all duration-300 hover:scale-105 shadow-lg shadow-red-600/25"
@@ -463,7 +463,7 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
                   live performance highlights, and new music video premieres.
                 </p>
                 <a
-                  href="https://www.youtube.com/@RahabKinity"
+                  href="https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-red-600 text-white font-bold hover:bg-red-700 transition-all duration-300 hover:scale-105 shadow-lg shadow-red-600/25"

@@ -27,11 +27,11 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { icon: FaSpotify, href: '#', label: 'Spotify' },
-  { icon: FaInstagram, href: '#', label: 'Instagram' },
-  { icon: FaTwitter, href: '#', label: 'Twitter' },
-  { icon: FaTiktok, href: '#', label: 'TikTok' },
-  { icon: FaYoutube, href: '#', label: 'YouTube' },
+  { icon: FaSpotify, href: 'https://open.spotify.com/artist/rayarmillion', label: 'Spotify' },
+  { icon: FaInstagram, href: 'https://instagram.com/rayarmillion', label: 'Instagram' },
+  { icon: FaTwitter, href: 'https://twitter.com/rayarmillion', label: 'Twitter' },
+  { icon: FaTiktok, href: 'https://tiktok.com/@rayarmillion', label: 'TikTok' },
+  { icon: FaYoutube, href: 'https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1', label: 'YouTube' },
 ];
 
 export default function Navbar() {

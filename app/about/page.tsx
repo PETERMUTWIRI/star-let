@@ -175,13 +175,15 @@ export default function AboutPage() {
                 <ScrollReveal delay={0.3}>
                   <div className="flex gap-4">
                     {[
-                      { icon: FaInstagram, href: '#', label: 'Instagram' },
-                      { icon: FaTwitter, href: '#', label: 'Twitter' },
-                      { icon: FaYoutube, href: '#', label: 'YouTube' },
+                      { icon: FaInstagram, href: 'https://instagram.com/rayarmillion', label: 'Instagram' },
+                      { icon: FaTwitter, href: 'https://twitter.com/rayarmillion', label: 'Twitter' },
+                      { icon: FaYoutube, href: 'https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1', label: 'YouTube' },
                     ].map((social) => (
                       <a
                         key={social.label}
                         href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         aria-label={social.label}
                         className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-amber-500/50 hover:bg-amber-500/10 transition-all"
                       >

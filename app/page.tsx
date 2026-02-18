@@ -183,13 +183,15 @@ export default async function HomePage() {
                 {/* Streaming Platforms */}
                 <div className="flex flex-wrap gap-3 pt-4">
                   {[
-                    { icon: FaSpotify, name: 'Spotify' },
-                    { icon: FaApple, name: 'Apple Music' },
-                    { icon: FaYoutube, name: 'YouTube' },
+                    { icon: FaSpotify, name: 'Spotify', href: 'https://open.spotify.com/artist/rayarmillion' },
+                    { icon: FaApple, name: 'Apple Music', href: 'https://music.apple.com/artist/rayarmillion' },
+                    { icon: FaYoutube, name: 'YouTube', href: 'https://www.youtube.com/channel/UCBoBfckNNdCS7joUqClADbA?sub_confirmation=1' },
                   ].map((platform) => (
                     <a
                       key={platform.name}
-                      href="#"
+                      href={platform.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:border-amber-500/50 hover:bg-white/10 transition-all"
                     >
                       <platform.icon className="w-4 h-4 text-slate-400" />
