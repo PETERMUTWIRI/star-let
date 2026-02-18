@@ -48,10 +48,13 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log('Received body:', body);
     const validatedData = commentSchema.parse(body);
+    console.log('Validated data:', validatedData);
 
     // Check if at least one ID is provided
     if (!validatedData.postId && !validatedData.videoId && !validatedData.musicId) {
+      console.log('No ID provided');
       return NextResponse.json({ error: 'Must provide postId, videoId, or musicId' }, { status: 400 });
     }
 
@@ -67,10 +70,12 @@ export async function POST(request: NextRequest) {
         approved: true, // Change to false for moderation
       },
     });
+    console.log('Comment created:', comment);
 
     return NextResponse.json({ success: true, comment: { id: comment.id, createdAt: comment.createdAt } });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.log('Zod validation error:', error.errors);
       return NextResponse.json({ error: error.errors }, { status: 400 });
     }
     console.error('Error creating comment:', error);

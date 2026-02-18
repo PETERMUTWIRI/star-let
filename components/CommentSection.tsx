@@ -52,19 +52,24 @@ export default function CommentSection({ postId, videoId, musicId }: CommentSect
     if (!newComment.trim()) return;
 
     setSubmitting(true);
+    const data = {
+      content: newComment,
+      author: author.trim() || null,
+      email: email.trim() || null,
+      postId,
+      videoId,
+      musicId,
+    };
+    console.log('Sending data:', data);
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: newComment,
-          author: author.trim() || null,
-          email: email.trim() || null,
-          postId,
-          videoId,
-          musicId,
-        }),
+        body: JSON.stringify(data),
       });
+      console.log('Response status:', response.status);
+      const result = await response.json();
+      console.log('Response data:', result);
 
       if (response.ok) {
         setNewComment('');
