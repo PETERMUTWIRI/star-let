@@ -11,9 +11,9 @@ interface Comment {
 }
 
 interface CommentSectionProps {
-  postId?: number;
-  videoId?: number;
-  musicId?: number;
+  postId?: string;
+  videoId?: string;
+  musicId?: string;
 }
 
 export default function CommentSection({ postId, videoId, musicId }: CommentSectionProps) {

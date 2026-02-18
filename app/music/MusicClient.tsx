@@ -201,7 +201,7 @@ export default function MusicClient({ music }: MusicClientProps) {
                         </button>
                       </div>
                       {showComments[item.id] && (
-                        <CommentSection musicId={item.id} />
+                        <CommentSection musicId={item.id.toString()} />
                       )}
                     </div>
                   </motion.div>

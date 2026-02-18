@@ -305,7 +305,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                   </div>
 
                   {/* Comments Section */}
-                  <CommentSection postId={latestPost.id} />
+                  <CommentSection postId={latestPost.id.toString()} />
                 </div>
               </div>
 

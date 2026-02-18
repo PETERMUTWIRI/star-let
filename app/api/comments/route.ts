@@ -6,9 +6,9 @@ const commentSchema = z.object({
   content: z.string().min(1).max(1000),
   author: z.string().optional(),
   email: z.string().email().optional(),
-  postId: z.number().optional(),
-  videoId: z.number().optional(),
-  musicId: z.number().optional(),
+  postId: z.string().optional(),
+  videoId: z.string().optional(),
+  musicId: z.string().optional(),
 });
 
 export async function GET(request: NextRequest) {
@@ -61,9 +61,9 @@ export async function POST(request: NextRequest) {
         content: validatedData.content,
         author: validatedData.author,
         email: validatedData.email,
-        postId: validatedData.postId,
-        videoId: validatedData.videoId,
-        musicId: validatedData.musicId,
+        postId: validatedData.postId ? parseInt(validatedData.postId) : null,
+        videoId: validatedData.videoId ? parseInt(validatedData.videoId) : null,
+        musicId: validatedData.musicId ? parseInt(validatedData.musicId) : null,
         approved: true, // Change to false for moderation
       },
     });
