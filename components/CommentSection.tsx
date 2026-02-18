@@ -92,14 +92,14 @@ export default function CommentSection({ postId, videoId, musicId }: CommentSect
             placeholder="Your name (optional)"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:border-amber-500 focus:outline-none"
+            className="px-4 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:border-amber-500 focus:outline-none focus:bg-slate-700/50"
           />
           <input
             type="email"
             placeholder="Your email (optional)"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:border-amber-500 focus:outline-none"
+            className="px-4 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:border-amber-500 focus:outline-none focus:bg-slate-700/50"
           />
         </div>
         <div className="relative">
@@ -108,7 +108,7 @@ export default function CommentSection({ postId, videoId, musicId }: CommentSect
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             rows={4}
-            className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-slate-400 focus:border-amber-500 focus:outline-none resize-none"
+            className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:border-amber-500 focus:outline-none focus:bg-slate-700/50 resize-none"
             required
           />
           <button
