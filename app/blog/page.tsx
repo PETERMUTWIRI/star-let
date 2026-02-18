@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Blog & Stories | Ray Armillion',
     description: 'Read inspiring stories and updates from Ray Armillion.',
     type: 'website',
-    url: 'https://starletmusic.com/blog',
+    url: 'https://www.staramillion.com/blog',
     images: [
       {
         url: '/og-image.jpg',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Read inspiring stories and updates from Ray Armillion.',
   },
   alternates: {
-    canonical: 'https://starletmusic.com/blog',
+    canonical: 'https://www.staramillion.com/blog',
   },
 };
 

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Learn how Ray Armillion Music collects, uses, and protects your personal information. Our commitment to your privacy and data security.',
   keywords: ['privacy policy', 'data protection', 'GDPR', 'personal information', 'cookies'],
   alternates: {
-    canonical: 'https://starletmusic.com/privacy',
+    canonical: 'https://staramillion.com/privacy',
   },
   robots: {
     index: true,
@@ -143,7 +143,7 @@ export default function PrivacyPolicyPage() {
                 <li>Request a copy of your data in a portable format</li>
               </ul>
               <p className="mb-4">
-                To exercise these rights, please contact us at <a href="mailto:privacy@starletmusic.com" className="text-brand-dark hover:underline">privacy@starletmusic.com</a>.
+                To exercise these rights, please contact us at <a href="mailto:privacy@staramillion.com" className="text-brand-dark hover:underline">privacy@staramillion.com</a>.
               </p>
 
               <h2 className="text-2xl font-bold text-brand-text mt-12 mb-4">7. Data Retention</h2>
@@ -174,8 +174,8 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="bg-white rounded-xl p-6 mt-4 shadow-sm">
                 <p className="mb-1"><strong>Ray Armillion Music</strong></p>
-                <p className="mb-1">Email: <a href="mailto:privacy@starletmusic.com" className="text-brand-dark hover:underline">privacy@starletmusic.com</a></p>
-                <p>Management: <a href="mailto:booking@starletmusic.com" className="text-brand-dark hover:underline">booking@starletmusic.com</a></p>
+                <p className="mb-1">Email: <a href="mailto:privacy@staramillion.com" className="text-brand-dark hover:underline">privacy@staramillion.com</a></p>
+                <p>Management: <a href="mailto:booking@staramillion.com" className="text-brand-dark hover:underline">booking@staramillion.com</a></p>
               </div>
 
             </div>

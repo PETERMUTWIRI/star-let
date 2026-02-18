@@ -2,7 +2,7 @@
  * Structured Data (JSON-LD) Utility for Ray Armillion Music Website
  * 
  * This module provides functions to generate schema.org JSON-LD structured data
- * for various content types on the starletmusic.com website.
+ * for various content types on the staramillion.com website.
  * 
  * @see https://schema.org/docs/schemas.html
  * @see https://developers.google.com/search/docs/appearance/structured-data
@@ -13,7 +13,7 @@
 // ============================================================================
 
 /** Base URL for the website */
-export const SITE_URL = 'https://starletmusic.com';
+export const SITE_URL = 'https://www.staramillion.com';
 
 /** Default locale for the website */
 export const DEFAULT_LOCALE = 'en-US';
@@ -24,7 +24,7 @@ export const ARTIST_INFO = {
   alternateName: 'Starlet Music',
   description: 'Kenyan-American gospel and inspirational singer spreading hope through powerful vocals and uplifting music.',
   tagline: 'Inspiring Hearts Through Music',
-  email: 'contact@starletmusic.com',
+  email: 'contact@staramillion.com',
   phone: '+1-XXX-XXX-XXXX', // Placeholder - update with actual number
   foundingDate: '2020-01-01', // Placeholder - update with actual date
   nationality: 'Kenyan-American',

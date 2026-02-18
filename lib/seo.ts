@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 /**
  * SEO Metadata Configuration for Ray Armillion - Kenyan-American Gospel/Inspirational Singer
- * Base URL: https://starletmusic.com
+ * Base URL: https://www.staramillion.com
  */
 
 // ============================================================================
@@ -14,7 +14,7 @@ export const SITE_CONFIG = {
   title: 'Ray Armillion | Official Website',
   description:
     'Official website of Ray Armillion - Kenyan-American gospel and inspirational singer. Experience soul-stirring music that blends Kenyan heritage with contemporary sound.',
-  url: 'https://starletmusic.com',
+  url: 'https://www.staramillion.com',
   locale: 'en_US',
   author: 'Ray Armillion',
   keywords: [

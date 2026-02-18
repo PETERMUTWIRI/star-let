@@ -78,6 +78,21 @@
 }
 
 @layer components {
+  /* Navbar Shadow Removal - Fix for white line on scroll */
+  header[class*="fixed"],
+  motion-header,
+  header {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+
+  /* Remove any top borders from main content */
+  main,
+  [role="main"] {
+    border-top: none !important;
+    box-shadow: none !important;
+  }
+
   /* Premium Gradient Backgrounds */
   .bg-gradient-hero {
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #312e81 60%, #1e293b 100%);

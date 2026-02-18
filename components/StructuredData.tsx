@@ -8,9 +8,9 @@ export function MusicGroupSchema() {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
     name: 'Ray Armillion',
-    url: 'https://starletmusic.com',
-    logo: 'https://starletmusic.com/rahab_kinity_logo.png',
-    image: 'https://starletmusic.com/images/about/Rahab.jpeg',
+    url: 'https://www.staramillion.com',
+    logo: 'https://www.staramillion.com/rahab_kinity_logo.png',
+    image: 'https://www.staramillion.com/images/about/Rahab.jpeg',
     description: 'Ray Armillion - Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide. From refugee to cancer survivor to celebrated performer.',
     genre: ['Gospel', 'Christian', 'World Music', 'Contemporary Worship'],
     origin: {
@@ -72,7 +72,7 @@ export function MusicAlbumSchema({
     '@type': 'MusicAlbum',
     name,
     description,
-    image: image ? `https://starletmusic.com${image}` : undefined,
+    image: image ? `https://www.staramillion.com${image}` : undefined,
     datePublished,
     numTracks,
     genre,
@@ -80,7 +80,7 @@ export function MusicAlbumSchema({
       '@type': 'MusicGroup',
       name: byArtist,
     },
-    url: `https://starletmusic.com/music`,
+    url: `https://www.staramillion.com/music`,
   };
 
   return (
@@ -134,7 +134,7 @@ export function EventSchema({
     '@type': 'MusicEvent',
     name,
     description,
-    image: image ? `https://starletmusic.com${image}` : undefined,
+    image: image ? `https://www.staramillion.com${image}` : undefined,
     startDate,
     endDate,
     eventStatus: `https://schema.org/${eventStatus}`,
@@ -164,7 +164,7 @@ export function EventSchema({
       availability: offers.availability
         ? `https://schema.org/${offers.availability}`
         : 'https://schema.org/InStock',
-      url: offers.url || 'https://starletmusic.com/events',
+      url: offers.url || 'https://www.staramillion.com/events',
       validFrom: new Date().toISOString(),
     };
   }
@@ -184,12 +184,12 @@ export function WebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Ray Armillion Official Website',
-    url: 'https://starletmusic.com',
+    url: 'https://www.staramillion.com',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://starletmusic.com/blog?q={search_term_string}',
+        urlTemplate: 'https://www.staramillion.com/blog?q={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },
@@ -222,7 +222,7 @@ export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: `https://starletmusic.com${item.path}`,
+      item: `https://www.staramillion.com${item.path}`,
     })),
   };
 
@@ -262,7 +262,7 @@ export function ArticleSchema({
     '@type': 'Article',
     headline,
     description,
-    image: image ? `https://starletmusic.com${image}` : 'https://starletmusic.com/og-image.jpg',
+    image: image ? `https://www.staramillion.com${image}` : 'https://www.staramillion.com/og-image.jpg',
     datePublished,
     dateModified: dateModified || datePublished,
     author: {
@@ -274,12 +274,12 @@ export function ArticleSchema({
       name: 'Ray Armillion',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://starletmusic.com/rahab_kinity_logo.png',
+        url: 'https://www.staramillion.com/rahab_kinity_logo.png',
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://starletmusic.com/blog/${slug}`,
+      '@id': `https://www.staramillion.com/blog/${slug}`,
     },
     articleSection: category,
   };

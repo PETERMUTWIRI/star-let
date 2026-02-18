@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Read the Terms of Service for using the Ray Armillion Music website. Guidelines for ticket purchases, merchandise, and content usage.',
   keywords: ['terms of service', 'terms and conditions', 'user agreement', 'legal'],
   alternates: {
-    canonical: 'https://starletmusic.com/terms',
+    canonical: 'https://staramillion.com/terms',
   },
   robots: {
     index: true,
@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
             <div className="prose prose-lg max-w-none text-brand-text/80">
               
               <p className="text-xl text-brand-text/70 mb-8">
-                Welcome to Ray Armillion Music (starletmusic.com). By accessing or using our website, 
+                Welcome to Ray Armillion Music (staramillion.com). By accessing or using our website, 
                 you agree to be bound by these Terms of Service. Please read them carefully 
                 before using our services.
               </p>
@@ -159,8 +159,8 @@ export default function TermsOfServicePage() {
               </p>
               <div className="bg-white rounded-xl p-6 mt-4 shadow-sm">
                 <p className="mb-1"><strong>Ray Armillion Music</strong></p>
-                <p className="mb-1">Email: <a href="mailto:legal@starletmusic.com" className="text-brand-dark hover:underline">legal@starletmusic.com</a></p>
-                <p className="mb-1">Management: <a href="mailto:booking@starletmusic.com" className="text-brand-dark hover:underline">booking@starletmusic.com</a></p>
+                <p className="mb-1">Email: <a href="mailto:legal@staramillion.com" className="text-brand-dark hover:underline">legal@staramillion.com</a></p>
+                <p className="mb-1">Management: <a href="mailto:booking@staramillion.com" className="text-brand-dark hover:underline">booking@staramillion.com</a></p>
               </div>
 
               <p className="mt-8 text-sm text-brand-text/50">

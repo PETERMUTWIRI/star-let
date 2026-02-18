@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Videos | Ray Armillion',
     description: 'Watch official music videos, live performances, and behind-the-scenes footage.',
     type: 'video.other',
-    url: 'https://starletmusic.com/videos',
+    url: 'https://www.staramillion.com/videos',
     images: [
       {
         url: '/og-image.jpg',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Watch official music videos and live performances.',
   },
   alternates: {
-    canonical: 'https://starletmusic.com/videos',
+    canonical: 'https://www.staramillion.com/videos',
   },
 };
 

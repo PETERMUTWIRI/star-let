@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'Events & Concerts | Ray Armillion',
     description: 'See Ray Armillion live! View upcoming concerts, worship nights, and community events. Get tickets now.',
     type: 'website',
-    url: 'https://starletmusic.com/events',
+    url: 'https://www.staramillion.com/events',
     images: [
       {
         url: '/og-image.jpg',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description: 'See Ray Armillion live! View upcoming concerts and get tickets.',
   },
   alternates: {
-    canonical: 'https://starletmusic.com/events',
+    canonical: 'https://www.staramillion.com/events',
   },
 };
 

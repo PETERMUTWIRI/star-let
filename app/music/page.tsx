@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Music | Ray Armillion',
     description: 'Stream the latest gospel music, worship songs, and live performances. Experience soulful melodies that inspire hope.',
     type: 'music.playlist',
-    url: 'https://starletmusic.com/music',
+    url: 'https://www.staramillion.com/music',
     images: [
       {
         url: '/og-image.jpg',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: 'Stream the latest gospel music and worship songs.',
   },
   alternates: {
-    canonical: 'https://starletmusic.com/music',
+    canonical: 'https://www.staramillion.com/music',
   },
 };
 

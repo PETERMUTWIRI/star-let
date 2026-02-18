@@ -53,14 +53,14 @@ export default function Navbar() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 shadow-none !shadow-none ${
           isScrolled
             ? 'bg-slate-950'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-6 shadow-none">
+          <div className="flex items-center justify-between h-20 shadow-none">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative w-20 h-20 rounded-xl overflow-hidden group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all">

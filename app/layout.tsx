@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://starletmusic.com'),
+  metadataBase: new URL('https://www.staramillion.com'),
   alternates: {
     canonical: '/',
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ray Armillion | Official Website",
     description: "Kenyan-American Gospel Artist creating soulful music that resonates with hearts worldwide.",
-    url: 'https://starletmusic.com',
+    url: 'https://www.staramillion.com',
     siteName: "Ray Armillion",
     locale: 'en_US',
     type: 'website',

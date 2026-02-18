@@ -345,7 +345,7 @@ function VideoEditor() {
               <h4 className="text-sm font-semibold text-gray-700 mb-2">Google Search Preview</h4>
               <div className="bg-white p-4 rounded border">
                 <div className="text-blue-800 text-lg truncate" style={{ color: '#1a0dab' }}>{form.metaTitle || form.title || 'Video Title'}</div>
-                <div className="text-green-700 text-sm truncate">starletmusic.com › videos › {(form.title || 'video').toLowerCase().replace(/\s+/g, '-')}</div>
+                <div className="text-green-700 text-sm truncate">staramillion.com › videos › {(form.title || 'video').toLowerCase().replace(/\s+/g, '-')}</div>
                 <div className="text-gray-600 text-sm line-clamp-2 mt-1">{form.metaDesc || form.description?.slice(0, 160) || 'No description provided...'}</div>
               </div>
             </div>

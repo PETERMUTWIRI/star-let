@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Our commitment to making music and digital content accessible to everyone. Learn about our WCAG 2.1 Level AA compliance and accessibility features.',
   keywords: ['accessibility', 'WCAG', 'screen reader', 'keyboard navigation', 'inclusive design', 'disability access'],
   alternates: {
-    canonical: 'https://starletmusic.com/accessibility',
+    canonical: 'https://staramillion.com/accessibility',
   },
   robots: {
     index: true,
@@ -153,8 +153,8 @@ export default function AccessibilityPage() {
               </p>
               
               <div className="bg-white rounded-xl p-6 mb-6 shadow-sm">
-                <p className="mb-1"><strong>Email:</strong> <a href="mailto:accessibility@starletmusic.com" className="text-brand-dark hover:underline">accessibility@starletmusic.com</a></p>
-                <p className="mb-1"><strong>General Contact:</strong> <a href="mailto:booking@starletmusic.com" className="text-brand-dark hover:underline">booking@starletmusic.com</a></p>
+                <p className="mb-1"><strong>Email:</strong> <a href="mailto:accessibility@staramillion.com" className="text-brand-dark hover:underline">accessibility@staramillion.com</a></p>
+                <p className="mb-1"><strong>General Contact:</strong> <a href="mailto:booking@staramillion.com" className="text-brand-dark hover:underline">booking@staramillion.com</a></p>
               </div>
 
               <p className="mb-4">
