@@ -10,6 +10,7 @@ import {
   FaHeart
 } from 'react-icons/fa';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import CommentSection from '@/components/CommentSection';
 import Image from 'next/image';
 
 interface Music {
@@ -34,6 +35,7 @@ const categories = ['All', 'Single', 'Music Video', 'Live Performance', 'Worship
 export default function MusicClient({ music }: MusicClientProps) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [playingVideo, setPlayingVideo] = useState<string | null>(null);
+  const [showComments, setShowComments] = useState<Record<number, boolean>>({});
 
   const filteredMusic = activeCategory === 'All' 
     ? music 
@@ -191,7 +193,16 @@ export default function MusicClient({ music }: MusicClientProps) {
                           Watch on YouTube
                           <FaExternalLinkAlt className="w-3 h-3" />
                         </a>
+                        <button
+                          onClick={() => setShowComments(prev => ({ ...prev, [item.id]: !prev[item.id] }))}
+                          className="text-sm text-slate-400 hover:text-white transition-colors"
+                        >
+                          {showComments[item.id] ? 'Hide' : 'Comments'}
+                        </button>
                       </div>
+                      {showComments[item.id] && (
+                        <CommentSection musicId={item.id} />
+                      )}
                     </div>
                   </motion.div>
                 </StaggerItem>

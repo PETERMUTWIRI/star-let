@@ -24,6 +24,7 @@ model Post {
   metaTitle   String?   @db.VarChar(100)
   metaDesc    String?   @db.VarChar(160)
   ogImage     String?   @db.VarChar(500)
+  comments    Comment[]
 
   @@unique([slug, deletedAt])
   @@index([slug])
@@ -96,16 +97,17 @@ model NewsletterSubscriber {
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
   description String?
-  youtubeId   String   @db.VarChar(50)
-  category    String   @db.VarChar(100)
-  thumbnail   String?  @db.VarChar(500)
-  published   Boolean  @default(true)
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  youtubeId   String    @db.VarChar(50)
+  category    String    @db.VarChar(100)
+  thumbnail   String?   @db.VarChar(500)
+  published   Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  comments    Comment[]
 }
 
 model Registration {
@@ -116,14 +118,15 @@ model Registration {
   stripeSessionId String?  @db.VarChar(255)
   amountPaid      Int?
   status          String   @default("pending")
-  ticketCode      String?  @unique @db.VarChar(20)  // Unique ticket code for email confirmation
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  ticketCode      String?  @unique @db.VarChar(20)
   event           Event    @relation(fields: [eventId], references: [id])
 
   @@index([eventId])
   @@index([email])
   @@index([status])
+  @@index([ticketCode])
 }
 
 model Music {
@@ -141,6 +144,7 @@ model Music {
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @default(now())
   deletedAt          DateTime? @db.Timestamp(6)
+  comments           Comment[]
 
   @@unique([slug, deletedAt], map: "Music_slug_deletedAt_unique")
   @@index([category])
@@ -148,6 +152,26 @@ model Music {
   @@index([order])
   @@index([published])
   @@index([slug])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  author    String?
+  email     String?
+  postId    Int?
+  videoId   Int?
+  musicId   Int?
+  approved  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  music     Music?   @relation(fields: [musicId], references: [id], onDelete: Cascade)
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  video     Video?   @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([videoId])
+  @@index([musicId])
+  @@index([approved])
 }
 
 enum RegistrationType {

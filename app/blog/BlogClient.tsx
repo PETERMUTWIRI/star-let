@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCalendarAlt, FaUser, FaArrowRight, FaClock, FaTag, FaShare, FaBookmark, FaSearch, FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import ScrollReveal, { StaggerContainer, StaggerItem } from '@/components/ScrollReveal';
+import CommentSection from '@/components/CommentSection';
 
 export interface BlogPost {
   id: number;
@@ -302,6 +303,9 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                       </button>
                     </div>
                   </div>
+
+                  {/* Comments Section */}
+                  <CommentSection postId={latestPost.id} />
                 </div>
               </div>
 

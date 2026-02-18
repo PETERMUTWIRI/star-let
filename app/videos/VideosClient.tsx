@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaPlay, FaArrowUpRightFromSquare, FaXmark, FaYoutube, FaEye, FaClock } from 'react-icons/fa6';
+import CommentSection from '@/components/CommentSection';
 import Image from 'next/image';
 import ScrollReveal from '@/components/ScrollReveal';
 
@@ -439,6 +440,9 @@ export default function VideosClient({ initialVideos }: VideosClientProps) {
                   <FaArrowUpRightFromSquare className="w-4 h-4" />
                 </a>
               </div>
+
+              {/* Comments Section */}
+              <CommentSection videoId={selectedVideo.id} />
             </motion.div>
           </motion.div>
         )}
