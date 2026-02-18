@@ -6,7 +6,6 @@ import Footer from '../components/Footer';
 import PageTransition from '@/components/PageTransition';
 import BackToTop from '@/components/BackToTop';
 import CookieConsent from '@/components/CookieConsent';
-import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { WebSiteSchema } from '@/components/StructuredData';
 
 const inter = Inter({ 
@@ -89,7 +88,6 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased bg-slate-950 text-white overscroll-none`}>
         <WebSiteSchema />
         <div className="fixed inset-0 bg-gradient-mesh pointer-events-none z-0" />
-        <ReadingProgressBar />
         <Navbar />
         <main className="relative z-10 pt-20 !border-none !shadow-none">
           <PageTransition>
