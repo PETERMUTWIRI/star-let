@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import MerchandiseClient from './MerchandiseClient';
+import MerchandiseClient, { Product } from './MerchandiseClient';
 
 export const metadata = {
   title: 'Merchandise | Ray Armillion',
@@ -31,7 +31,7 @@ async function getProducts() {
         console.error('Error mapping product:', product.id, error);
         return null;
       }
-    }).filter(Boolean); // Remove null products
+    }).filter((product): product is Product => product !== null);
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
