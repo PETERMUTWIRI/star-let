@@ -6,8 +6,8 @@ import { stripe, isStripeConfigured } from '@/lib/stripe';
 /* ---------- types ---------- */
 interface ProductCheckoutRequest {
   productId: string;
-  email?: string;
-  name?: string;
+  email: string;
+  name: string;
 }
 
 /* ---------- POST ---------- */
@@ -25,22 +25,20 @@ export async function POST(req: NextRequest) {
     const { productId, email, name } = body;
 
     // Validate required fields
-    if (!productId) {
+    if (!productId || !email || !name) {
       return NextResponse.json(
-        { error: 'Missing required field: productId' },
+        { error: 'Missing required fields: productId, email, name' },
         { status: 400 }
       );
     }
 
-    // Validate email format if provided
-    if (email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        return NextResponse.json(
-          { error: 'Invalid email format' },
-          { status: 400 }
-        );
-      }
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      );
     }
 
     // Convert productId to number
@@ -95,24 +93,9 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Create or retrieve customer if email is provided
-    let customer;
-    if (email) {
-      const existingCustomers = await stripe.customers.list({ email });
-      if (existingCustomers.data.length > 0) {
-        customer = existingCustomers.data[0];
-      } else {
-        customer = await stripe.customers.create({
-          email,
-          name: name || undefined,
-        });
-      }
-    }
-
     // Create Stripe checkout session
     const checkoutSession = await stripe.checkout.sessions.create({
-      customer: customer?.id,
-      customer_email: !customer ? email : undefined,
+      customer_email: email,
       line_items: [
         {
           price: stripePriceId,
@@ -124,8 +107,8 @@ export async function POST(req: NextRequest) {
       cancel_url: `${baseUrl}/merchandise`,
       metadata: {
         productId: String(productIdNum),
-        customerEmail: email || '',
-        customerName: name || '',
+        customerEmail: email,
+        customerName: name,
         productTitle: product.title,
         productPrice: String(priceInCents),
       },

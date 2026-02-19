@@ -46,6 +46,18 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
   const handleCheckout = async () => {
     if (!selectedProduct) return;
 
+    // Validate form
+    if (!customerName.trim() || !customerEmail.trim()) {
+      alert('Please enter your name and email');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(customerEmail)) {
+      alert('Please enter a valid email address');
+      return;
+    }
+
     setIsProcessing(true);
     try {
       const response = await fetch('/api/stripe/checkout/products', {
@@ -55,8 +67,8 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
         },
         body: JSON.stringify({
           productId: selectedProduct.id,
-          email: customerEmail || undefined,
-          name: customerName || undefined,
+          email: customerEmail,
+          name: customerName,
         }),
       });
 
@@ -333,7 +345,7 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
               <div className="space-y-4 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Email (Optional)
+                    Email *
                   </label>
                   <input
                     type="email"
@@ -341,11 +353,12 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     placeholder="your@email.com"
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Name (Optional)
+                    Name *
                   </label>
                   <input
                     type="text"
@@ -353,6 +366,7 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="Your Name"
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    required
                   />
                 </div>
               </div>
