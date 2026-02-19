@@ -16,6 +16,8 @@ export default function NewProductPage() {
     published: true,
   });
   const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleImageUpload = async (file: File) => {
     setUploading(true);
@@ -40,6 +42,8 @@ export default function NewProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
+    setSuccessMessage('');
 
     try {
       const response = await fetch('/api/products', {
@@ -52,10 +56,28 @@ export default function NewProductPage() {
       });
 
       if (response.ok) {
-        router.push('/admin/merchandise');
+        setSuccessMessage('Product created successfully!');
+        // Reset form
+        setFormData({
+          title: '',
+          description: '',
+          price: '',
+          category: 'T-Shirts',
+          image: '',
+          published: true,
+        });
+        // Redirect after a short delay to show success message
+        setTimeout(() => {
+          router.push('/admin/merchandise');
+        }, 2000);
+      } else {
+        throw new Error('Failed to create product');
       }
     } catch (error) {
       console.error('Error creating product:', error);
+      setSuccessMessage('Failed to create product. Please try again.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -72,6 +94,11 @@ export default function NewProductPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
+        {successMessage && (
+          <div className={`mb-6 p-4 rounded-lg ${successMessage.includes('successfully') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+            {successMessage}
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -82,7 +109,8 @@ export default function NewProductPage() {
               required
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+              placeholder="Enter product title"
             />
           </div>
 
@@ -93,7 +121,7 @@ export default function NewProductPage() {
             <select
               value={formData.category}
               onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 bg-white"
             >
               <option value="T-Shirts">T-Shirts</option>
               <option value="Caps">Caps</option>
@@ -112,7 +140,8 @@ export default function NewProductPage() {
               required
               value={formData.price}
               onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+              placeholder="0.00"
             />
           </div>
 
@@ -171,7 +200,8 @@ export default function NewProductPage() {
             value={formData.description}
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500"
+            placeholder="Enter product description (optional)"
           />
         </div>
 
@@ -191,9 +221,19 @@ export default function NewProductPage() {
         <div className="mt-6 flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+            disabled={saving}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            <FaSave /> Save Product
+            {saving ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Saving...
+              </>
+            ) : (
+              <>
+                <FaSave /> Save Product
+              </>
+            )}
           </button>
         </div>
       </form>

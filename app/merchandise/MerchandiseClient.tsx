@@ -27,6 +27,8 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  console.log('MerchandiseClient received products:', initialProducts.length); // Debug log
+
   const filteredProducts = useMemo(() => {
     if (activeCategory === 'All') return initialProducts;
     return initialProducts.filter(p => p.category === activeCategory);
@@ -176,7 +178,7 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
 
                     {/* Price Badge */}
                     <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full bg-amber-500 text-black text-sm font-bold">
+                      <span className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-black text-lg font-bold shadow-lg border-2 border-white/20">
                         ${product.price}
                       </span>
                     </div>
@@ -187,9 +189,13 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                     <h3 className="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-amber-400 transition-colors">
                       {product.title}
                     </h3>
-                    {product.description && (
-                      <p className="text-sm text-slate-400 mb-4 line-clamp-2">
+                    {product.description ? (
+                      <p className="text-sm text-slate-300 mb-4 line-clamp-2 leading-relaxed">
                         {product.description}
+                      </p>
+                    ) : (
+                      <p className="text-sm text-slate-500 mb-4 italic">
+                        No description available
                       </p>
                     )}
                     <button

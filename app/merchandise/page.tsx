@@ -13,16 +13,25 @@ async function getProducts() {
       orderBy: { order: 'asc' },
     });
 
-    return products.map((product) => ({
-      id: product.id.toString(),
-      title: product.title,
-      description: product.description,
-      price: product.price.toNumber(),
-      category: product.category,
-      image: product.image,
-      stripeProductId: product.stripeProductId,
-      stripePriceId: product.stripePriceId,
-    }));
+    console.log('Fetched products:', products.length); // Debug log
+
+    return products.map((product) => {
+      try {
+        return {
+          id: product.id.toString(),
+          title: product.title || 'Untitled Product',
+          description: product.description,
+          price: product.price ? product.price.toNumber() : 0,
+          category: product.category || 'Uncategorized',
+          image: product.image,
+          stripeProductId: product.stripeProductId,
+          stripePriceId: product.stripePriceId,
+        };
+      } catch (error) {
+        console.error('Error mapping product:', product.id, error);
+        return null;
+      }
+    }).filter(Boolean); // Remove null products
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];

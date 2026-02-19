@@ -30,6 +30,8 @@ export default function EditProductForm({ product }: EditProductFormProps) {
     published: product.published,
   });
   const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleImageUpload = async (file: File) => {
     setUploading(true);
@@ -54,6 +56,8 @@ export default function EditProductForm({ product }: EditProductFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
+    setSuccessMessage('');
 
     try {
       const response = await fetch(`/api/products/${product.id}`, {
@@ -66,10 +70,18 @@ export default function EditProductForm({ product }: EditProductFormProps) {
       });
 
       if (response.ok) {
-        router.push('/admin/merchandise');
+        setSuccessMessage('Product updated successfully!');
+        setTimeout(() => {
+          router.push('/admin/merchandise');
+        }, 2000);
+      } else {
+        throw new Error('Failed to update product');
       }
     } catch (error) {
       console.error('Error updating product:', error);
+      setSuccessMessage('Failed to update product. Please try again.');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -86,6 +98,11 @@ export default function EditProductForm({ product }: EditProductFormProps) {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6">
+        {successMessage && (
+          <div className={`mb-6 p-4 rounded-lg ${successMessage.includes('successfully') ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+            {successMessage}
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -205,9 +222,19 @@ export default function EditProductForm({ product }: EditProductFormProps) {
         <div className="mt-6 flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+            disabled={saving}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center gap-2"
           >
-            <FaSave /> Update Product
+            {saving ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                Updating...
+              </>
+            ) : (
+              <>
+                <FaSave /> Update Product
+              </>
+            )}
           </button>
         </div>
       </form>
