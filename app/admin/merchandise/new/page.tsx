@@ -68,7 +68,7 @@ export default function NewProductPage() {
         });
         // Redirect after a short delay to show success message
         setTimeout(() => {
-          router.push('/admin/merchandise');
+          router.push('/admin/merchandise?t=' + Date.now()); // Cache-busting parameter
         }, 2000);
       } else {
         throw new Error('Failed to create product');

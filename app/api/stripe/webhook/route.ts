@@ -99,16 +99,19 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   if (productId) {
     console.log('Processing completed checkout for merchandise:', productId);
 
-    // Create a merchandise purchase record (you might want to add a Purchase model)
-    // For now, we'll just log it - you can extend this to store purchase history
-    console.log('Merchandise purchase completed:', {
-      productId,
-      customerEmail,
-      customerName,
-      productTitle,
-      productPrice,
-      sessionId: session.id,
+    // Create purchase record
+    const purchase = await prisma.purchase.create({
+      data: {
+        productId: parseInt(productId),
+        customerEmail: customerEmail || null,
+        customerName: customerName || null,
+        amount: parseInt(productPrice),
+        stripeSessionId: session.id,
+        status: 'completed',
+      },
     });
+
+    console.log('Merchandise purchase recorded:', purchase.id);
 
     // TODO: Send confirmation email for merchandise purchase
     // await sendMerchandiseConfirmationEmail(customerEmail, customerName, productTitle);

@@ -28,15 +28,15 @@ async function verifyPurchase(sessionId: string) {
 
     const { productId, customerEmail, customerName, productTitle, productPrice } = session.metadata || {};
 
-    if (!productId || !customerEmail || !customerName) {
+    if (!productId) {
       return { error: 'Invalid session metadata' };
     }
 
     return {
       session,
       productId: parseInt(productId),
-      customerEmail,
-      customerName,
+      customerEmail: customerEmail || '',
+      customerName: customerName || '',
       productTitle,
       productPrice: parseInt(productPrice),
     };
@@ -97,8 +97,9 @@ async function SuccessPageContent({ sessionId }: { sessionId: string }) {
             <div>
               <h3 className="text-lg font-semibold mb-4">Customer Information</h3>
               <div className="space-y-2 text-slate-300">
-                <p><span className="font-medium">Name:</span> {customerName}</p>
-                <p><span className="font-medium">Email:</span> {customerEmail}</p>
+                {customerName && <p><span className="font-medium">Name:</span> {customerName}</p>}
+                {customerEmail && <p><span className="font-medium">Email:</span> {customerEmail}</p>}
+                {!customerName && !customerEmail && <p className="text-slate-400 italic">No customer information provided</p>}
               </div>
             </div>
 

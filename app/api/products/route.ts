@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { stripe, isStripeConfigured } from '@/lib/stripe';
 
 const productSchema = z.object({
   title: z.string().min(1),
@@ -39,11 +40,52 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const validatedData = productSchema.parse(body);
 
+    // Create product in database first
     const product = await prisma.product.create({
       data: validatedData,
     });
 
-    return NextResponse.json(product);
+    // Generate Stripe product and price if Stripe is configured
+    if (isStripeConfigured()) {
+      try {
+        const priceInCents = Math.round(validatedData.price * 100);
+
+        // Create Stripe product
+        const stripeProduct = await stripe.products.create({
+          name: validatedData.title,
+          description: validatedData.description || undefined,
+          images: validatedData.image ? [validatedData.image] : undefined,
+        });
+
+        // Create Stripe price
+        const stripePrice = await stripe.prices.create({
+          unit_amount: priceInCents,
+          currency: 'usd',
+          product: stripeProduct.id,
+        });
+
+        // Update product with Stripe IDs
+        await prisma.product.update({
+          where: { id: product.id },
+          data: {
+            stripeProductId: stripeProduct.id,
+            stripePriceId: stripePrice.id,
+          },
+        });
+
+        console.log('Stripe product and price created for product:', product.id);
+      } catch (stripeError) {
+        console.error('Error creating Stripe product/price:', stripeError);
+        // Don't fail the product creation if Stripe fails
+      }
+    }
+
+    // Fetch the updated product with Stripe IDs
+    const updatedProduct = await prisma.product.findUnique({
+      where: { id: product.id },
+    });
+
+    return NextResponse.json(updatedProduct);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 });

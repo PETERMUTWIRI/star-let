@@ -72,7 +72,7 @@ export default function EditProductForm({ product }: EditProductFormProps) {
       if (response.ok) {
         setSuccessMessage('Product updated successfully!');
         setTimeout(() => {
-          router.push('/admin/merchandise');
+          router.push('/admin/merchandise?t=' + Date.now()); // Cache-busting parameter
         }, 2000);
       } else {
         throw new Error('Failed to update product');

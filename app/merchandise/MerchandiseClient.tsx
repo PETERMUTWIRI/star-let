@@ -26,6 +26,10 @@ const categories = ['All', 'T-Shirts', 'Caps', 'Accessories', 'Maasai Collection
 export default function MerchandiseClient({ initialProducts }: MerchandiseClientProps) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   console.log('MerchandiseClient received products:', initialProducts.length); // Debug log
 
@@ -34,7 +38,15 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
     return initialProducts.filter(p => p.category === activeCategory);
   }, [initialProducts, activeCategory]);
 
-  const handlePurchase = async (product: Product) => {
+  const handlePurchase = (product: Product) => {
+    setSelectedProduct(product);
+    setShowCheckoutModal(true);
+  };
+
+  const handleCheckout = async () => {
+    if (!selectedProduct) return;
+
+    setIsProcessing(true);
     try {
       const response = await fetch('/api/stripe/checkout/products', {
         method: 'POST',
@@ -42,9 +54,9 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          productId: product.id,
-          productTitle: product.title,
-          productPrice: product.price,
+          productId: selectedProduct.id,
+          email: customerEmail || undefined,
+          name: customerName || undefined,
         }),
       });
 
@@ -57,6 +69,12 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
     } catch (error) {
       console.error('Error creating checkout session:', error);
       alert('Failed to start checkout process. Please try again.');
+    } finally {
+      setIsProcessing(false);
+      setShowCheckoutModal(false);
+      setSelectedProduct(null);
+      setCustomerEmail('');
+      setCustomerName('');
     }
   };
 
@@ -83,7 +101,7 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6"
               >
-                <span className="text-gradient">Wear Hope. Share Inspiration.</span>
+                <span className="text-gradient">Share Inspiration.</span>
                 <br />
                 <span className="text-2xl sm:text-3xl lg:text-4xl text-slate-300 font-light">
                   Ray Armillion Collection
@@ -283,6 +301,71 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                     Purchase Now
                   </button>
                 </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Checkout Modal */}
+      <AnimatePresence>
+        {showCheckoutModal && selectedProduct && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowCheckoutModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full mx-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4">Complete Your Purchase</h3>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Email (Optional)
+                  </label>
+                  <input
+                    type="email"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder="Your Name"
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowCheckoutModal(false)}
+                  className="flex-1 px-4 py-3 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors"
+                  disabled={isProcessing}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCheckout}
+                  disabled={isProcessing}
+                  className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-amber-500 to-purple-600 text-white font-semibold hover:shadow-lg shadow-amber-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isProcessing ? 'Processing...' : `Purchase $${selectedProduct.price}`}
+                </button>
               </div>
             </motion.div>
           </motion.div>
