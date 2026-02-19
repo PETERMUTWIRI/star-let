@@ -330,19 +330,19 @@ export default function DashboardContent() {
               <FaTicketAlt /> View All
             </Link>
           </div>
-          <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+          <div className="space-y-2 md:space-y-3 max-h-96 overflow-y-auto pr-2">
             {recentRegistrations.length ? (
               recentRegistrations.map((r) => (
-                <div key={r.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition">
+                <div key={r.id} className="flex items-center gap-2 md:gap-4 p-2 md:p-3 bg-gray-50 rounded-lg border hover:bg-gray-100 transition">
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm truncate">{r.name}</p>
-                    <p className="text-xs text-gray-400">{r.event?.title || `Event #${r.eventId}`}</p>
+                    <p className="text-xs text-gray-400 truncate">{r.event?.title || `Event #${r.eventId}`}</p>
                   </div>
-                  <div className="text-right">
+                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
                     <p className={`text-sm font-semibold ${r.status === 'completed' ? 'text-green-600' : 'text-gray-600'}`}>
                       ${(r.amountPaid ?? 0).toFixed(2)}
                     </p>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    <span className={`text-xs px-1 md:px-2 py-0.5 rounded-full ${
                       r.status === 'completed' ? 'bg-green-100 text-green-800' :
                       r.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                       r.status === 'refunded' ? 'bg-blue-100 text-blue-800' :
@@ -448,7 +448,7 @@ function SectionCard<T>({
           <FaPlus /> New
         </Link>
       </div>
-      <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+      <div className="space-y-2 md:space-y-3 max-h-96 overflow-y-auto pr-2">
         {items.length ? (
           items.map(render)
         ) : (
@@ -464,18 +464,18 @@ function SectionCard<T>({
 
 function ItemRow({ id, title, subtitle, cover, editLink, onDelete, status }: { id: number; title: string; subtitle: string; cover?: string; editLink: string; onDelete: () => void; status?: string }) {
   return (
-    <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg border group hover:bg-gray-100 transition">
-      {cover && <img src={cover} alt="" className="w-12 h-12 object-cover rounded" />}
+    <div className="flex items-center gap-2 md:gap-4 p-2 md:p-3 bg-gray-50 rounded-lg border group hover:bg-gray-100 transition">
+      {cover && <img src={cover} alt="" className="w-10 h-10 md:w-12 md:h-12 object-cover rounded flex-shrink-0" />}
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-sm truncate">{title}</p>
-        <p className="text-xs text-gray-400">{subtitle}</p>
+        <p className="text-xs text-gray-400 truncate">{subtitle}</p>
       </div>
       {status && (
-        <span className="text-xs px-2 py-0.5 rounded-full bg-gray-200 text-gray-700">
+        <span className="text-xs px-1 md:px-2 py-0.5 rounded-full bg-gray-200 text-gray-700 flex-shrink-0">
           {status}
         </span>
       )}
-      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition">
+      <div className="flex gap-1 md:gap-2 opacity-0 group-hover:opacity-100 transition flex-shrink-0">
         <Link href={editLink} className="text-blue-600 hover:text-blue-800 p-1" title="Edit">
           <FaEdit />
         </Link>
