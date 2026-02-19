@@ -13,18 +13,19 @@ import {
   FaTiktok,
   FaYoutube,
   FaSpotify,
-  FaChevronDown
+  FaChevronDown,
+  FaShoppingCart
 } from 'react-icons/fa6';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'Music', href: '/music' },
-  { name: 'Videos', href: '/videos' },
-  { name: 'Events', href: '/events' },
-  { name: 'Merchandise', href: '/merchandise' },
-  { name: 'About', href: '/about' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Home', href: '/', icon: null },
+  { name: 'Music', href: '/music', icon: null },
+  { name: 'Videos', href: '/videos', icon: null },
+  { name: 'Events', href: '/events', icon: null },
+  { name: 'Merchandise', href: '/merchandise', icon: FaShoppingCart },
+  { name: 'About', href: '/about', icon: null },
+  { name: 'Blog', href: '/blog', icon: null },
+  { name: 'Contact', href: '/contact', icon: null },
 ];
 
 const socialLinks = [
@@ -81,12 +82,13 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
                     pathname === link.href 
                       ? 'text-white' 
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
+                  {link.icon && <link.icon className="w-4 h-4" />}
                   {link.name}
                   {pathname === link.href && (
                     <motion.div
@@ -179,12 +181,13 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-xl text-lg font-medium transition-colors ${
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl text-lg font-medium transition-colors ${
                           pathname === link.href
                             ? 'bg-gradient-to-r from-blue-500/20 to-purple-600/20 text-white border border-blue-500/30'
                             : 'text-slate-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
+                        {link.icon && <link.icon className="w-5 h-5" />}
                         {link.name}
                       </Link>
                     </motion.div>

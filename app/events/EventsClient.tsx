@@ -173,6 +173,31 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
         </div>
       </section>
 
+      {/* Merchandise Banner */}
+      <section className="relative py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-r from-amber-500/10 to-purple-600/10 border border-amber-500/20 rounded-2xl p-6 text-center"
+          >
+            <h3 className="text-lg font-semibold text-white mb-2">
+              Support the Artist
+            </h3>
+            <p className="text-slate-300 text-sm mb-4">
+              Show your love for Ray Armillion&apos;s music with official merchandise
+            </p>
+            <a
+              href="/merchandise"
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 text-white text-sm font-semibold hover:shadow-lg transition-all"
+            >
+              <FaTicket className="w-4 h-4" />
+              Shop Merchandise
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Events Content */}
       <section className="relative py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">

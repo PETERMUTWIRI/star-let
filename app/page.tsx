@@ -16,6 +16,7 @@ import { GradientText } from '@/components/TextScramble';
 import HomepageHero from './HomepageHero';
 import HomepageEventsSection from './HomepageEventsSection';
 import HomepageBlogSection from './HomepageBlogSection';
+import HomepageMerchandiseSection from './HomepageMerchandiseSection';
 import HomepageBookingSection from './HomepageBookingSection';
 
 // Force dynamic rendering to get fresh data on every request
@@ -104,9 +105,34 @@ async function getLatestBlogPost() {
   }
 }
 
+async function getFeaturedProducts() {
+  try {
+    const products = await prisma.product.findMany({
+      where: { published: true },
+      orderBy: { order: 'asc' },
+      take: 4, // Only get first 4 for homepage
+    });
+
+    return products.map((product) => ({
+      id: product.id.toString(),
+      title: product.title || 'Untitled Product',
+      description: product.description,
+      price: product.price ? product.price.toNumber() : 0,
+      category: product.category || 'Uncategorized',
+      image: product.image,
+      stripeProductId: product.stripeProductId,
+      stripePriceId: product.stripePriceId,
+    }));
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+}
+
 export default async function HomePage() {
   const upcomingEvents = await getUpcomingEvents();
   const latestBlogPost = await getLatestBlogPost();
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -218,6 +244,9 @@ export default async function HomePage() {
 
       {/* Blog Section */}
       <HomepageBlogSection latestPost={latestBlogPost} />
+
+      {/* Merchandise Section */}
+      <HomepageMerchandiseSection featuredProducts={featuredProducts} />
 
       {/* Booking Section - Last Section */}
       <HomepageBookingSection />
