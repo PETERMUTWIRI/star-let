@@ -64,8 +64,13 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
         throw new Error('Failed to create checkout session');
       }
 
-      const { url } = await response.json();
-      window.location.href = url;
+      const data = await response.json();
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+      } else {
+        throw new Error('No checkout URL received');
+      }
     } catch (error) {
       console.error('Error creating checkout session:', error);
       alert('Failed to start checkout process. Please try again.');

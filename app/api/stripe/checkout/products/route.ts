@@ -134,7 +134,6 @@ export async function POST(req: NextRequest) {
     console.log('Stripe checkout session created for product:', checkoutSession.id);
 
     return NextResponse.json({
-      success: true,
       checkoutUrl: checkoutSession.url,
     });
   } catch (error) {
