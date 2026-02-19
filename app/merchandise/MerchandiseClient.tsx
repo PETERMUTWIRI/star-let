@@ -9,12 +9,12 @@ import ScrollReveal from '@/components/ScrollReveal';
 export interface Product {
   id: string;
   title: string;
-  description?: string;
+  description: string | null;
   price: number;
   category: string;
-  image?: string;
-  stripeProductId?: string;
-  stripePriceId?: string;
+  image: string | null;
+  stripeProductId: string | null;
+  stripePriceId: string | null;
 }
 
 interface MerchandiseClientProps {
