@@ -124,10 +124,10 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6"
               >
-                <span className="text-gradient">Share Inspiration.</span>
+                <span className="text-gradient">Ray Armillion Collection.</span>
                 <br />
                 <span className="text-2xl sm:text-3xl lg:text-4xl text-slate-300 font-light">
-                  Ray Armillion Collection
+                 
                 </span>
               </motion.h1>
 

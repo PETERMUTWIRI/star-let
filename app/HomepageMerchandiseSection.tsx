@@ -40,7 +40,7 @@ export default function HomepageMerchandiseSection({ featuredProducts }: Homepag
             <span className="text-gradient">Show Your Support</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto mb-8">
-            Wear the inspiration. Every piece in our collection carries the spirit of hope, resilience, and faith.
+             Every piece in our collection carries the spirit of hope, resilience, and faith.
             Support the artist while sharing a message that moves hearts.
           </p>
         </ScrollReveal>
