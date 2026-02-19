@@ -314,11 +314,12 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                   </button>
                                 )}
 
-                                {!featuredEvent.isFree && featuredEvent.ticketPrice && (
+                                {/* Price display hidden for professional presentation */}
+                                {/* {!featuredEvent.isFree && featuredEvent.ticketPrice && (
                                   <span className="text-2xl font-bold text-white">
                                     {featuredEvent.ticketPrice}
                                   </span>
-                                )}
+                                )} */}
                                 {featuredEvent.isFree && (
                                   <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 font-semibold border border-green-500/30">
                                     Free Event
@@ -400,11 +401,12 @@ export default function EventsClient({ initialEvents }: EventsClientProps) {
                                 </div>
 
                                 <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                                  {event.isFree ? (
+                                  {/* Price display hidden for professional presentation */}
+                                  {/* {event.isFree ? (
                                     <span className="text-green-400 font-semibold">Free Entry</span>
                                   ) : (
                                     <span className="text-white font-bold">{event.ticketPrice || 'Tickets Available'}</span>
-                                  )}
+                                  )} */}
                                   
                                   <span className="inline-flex items-center gap-1 text-cyan-400 text-sm font-medium group-hover:gap-2 transition-all">
                                     Details

@@ -233,11 +233,12 @@ export default function HomepageEventsSection({ upcomingEvents }: HomepageEvents
                       </button>
                     )}
 
-                    {!latestEvent.isFree && latestEvent.ticketPrice && (
+                    {/* Price display hidden for professional presentation */}
+                    {/* {!latestEvent.isFree && latestEvent.ticketPrice && (
                       <span className="text-2xl font-bold text-white">
                         {latestEvent.ticketPrice}
                       </span>
-                    )}
+                    )} */}
                     {latestEvent.isFree && (
                       <span className="px-4 py-2 rounded-full bg-green-500/20 text-green-400 font-semibold border border-green-500/30">
                         Free Event
