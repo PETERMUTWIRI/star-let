@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaShoppingCart, FaEye, FaFilter } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaShoppingCart } from 'react-icons/fa';
 import Image from 'next/image';
 import ScrollReveal from '@/components/ScrollReveal';
 
@@ -26,7 +26,6 @@ const categories = ['All', 'T-Shirts', 'Caps', 'Accessories', 'Maasai Collection
 export default function MerchandiseClient({ initialProducts }: MerchandiseClientProps) {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -38,9 +37,20 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
     return initialProducts.filter(p => p.category === activeCategory);
   }, [initialProducts, activeCategory]);
 
-  const handlePurchase = (product: Product) => {
+  // Auto-select first product when category changes
+  useMemo(() => {
+    if (filteredProducts.length > 0 && !selectedProduct) {
+      setSelectedProduct(filteredProducts[0]);
+    } else if (filteredProducts.length > 0 && selectedProduct && !filteredProducts.find(p => p.id === selectedProduct.id)) {
+      setSelectedProduct(filteredProducts[0]);
+    }
+  }, [filteredProducts, selectedProduct]);
+
+  const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
-    setShowCheckoutModal(true);
+    // Clear form when switching products
+    setCustomerEmail('');
+    setCustomerName('');
   };
 
   const handleCheckout = async () => {
@@ -88,10 +98,6 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
       alert('Failed to start checkout process. Please try again.');
     } finally {
       setIsProcessing(false);
-      setShowCheckoutModal(false);
-      setSelectedProduct(null);
-      setCustomerEmail('');
-      setCustomerName('');
     }
   };
 
@@ -161,134 +167,27 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
         </div>
       </section>
 
-      {/* Products Grid */}
+      {/* Products Section */}
       <section className="relative py-10 px-6 pb-24">
         <div className="max-w-7xl mx-auto">
-          {filteredProducts.length > 0 ? (
+          {/* Selected Product Display */}
+          {selectedProduct && (
             <motion.div
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              className="mb-12 bg-slate-900/40 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              {filteredProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  className="group relative bg-slate-900/60 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-500/10"
-                  whileHover={{ y: -8 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  {/* Product Image */}
-                  <div className="aspect-square relative overflow-hidden">
-                    {product.image ? (
-                      <Image
-                        src={product.image}
-                        alt={product.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-purple-100 flex items-center justify-center">
-                        <span className="text-6xl">🛍️</span>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <button
-                        onClick={() => setSelectedProduct(product)}
-                        className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center hover:bg-amber-600 transition-colors"
-                      >
-                        <FaEye className="w-6 h-6 text-white" />
-                      </button>
-                    </div>
-
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-bold border border-white/20">
-                        {product.category}
-                      </span>
-                    </div>
-
-                    {/* Price Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-black text-lg font-bold shadow-lg border-2 border-white/20">
-                        ${product.price}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-1 group-hover:text-amber-400 transition-colors">
-                      {product.title}
-                    </h3>
-                    {product.description ? (
-                      <p className="text-sm text-slate-300 mb-4 line-clamp-2 leading-relaxed">
-                        {product.description}
-                      </p>
-                    ) : (
-                      <p className="text-sm text-slate-500 mb-4 italic">
-                        No description available
-                      </p>
-                    )}
-                    <button
-                      onClick={() => handlePurchase(product)}
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 text-white font-semibold hover:shadow-lg shadow-amber-500/25 transition-all"
-                    >
-                      <FaShoppingCart className="w-4 h-4" />
-                      Add to Cart - ${product.price}
-                    </button>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-slate-400">No products found in this category.</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Product Modal */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
-            onClick={() => setSelectedProduct(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative w-full max-w-md"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProduct(null)}
-                className="absolute -top-12 right-0 text-white hover:text-amber-400 transition-colors p-2 z-10"
-                aria-label="Close product"
-              >
-                ✕
-              </button>
-
-              {/* Product Details */}
-              <div className="bg-slate-900 rounded-3xl overflow-hidden">
-                {/* Image */}
-                <div className="aspect-square relative">
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Product Image */}
+                <div className="aspect-square relative rounded-2xl overflow-hidden">
                   {selectedProduct.image ? (
                     <Image
                       src={selectedProduct.image}
                       alt={selectedProduct.title}
                       fill
                       className="object-cover"
-                      sizes="400px"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-purple-100 flex items-center justify-center">
@@ -297,99 +196,174 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                   )}
                 </div>
 
-                {/* Info */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    {selectedProduct.title}
-                  </h3>
-                  <p className="text-amber-400 font-semibold text-xl mb-4">
-                    ${selectedProduct.price}
-                  </p>
-                  {selectedProduct.description && (
-                    <p className="text-slate-300 mb-6">
-                      {selectedProduct.description}
-                    </p>
-                  )}
-                  <button
-                    onClick={() => handlePurchase(selectedProduct)}
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-purple-600 text-white font-semibold hover:shadow-lg shadow-amber-500/25 transition-all"
-                  >
-                    <FaShoppingCart className="w-4 h-4" />
-                    Purchase Now
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {/* Product Details & Checkout */}
+                <div className="flex flex-col justify-center">
+                  <div className="mb-6">
+                    <span className="inline-block px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-sm font-medium mb-4">
+                      {selectedProduct.category}
+                    </span>
+                    <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                      {selectedProduct.title}
+                    </h2>
+                    <div className="text-3xl font-bold text-amber-400 mb-4">
+                      ${selectedProduct.price}
+                    </div>
+                    {selectedProduct.description ? (
+                      <p className="text-slate-300 text-lg leading-relaxed mb-6">
+                        {selectedProduct.description}
+                      </p>
+                    ) : (
+                      <p className="text-slate-500 italic mb-6">
+                        No description available
+                      </p>
+                    )}
+                  </div>
 
-      {/* Checkout Modal */}
-      <AnimatePresence>
-        {showCheckoutModal && selectedProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowCheckoutModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full mx-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="text-2xl font-bold text-white mb-4">Complete Your Purchase</h3>
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    required
-                  />
+                  {/* Checkout Form */}
+                  <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
+                    <h3 className="text-xl font-semibold text-white mb-4">Complete Your Purchase</h3>
+                    <div className="space-y-4 mb-6">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          value={customerEmail}
+                          onChange={(e) => setCustomerEmail(e.target.value)}
+                          placeholder="your@email.com"
+                          className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">
+                          Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                          placeholder="Your Name"
+                          className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleCheckout}
+                      disabled={isProcessing}
+                      className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-purple-600 text-white font-semibold hover:shadow-lg shadow-amber-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                    >
+                      {isProcessing ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <FaShoppingCart className="w-5 h-5" />
+                          Purchase Now - ${selectedProduct.price}
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowCheckoutModal(false)}
-                  className="flex-1 px-4 py-3 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors"
-                  disabled={isProcessing}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleCheckout}
-                  disabled={isProcessing}
-                  className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-amber-500 to-purple-600 text-white font-semibold hover:shadow-lg shadow-amber-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isProcessing ? 'Processing...' : `Purchase $${selectedProduct.price}`}
-                </button>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+
+          {/* Products Grid */}
+          {filteredProducts.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-bold text-white">
+                  {activeCategory === 'All' ? 'All Products' : `${activeCategory} Collection`}
+                </h2>
+                <span className="text-slate-400">
+                  {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+                </span>
+              </div>
+              <motion.div
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+              >
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    className={`group relative bg-slate-900/60 backdrop-blur-sm rounded-2xl overflow-hidden border transition-all duration-300 cursor-pointer ${
+                      selectedProduct?.id === product.id
+                        ? 'border-amber-500/50 shadow-lg shadow-amber-500/20'
+                        : 'border-white/10 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/10'
+                    }`}
+                    whileHover={{ y: -4 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.05 }}
+                    onClick={() => handleProductClick(product)}
+                  >
+                    {/* Product Image */}
+                    <div className="aspect-square relative overflow-hidden">
+                      {product.image ? (
+                        <Image
+                          src={product.image}
+                          alt={product.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-100 to-purple-100 flex items-center justify-center">
+                          <span className="text-4xl">🛍️</span>
+                        </div>
+                      )}
+
+                      {/* Selected Indicator */}
+                      {selectedProduct?.id === product.id && (
+                        <div className="absolute inset-0 bg-amber-500/20 border-2 border-amber-500 rounded-2xl"></div>
+                      )}
+
+                      {/* Category Badge */}
+                      <div className="absolute top-2 left-2">
+                        <span className="px-2 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-bold border border-white/20">
+                          {product.category}
+                        </span>
+                      </div>
+
+                      {/* Price Badge */}
+                      <div className="absolute top-2 right-2">
+                        <span className="px-3 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-black text-sm font-bold shadow-lg border border-white/20">
+                          ${product.price}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4">
+                      <h3 className={`text-sm font-bold mb-2 line-clamp-2 transition-colors ${
+                        selectedProduct?.id === product.id ? 'text-amber-400' : 'text-white group-hover:text-amber-400'
+                      }`}>
+                        {product.title}
+                      </h3>
+                      {product.description && (
+                        <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                          {product.description}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-slate-400">No products found in this category.</p>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }
