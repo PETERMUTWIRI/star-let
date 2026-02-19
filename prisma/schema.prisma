@@ -174,6 +174,25 @@ model Comment {
   @@index([approved])
 }
 
+model Product {
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(255)
+  description     String?
+  price           Decimal  @db.Decimal(10, 2)
+  category        String   @db.VarChar(100)
+  image           String?  @db.VarChar(500)
+  published       Boolean  @default(true)
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+  stripeProductId String?  @db.VarChar(255)
+  stripePriceId   String?  @db.VarChar(255)
+
+  @@index([category])
+  @@index([published])
+  @@index([order])
+}
+
 enum RegistrationType {
   native
   external

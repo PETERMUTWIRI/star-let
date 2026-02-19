@@ -21,6 +21,7 @@ const navLinks = [
   { name: 'Music', href: '/music' },
   { name: 'Videos', href: '/videos' },
   { name: 'Events', href: '/events' },
+  { name: 'Merchandise', href: '/merchandise' },
   { name: 'About', href: '/about' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
