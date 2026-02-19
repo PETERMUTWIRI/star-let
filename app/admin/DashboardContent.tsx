@@ -46,6 +46,16 @@ interface Music {
   createdAt: string;
 }
 
+interface Product {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  image?: string;
+  published: boolean;
+  createdAt: string;
+}
+
 interface Registration {
   id: number;
   eventId: number;
@@ -82,6 +92,7 @@ export default function DashboardContent() {
   const { data: events, mutate: mutateEvents } = useSWR<Event[]>('/api/events', fetcher);
   const { data: videos, mutate: mutateVideos } = useSWR<Video[]>('/api/videos', fetcher);
   const { data: music, mutate: mutateMusic } = useSWR<Music[]>('/api/music', fetcher);
+  const { data: products, mutate: mutateProducts } = useSWR<Product[]>('/api/products', fetcher);
   const { data: registrations } = useSWR<Registration[]>('/api/registrations/all', fetcher);
 
   const deletePost = async (id: number) => {
@@ -108,6 +119,12 @@ export default function DashboardContent() {
     mutateMusic(music?.filter((m) => m.id !== id) ?? [], false);
   };
 
+  const deleteProduct = async (id: number) => {
+    if (!confirm('Delete this product?')) return;
+    await fetch(`/api/products/${id}`, { method: 'DELETE' });
+    mutateProducts(products?.filter((p) => p.id !== id) ?? [], false);
+  };
+
   /* ---------- computed stats ---------- */
   const totalRevenue = (registrations
     ?.filter(r => r.status === 'completed')
@@ -123,16 +140,19 @@ export default function DashboardContent() {
   const recentMusic = music
     ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
 
+  const recentProducts = products
+    ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
+
   const recentRegistrations = registrations
     ?.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 5) || [];
 
   /* ---------- skeleton while loading ---------- */
-  if (!posts || !events || !videos || !music || !registrations)
+  if (!posts || !events || !videos || !music || !products || !registrations)
     return (
       <div className="max-w-7xl mx-auto p-8">
         <div className="h-10 bg-slate-700 rounded mb-8 animate-pulse" />
-        <div className="grid md:grid-cols-4 gap-6 mb-10">
+        <div className="grid md:grid-cols-5 gap-6 mb-10">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="h-24 bg-slate-700 rounded animate-pulse" />
           ))}
@@ -165,12 +185,13 @@ export default function DashboardContent() {
       </div>
 
       {/* KPI CARDS */}
-      <div className="grid md:grid-cols-4 gap-6 mb-10">
+      <div className="grid md:grid-cols-5 gap-6 mb-10">
         <MetricCard label="Blog Posts" value={posts.length} icon={<FaPen />} href="/admin/blog/list" color="blue" />
         <MetricCard label="Events" value={events.length} icon={<FaCalendar />} href="/admin/events/list" color="green" />
         <MetricCard label="Videos" value={videos.length} icon={<FaVideo />} href="/admin/videos/list" color="purple" />
         <MetricCard label="Registrations" value={registrations.length} icon={<FaTicketAlt />} href="/admin/registrations" color="orange" />
         <MetricCard label="Music" value={music.length} icon={<FaCompactDisc />} href="/admin/music/list" color="red" />
+        <MetricCard label="Products" value={products?.length || 0} icon={<FaDollarSign />} href="/admin/merchandise" color="orange" />
       </div>
 
       {/* Quick Stats Row */}
@@ -282,6 +303,25 @@ export default function DashboardContent() {
           )}
         />
 
+        {/* MERCHANDISE SECTION */}
+        <SectionCard
+          title="Recent Products"
+          href="/admin/merchandise"
+          onNew="/admin/merchandise"
+          items={recentProducts.slice(0, 5)}
+          render={(p) => (
+            <ItemRow
+              id={p.id}
+              title={p.title}
+              subtitle={`${p.category} • $${p.price}`}
+              cover={p.image}
+              editLink={`/admin/merchandise?id=${p.id}`}
+              onDelete={() => deleteProduct(p.id)}
+              status={p.published ? undefined : 'Draft'}
+            />
+          )}
+        />
+
         {/* REGISTRATIONS SECTION */}
         <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
           <div className="flex items-center justify-between mb-4">
@@ -332,6 +372,7 @@ export default function DashboardContent() {
           <QuickActionButton href="/admin/videos" icon={<FaVideo />} label="Add Video" />
           <QuickActionButton href="/admin/registrations" icon={<FaTicketAlt />} label="View Registrations" />
           <QuickActionButton href="/admin/music" icon={<FaMusic />} label="Add Music" />
+          <QuickActionButton href="/admin/merchandise" icon={<FaCompactDisc />} label="Add Product" />
         </div>
       </div>
     </div>
