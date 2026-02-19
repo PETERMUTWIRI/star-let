@@ -77,27 +77,45 @@ export async function POST(req: NextRequest) {
  * Handle successful checkout completion
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
-  const { registrationId, eventId, userId } = session.metadata || {};
+  const { registrationId, eventId, productId, customerEmail, customerName, productTitle, productPrice } = session.metadata || {};
 
-  if (!registrationId) {
-    console.error('No registrationId in session metadata');
+  // Handle event registration
+  if (registrationId) {
+    console.log('Processing completed checkout for event registration:', registrationId);
+
+    // Update registration status to completed
+    const registration = await prisma.registration.update({
+      where: { id: Number(registrationId) },
+      data: {
+        status: 'completed',
+      },
+    });
+
+    console.log('Registration marked as completed:', registration.id);
     return;
   }
 
-  console.log('Processing completed checkout for registration:', registrationId);
+  // Handle merchandise purchase
+  if (productId) {
+    console.log('Processing completed checkout for merchandise:', productId);
 
-  // Update registration status to completed
-  const registration = await prisma.registration.update({
-    where: { id: Number(registrationId) },
-    data: {
-      status: 'completed',
-    },
-  });
+    // Create a merchandise purchase record (you might want to add a Purchase model)
+    // For now, we'll just log it - you can extend this to store purchase history
+    console.log('Merchandise purchase completed:', {
+      productId,
+      customerEmail,
+      customerName,
+      productTitle,
+      productPrice,
+      sessionId: session.id,
+    });
 
-  console.log('Registration marked as completed:', registration.id);
+    // TODO: Send confirmation email for merchandise purchase
+    // await sendMerchandiseConfirmationEmail(customerEmail, customerName, productTitle);
+    return;
+  }
 
-  // TODO: Send confirmation email
-  // await sendConfirmationEmail(registration.email, registration.name, eventId);
+  console.error('Unknown checkout session type - no registrationId or productId in metadata');
 }
 
 /**

@@ -33,8 +33,29 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
   }, [initialProducts, activeCategory]);
 
   const handlePurchase = async (product: Product) => {
-    // TODO: Integrate Stripe checkout
-    alert(`Purchase ${product.title} for $${product.price}`);
+    try {
+      const response = await fetch('/api/stripe/checkout/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          productTitle: product.title,
+          productPrice: product.price,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      alert('Failed to start checkout process. Please try again.');
+    }
   };
 
   return (
