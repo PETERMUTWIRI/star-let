@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </button>
         </header>
         
-        <main className="p-6">{children}</main>
+        <main className="p-4 md:p-6">{children}</main>
       </div>
     </NeonAuthUIProvider>
   );

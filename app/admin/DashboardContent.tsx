@@ -174,9 +174,9 @@ export default function DashboardContent() {
 
   /* ---------- dashboard ---------- */
   return (
-    <div className="max-w-7xl mx-auto p-8">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-black text-white flex items-center gap-3">
+    <div className="max-w-7xl mx-auto p-4 md:p-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+        <h1 className="text-2xl sm:text-3xl font-black text-white flex items-center gap-3">
           <FaMusic className="text-blue-600" /> Ray Armillion Music Admin
         </h1>
         <div className="text-sm text-gray-400">
@@ -185,7 +185,7 @@ export default function DashboardContent() {
       </div>
 
       {/* KPI CARDS */}
-      <div className="grid md:grid-cols-5 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 mb-8 md:mb-10">
         <MetricCard label="Blog Posts" value={posts.length} icon={<FaPen />} href="/admin/blog/list" color="blue" />
         <MetricCard label="Events" value={events.length} icon={<FaCalendar />} href="/admin/events/list" color="green" />
         <MetricCard label="Videos" value={videos.length} icon={<FaVideo />} href="/admin/videos/list" color="purple" />
@@ -195,7 +195,7 @@ export default function DashboardContent() {
       </div>
 
       {/* Quick Stats Row */}
-      <div className="grid md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-10">
         <QuickStatCard 
           label="Total Revenue" 
           value={`$${totalRevenue.toFixed(2)}`} 
@@ -227,7 +227,7 @@ export default function DashboardContent() {
       </div>
 
       {/* CONTENT GRID */}
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-4 md:gap-8">
         {/* BLOG SECTION */}
         <SectionCard
           title="Recent Blog Posts"
@@ -323,7 +323,7 @@ export default function DashboardContent() {
         />
 
         {/* REGISTRATIONS SECTION */}
-        <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
+        <div className="bg-slate-800 rounded-2xl shadow p-4 md:p-6 border border-white/10">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-black text-white">Recent Registrations</h2>
             <Link href="/admin/registrations" className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1">
@@ -364,9 +364,9 @@ export default function DashboardContent() {
       </div>
 
       {/* Quick Actions */}
-      <div className="mt-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow p-6">
+      <div className="mt-8 md:mt-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow p-4 md:p-6">
         <h2 className="text-xl font-black text-white mb-4">Quick Actions</h2>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-3 md:gap-4">
           <QuickActionButton href="/admin/blog" icon={<FaFileAlt />} label="New Blog Post" />
           <QuickActionButton href="/admin/events" icon={<FaCalendar />} label="New Event" />
           <QuickActionButton href="/admin/videos" icon={<FaVideo />} label="Add Video" />
@@ -390,7 +390,7 @@ function MetricCard({ label, value, icon, href, color = 'blue' }: { label: strin
   };
   
   return (
-    <Link href={href} className="group bg-slate-800 rounded-2xl shadow p-6 hover:shadow-xl transition border border-white/10">
+    <Link href={href} className="group bg-slate-800 rounded-2xl shadow p-4 md:p-6 hover:shadow-xl transition border border-white/10">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-gray-400">{label}</p>
@@ -412,7 +412,7 @@ function QuickStatCard({ label, value, icon, trend, color = 'blue' }: { label: s
   };
   
   return (
-    <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
+    <div className="bg-slate-800 rounded-2xl shadow p-4 md:p-6 border border-white/10">
       <div className="flex items-center gap-4">
         <div className={`p-3 rounded-xl ${colorClasses[color]}`}>
           {icon}
@@ -441,7 +441,7 @@ function SectionCard<T>({
   render: (item: T) => React.ReactNode;
 }) {
   return (
-    <div className="bg-slate-800 rounded-2xl shadow p-6 border border-white/10">
+    <div className="bg-slate-800 rounded-2xl shadow p-4 md:p-6 border border-white/10">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-black text-white">{title}</h2>
         <Link href={onNew} className="text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-1">
