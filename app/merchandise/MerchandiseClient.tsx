@@ -81,10 +81,10 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6"
               >
-                <span className="text-gradient">Support the Artist</span>
+                <span className="text-gradient">Wear Hope. Share Inspiration.</span>
                 <br />
                 <span className="text-2xl sm:text-3xl lg:text-4xl text-slate-300 font-light">
-                  Maasai-Inspired Merchandise
+                  Ray Armillion Collection
                 </span>
               </motion.h1>
 
@@ -94,8 +94,7 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-lg text-slate-400 max-w-3xl mx-auto mb-8"
               >
-                Show your love for Ray Armillion and Kenyan gospel music with our exclusive collection
-                of T-shirts, caps, and Maasai-inspired apparel. Every purchase supports the artist&apos;s mission.
+                Every piece carries the spirit of hope and transformation. From powerful performances at historic gatherings to intimate moments that inspire change. Our collection tells stories of resilience and faith. When you wear Ray Armillion, you&apos;re not just supporting an artist—you&apos;re amplifying a voice that brings hope, healing, and inspiration .
               </motion.p>
             </div>
           </ScrollReveal>
