@@ -13,9 +13,9 @@ import {
   FaTiktok,
   FaYoutube,
   FaSpotify,
-  FaChevronDown,
-  FaShoppingCart
+  FaChevronDown
 } from 'react-icons/fa6';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const navLinks = [
   { name: 'Home', href: '/', icon: null },
