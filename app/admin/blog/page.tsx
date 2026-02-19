@@ -362,19 +362,33 @@ function BlogEditor() {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
               <div className="flex items-center gap-4">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleImageUpload(e, setCover)}
-                  disabled={isLoading}
-                  className="flex-1"
-                />
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setCover)}
+                    disabled={isLoading}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="cover-upload"
+                  />
+                  <label
+                    htmlFor="cover-upload"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-50 border-2 border-dashed border-blue-300 rounded-lg cursor-pointer hover:bg-blue-100 hover:border-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span className="text-sm text-blue-700 font-medium">
+                      {isLoading ? 'Uploading...' : 'Choose Cover Image'}
+                    </span>
+                  </label>
+                </div>
                 {cover && (
                   <div className="relative">
-                    <img src={cover} alt="cover" className="h-20 w-20 object-cover rounded" />
-                    <button 
+                    <img src={cover} alt="cover" className="h-20 w-20 object-cover rounded border" />
+                    <button
                       onClick={() => setCover('')}
-                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs"
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center hover:bg-red-600"
                     >
                       ×
                     </button>

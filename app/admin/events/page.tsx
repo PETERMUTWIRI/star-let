@@ -349,19 +349,61 @@ function EventEditor() {
             {/* COVER IMAGE */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2"><FaImage className="inline mr-1" /> Cover Image</label>
-              <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'cover')} disabled={isLoading || uploadLoading} />
-              {uploadLoading && <span className="text-blue-600 text-sm ml-2">Uploading...</span>}
-              {form.cover && (
-                <div className="mt-2 relative inline-block">
-                  <img src={form.cover} alt="Cover" className="h-24 rounded shadow" />
-                  <button onClick={() => setForm(p => ({ ...p, cover: '' }))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600">×</button>
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, 'cover')}
+                    disabled={isLoading || uploadLoading}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    id="cover-upload-events"
+                  />
+                  <label
+                    htmlFor="cover-upload-events"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-50 border-2 border-dashed border-blue-300 rounded-lg cursor-pointer hover:bg-blue-100 hover:border-blue-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <span className="text-sm text-blue-700 font-medium">
+                      {uploadLoading ? 'Uploading...' : 'Choose Cover Image'}
+                    </span>
+                  </label>
                 </div>
-              )}
+                {form.cover && (
+                  <div className="relative">
+                    <img src={form.cover} alt="Cover" className="h-24 rounded shadow border" />
+                    <button onClick={() => setForm(p => ({ ...p, cover: '' }))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center hover:bg-red-600">×</button>
+                  </div>
+                )}
+              </div>
             </div>
             {/* GALLERY (NEW) */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2"><FaImage className="inline mr-1" /> Gallery (max 10)</label>
-              <input type="file" accept="image/*" multiple onChange={(e) => e.target.files && uploadImages(e.target.files)} disabled={isLoading || uploadLoading} />
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => e.target.files && uploadImages(e.target.files)}
+                  disabled={isLoading || uploadLoading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  id="gallery-upload-events"
+                />
+                <label
+                  htmlFor="gallery-upload-events"
+                  className="flex items-center gap-2 px-4 py-2 bg-green-50 border-2 border-dashed border-green-300 rounded-lg cursor-pointer hover:bg-green-100 hover:border-green-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  <span className="text-sm text-green-700 font-medium">
+                    {uploadLoading ? 'Uploading...' : 'Choose Gallery Images'}
+                  </span>
+                </label>
+              </div>
               {uploadLoading && <span className="text-blue-600 text-sm ml-2">Uploading...</span>}
             </div>
             {/* GALLERY (NEW) */}
@@ -411,14 +453,35 @@ function EventEditor() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Social Media Image (Open Graph)</label>
-            <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'ogImage')} disabled={isLoading || uploadLoading} />
-            {uploadLoading && <span className="text-blue-600 text-sm ml-2">Uploading...</span>}
-            {form.ogImage && (
-              <div className="mt-2 relative inline-block">
-                <img src={form.ogImage} alt="OG" className="h-24 rounded shadow" />
-                <button onClick={() => setForm(p => ({ ...p, ogImage: '' }))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs hover:bg-red-600">×</button>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, 'ogImage')}
+                  disabled={isLoading || uploadLoading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  id="og-upload-events"
+                />
+                <label
+                  htmlFor="og-upload-events"
+                  className="flex items-center gap-2 px-4 py-2 bg-purple-50 border-2 border-dashed border-purple-300 rounded-lg cursor-pointer hover:bg-purple-100 hover:border-purple-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                  <span className="text-sm text-purple-700 font-medium">
+                    {uploadLoading ? 'Uploading...' : 'Choose Social Image'}
+                  </span>
+                </label>
               </div>
-            )}
+              {form.ogImage && (
+                <div className="relative">
+                  <img src={form.ogImage} alt="OG" className="h-24 rounded shadow border" />
+                  <button onClick={() => setForm(p => ({ ...p, ogImage: '' }))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center hover:bg-red-600">×</button>
+                </div>
+              )}
+            </div>
             <p className="text-xs text-gray-500 mt-1">Recommended: 1200×630 pixels</p>
           </div>
 

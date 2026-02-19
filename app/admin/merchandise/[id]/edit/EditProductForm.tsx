@@ -34,7 +34,7 @@ export default function EditProductForm({ product }: EditProductFormProps) {
   const handleImageUpload = async (file: File) => {
     setUploading(true);
     const formDataUpload = new FormData();
-    formDataUpload.append('image', file);
+    formDataUpload.append('file', file);
 
     try {
       const response = await fetch('/api/upload', {
@@ -134,23 +134,46 @@ export default function EditProductForm({ product }: EditProductFormProps) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Image
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleImageUpload(file);
-              }}
-              className="w-full"
-            />
-            {uploading && <p className="text-sm text-gray-500 mt-1">Uploading...</p>}
-            {formData.image && (
-              <img
-                src={formData.image}
-                alt="Preview"
-                className="mt-2 h-20 w-20 object-cover rounded"
-              />
-            )}
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleImageUpload(file);
+                  }}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  id="image-upload-edit"
+                />
+                <label
+                  htmlFor="image-upload-edit"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-50 border-2 border-dashed border-blue-300 rounded-lg cursor-pointer hover:bg-blue-100 hover:border-blue-400 transition-colors"
+                >
+                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <span className="text-sm text-blue-700 font-medium">
+                    {uploading ? 'Uploading...' : 'Choose Image'}
+                  </span>
+                </label>
+              </div>
+              {formData.image && (
+                <div className="relative">
+                  <img
+                    src={formData.image}
+                    alt="Preview"
+                    className="h-20 w-20 object-cover rounded border"
+                  />
+                  <button
+                    onClick={() => setFormData(prev => ({ ...prev, image: '' }))}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center hover:bg-red-600"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
