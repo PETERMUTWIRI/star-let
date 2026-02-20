@@ -114,7 +114,6 @@ export default function MerchandiseClient({ initialProducts }: MerchandiseClient
                 transition={{ duration: 0.6 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-sm font-medium mb-6"
               >
-                <FaShoppingCart className="w-4 h-4" />
                 Official Store
               </motion.div>
 
