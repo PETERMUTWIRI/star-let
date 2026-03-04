@@ -231,7 +231,7 @@ export default function DashboardContent() {
         {/* BLOG SECTION */}
         <SectionCard
           title="Recent Blog Posts"
-          href="/admin/blog"
+          href="/admin/blog/list"
           onNew="/admin/blog"
           items={posts.slice(0, 5)}
           render={(p) => (
@@ -250,7 +250,7 @@ export default function DashboardContent() {
         {/* EVENTS SECTION */}
         <SectionCard
           title="Upcoming Events"
-          href="/admin/events"
+          href="/admin/events/list"
           onNew="/admin/events"
           items={upcomingEvents.slice(0, 5)}
           render={(e) => (
@@ -268,7 +268,7 @@ export default function DashboardContent() {
         {/* VIDEOS SECTION */}
         <SectionCard
           title="Recent Videos"
-          href="/admin/videos"
+          href="/admin/videos/list"
           onNew="/admin/videos"
           items={recentVideos.slice(0, 5)}
           render={(v) => (
@@ -287,7 +287,7 @@ export default function DashboardContent() {
         {/* MUSIC SECTION */}
         <SectionCard
           title="Recent Music"
-          href="/admin/music"
+          href="/admin/music/list"
           onNew="/admin/music"
           items={recentMusic.slice(0, 5)}
           render={(m) => (
