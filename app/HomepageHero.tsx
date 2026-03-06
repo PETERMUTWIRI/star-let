@@ -517,8 +517,7 @@ export default function HomepageHero() {
                     className="absolute top-6 left-6 px-4 py-2 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/10"
                   >
                     <span className="flex items-center gap-2 text-sm text-white">
-                      <span className="text-lg">🇰🇪</span>
-                      <span>Kenya → USA</span>
+                      
                     </span>
                   </motion.div>
 
@@ -553,38 +552,7 @@ export default function HomepageHero() {
         </div>
       </div>
 
-      {/* ==========================================================================
-          BOTTOM BAR - Upcoming Event Teaser
-          ========================================================================== */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: 1.4 }}
-        className="absolute bottom-0 left-0 right-0 z-20"
-      >
-        <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 pb-8">
-          <Link href="/events" className="group">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-amber-500/30 transition-all duration-300">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-                  <FaCalendarAlt className="w-5 h-5 text-white" />
-                </div>
-                <div className="text-center sm:text-left">
-                  <p className="text-xs text-slate-400 uppercase tracking-wider">Next Performance</p>
-                  <p className="text-white font-semibold group-hover:text-amber-400 transition-colors">
-                    View All Upcoming Events
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-amber-400 text-sm">
-                <FaMapMarkerAlt className="w-4 h-4" />
-                <span>Book Your Experience</span>
-                <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </Link>
-        </div>
-      </motion.div>
+      
 
       {/* ==========================================================================
           SCROLL INDICATOR
