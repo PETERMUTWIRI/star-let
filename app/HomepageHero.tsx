@@ -391,7 +391,7 @@ export default function HomepageHero() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-4"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-4"
               >
                 <span className="block text-white">RAY</span>
                 <span className="block bg-gradient-to-r from-amber-400 via-orange-500 to-purple-600 bg-clip-text text-transparent">
@@ -466,30 +466,7 @@ export default function HomepageHero() {
                 </Link>
               </motion.div>
 
-              {/* Quick Stats / Credibility */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={isLoaded ? { opacity: 1 } : {}}
-                transition={{ duration: 0.8, delay: 1.2 }}
-                className="mt-12 pt-8 border-t border-white/10"
-              >
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 sm:gap-8">
-                  <div className="text-center lg:text-left">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">1.4M+</div>
-                    <div className="text-xs sm:text-sm text-slate-500 uppercase tracking-wider">Streams</div>
-                  </div>
-                  <div className="w-px h-10 bg-white/10 hidden sm:block" />
-                  <div className="text-center lg:text-left">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">10+</div>
-                    <div className="text-xs sm:text-sm text-slate-500 uppercase tracking-wider">Countries</div>
-                  </div>
-                  <div className="w-px h-10 bg-white/10 hidden sm:block" />
-                  <div className="text-center lg:text-left">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">100+</div>
-                    <div className="text-xs sm:text-sm text-slate-500 uppercase tracking-wider">Shows</div>
-                  </div>
-                </div>
-              </motion.div>
+
             </motion.div>
 
             {/* RIGHT COLUMN: Image with Parallax */}
