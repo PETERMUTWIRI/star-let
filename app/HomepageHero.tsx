@@ -365,8 +365,8 @@ export default function HomepageHero() {
           MAIN CONTENT
           ========================================================================== */}
       <div className="relative z-10 min-h-screen flex items-center">
-        <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-20 lg:py-0">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="w-full max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 pt-20 sm:pt-24 lg:pt-0 pb-8 lg:pb-0">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 items-center">
             
             {/* LEFT COLUMN: Text Content */}
             <motion.div 
