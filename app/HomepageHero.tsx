@@ -530,7 +530,7 @@ export default function HomepageHero() {
                   >
                     <span className="flex items-center gap-2 text-sm text-white font-medium">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                      <span>Cancer Survivor</span>
+                      
                     </span>
                   </motion.div>
                 </motion.div>
