@@ -12,20 +12,19 @@ import {
   FaTwitter,
   FaTiktok,
   FaYoutube,
-  FaSpotify,
-  FaChevronDown
+  FaSpotify
 } from 'react-icons/fa6';
 
 
 const navLinks = [
-  { name: 'Home', href: '/', icon: null },
-  { name: 'Music', href: '/music', icon: null },
-  { name: 'Videos', href: '/videos', icon: null },
-  { name: 'Events', href: '/events', icon: null },
-  { name: 'Merchandise', href: '/merchandise', icon: null },
-  { name: 'About', href: '/about', icon: null },
-  { name: 'Blog', href: '/blog', icon: null },
-  { name: 'Contact', href: '/contact', icon: null },
+  { name: 'Home', href: '/' },
+  { name: 'Music', href: '/music' },
+  { name: 'Videos', href: '/videos' },
+  { name: 'Events', href: '/events' },
+  { name: 'Merchandise', href: '/merchandise' },
+  { name: 'About', href: '/about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
 ];
 
 const socialLinks = [
@@ -90,7 +89,7 @@ export default function Navbar() {
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  {link.icon && <link.icon className="w-4 h-4" />}
+                  
                   {link.name}
                   {pathname === link.href && (
                     <motion.div
@@ -189,7 +188,7 @@ export default function Navbar() {
                             : 'text-slate-400 hover:text-white hover:bg-white/5'
                         }`}
                       >
-                        {link.icon && <link.icon className="w-5 h-5" />}
+                        
                         {link.name}
                       </Link>
                     </motion.div>
