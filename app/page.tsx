@@ -109,8 +109,8 @@ async function getFeaturedProducts() {
   try {
     const products = await prisma.product.findMany({
       where: { published: true },
-      orderBy: { order: 'asc' },
-      take: 4, // Only get first 4 for homepage
+      orderBy: { createdAt: 'desc' }, // Show latest products first
+      take: 4, // Only show 4 products on homepage
     });
 
     return products.map((product) => ({

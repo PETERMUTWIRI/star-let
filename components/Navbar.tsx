@@ -15,14 +15,14 @@ import {
   FaSpotify,
   FaChevronDown
 } from 'react-icons/fa6';
-import { FaShoppingCart } from 'react-icons/fa';
+
 
 const navLinks = [
   { name: 'Home', href: '/', icon: null },
   { name: 'Music', href: '/music', icon: null },
   { name: 'Videos', href: '/videos', icon: null },
   { name: 'Events', href: '/events', icon: null },
-  { name: 'Merchandise', href: '/merchandise', icon: FaShoppingCart },
+  { name: 'Merchandise', href: '/merchandise', icon: null },
   { name: 'About', href: '/about', icon: null },
   { name: 'Blog', href: '/blog', icon: null },
   { name: 'Contact', href: '/contact', icon: null },
